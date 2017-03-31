@@ -17,4 +17,4 @@ Running tests
 
 - $VENV/bin/pip install -e ".[testing]"
 
-- $VENV/bin/py.test
+- $VENV/bin/pytest
