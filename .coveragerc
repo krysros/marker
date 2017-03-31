@@ -1,0 +1,3 @@
+[run]
+source = marker
+omit = marker/test*

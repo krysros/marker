@@ -1,0 +1,28 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  padding-top: 70px;
+  margin-bottom: 120px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+}
+
+.nav-tabs {
+  margin-bottom: 20px;
+}
+
+.nav-pills {
+  margin-bottom: 30px;
+}
+
+.div-inline {
+  display:inline-block;
+}

@@ -1,0 +1,231 @@
+import datetime
+from pyramid.view import view_config
+from pyramid.httpexceptions import (
+    HTTPFound,
+    HTTPNotFound,
+    )
+
+import deform
+import colander
+
+from ..models import (
+    Tender,
+    Investor,
+    User,
+    )
+from ..csrf import CSRFSchema
+from ..paginator import get_paginator
+
+
+class TenderView(object):
+    def __init__(self, request):
+        self.request = request
+
+    @property
+    def tender_form(self):
+
+        def check_name(node, value):
+            query = self.request.dbsession.query(Tender)
+            exists = query.filter_by(name=value).one_or_none()
+            if exists:
+                raise colander.Invalid(node, 'Ta nazwa przetargu jest już zajęta')
+
+        def check_investor(node, value):
+            query = self.request.dbsession.query(Investor)
+            exists = query.filter_by(name=value).one_or_none()
+            if not exists:
+                raise colander.Invalid(
+                    node, 'Inwestor o tej nazwie nie występuje w bazie danych',
+                    )
+
+        investor_widget = deform.widget.AutocompleteInputWidget(
+            values=self.request.route_url('investor_select'),
+            min_length=1,
+            )
+
+        class Schema(CSRFSchema):
+            name = colander.SchemaNode(
+                colander.String(),
+                title='Nazwa przetargu',
+                validator=colander.All(
+                    colander.Length(min=3, max=100), check_name)
+                )
+            city = colander.SchemaNode(
+                colander.String(),
+                title='Miasto',
+                validator=colander.Length(min=3, max=100),
+                )
+            investor = colander.SchemaNode(
+                colander.String(),
+                title='Inwestor',
+                widget=investor_widget,
+                validator=check_investor,
+                )
+            deadline = colander.SchemaNode(
+                colander.Date(),
+                widget=deform.widget.DatePartsWidget(),
+                title='Termin składania ofert',
+                )
+
+        schema = Schema().bind(request=self.request)
+        submit_btn = deform.form.Button(name='submit', title='Zapisz')
+        return deform.Form(schema, buttons=(submit_btn,))
+
+    def _get_investor(self, name):
+        return self.request.dbsession.query(Investor).filter_by(name=name).one()
+
+    @view_config(
+        route_name='tenders',
+        renderer='tenders.mako',
+        permission='view'
+    )
+    def all(self):
+        page = self.request.params.get('page', 1)
+        query = self.request.params.get('filter', 'all')
+        now = datetime.datetime.now()
+        if query == 'all':
+            tenders = self.request.dbsession.query(Tender)
+        elif query == 'inprogress':
+            tenders = self.request.dbsession.query(Tender).\
+                filter(Tender.deadline > now.date())
+        elif query == 'completed':
+            tenders = self.request.dbsession.query(Tender).\
+                filter(Tender.deadline < now.date())
+        else:
+            return HTTPNotFound()
+        paginator = get_paginator(self.request, tenders, page=page)
+
+        return dict(
+            paginator=paginator,
+            logged_in=self.request.authenticated_userid,
+            )
+
+    @view_config(
+        route_name='tender_view',
+        renderer='tender.mako',
+        permission='view'
+    )
+    def view(self):
+        tender_id = self.request.matchdict['tender_id']
+        query = self.request.dbsession.query(Tender)
+        tender = query.filter_by(id=tender_id).one()
+        return dict(
+            tender=tender,
+            logged_in=self.request.authenticated_userid,
+            )
+
+    @view_config(
+        route_name='tender_add',
+        renderer='form.mako',
+        permission='edit'
+    )
+    def add(self):
+        form = self.tender_form
+        appstruct = {}
+        rendered_form = None
+
+        if 'submit' in self.request.params:
+            controls = self.request.POST.items()
+            try:
+                appstruct = form.validate(controls)
+            except deform.exception.ValidationFailure as e:
+                rendered_form = e.render()
+            else:
+                tender = Tender(
+                    name=appstruct['name'],
+                    city=appstruct['city'],
+                    investor=self._get_investor(appstruct['investor']),
+                    deadline=appstruct['deadline'],
+                    )
+                username = self.request.authenticated_userid
+                tender.added_by = self.request.dbsession.query(User).\
+                    filter_by(username=username).first()
+                self.request.dbsession.add(tender)
+                self.request.session.flash('success:Dodano do bazy danych')
+                return HTTPFound(location=self.request.route_url('tenders'))
+
+        if rendered_form is None:
+            rendered_form = form.render(appstruct=appstruct)
+        reqts = form.get_widget_resources()
+
+        return dict(
+            heading='Dodaj przetarg',
+            rendered_form=rendered_form,
+            logged_in=self.request.authenticated_userid,
+            css_links=reqts['css'],
+            js_links=reqts['js'],
+            )
+
+    @view_config(
+        route_name='tender_edit',
+        renderer='form.mako',
+        permission='edit'
+    )
+    def edit(self):
+        tender_id = self.request.matchdict['tender_id']
+        query = self.request.dbsession.query(Tender)
+        tender = query.filter_by(id=tender_id).one()
+        form = self.tender_form
+        rendered_form = None
+
+        if 'submit' in self.request.params:
+            controls = self.request.POST.items()
+            try:
+                appstruct = form.validate(controls)
+            except deform.exception.ValidationFailure as e:
+                rendered_form = e.render()
+            else:
+                tender.name = appstruct['name']
+                tender.city = appstruct['city']
+                tender.investor = self._get_investor(appstruct['investor'])
+                tender.deadline = appstruct['deadline']
+                username = self.request.authenticated_userid
+                tender.edited_by = self.request.dbsession.query(User).\
+                    filter_by(username=username).first()
+                self.request.session.flash('success:Dane przetargu zostały zmienione')
+                return HTTPFound(location=self.request.route_url('tender_edit',
+                                                                 tender_id=tender.id,
+                                                                 slug=tender.slug))
+        appstruct = {
+            'name': tender.name,
+            'city': tender.city,
+            'investor': tender.investor.name if tender.investor else '',
+            'deadline': tender.deadline
+            }
+
+        if rendered_form is None:
+            rendered_form = form.render(appstruct=appstruct)
+        reqts = form.get_widget_resources()
+
+        return dict(
+            heading='Edytuj dane przetargu',
+            rendered_form=rendered_form,
+            logged_in=self.request.authenticated_userid,
+            css_links=reqts['css'],
+            js_links=reqts['js'],
+            )
+
+    @view_config(
+        route_name='tender_delete',
+        request_method='POST',
+        permission='edit'
+    )
+    def delete(self):
+        tender_id = self.request.matchdict['tender_id']
+        query = self.request.dbsession.query(Tender)
+        tender = query.filter_by(id=tender_id).one()
+        self.request.dbsession.delete(tender)
+        self.request.session.flash('success:Usunięto z bazy danych')
+        return HTTPFound(location=self.request.route_url('home'))
+
+    @view_config(
+        route_name='tender_select',
+        request_method='GET',
+        renderer='json',
+    )
+    def select(self):
+        term = self.request.params.get('term')
+        query = self.request.dbsession.query(Tender)
+        items = query.filter(Tender.name.ilike('%' + term + '%'))
+        data = [i.name for i in items]
+        return data
