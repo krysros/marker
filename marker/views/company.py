@@ -210,6 +210,7 @@ class CompanyView(object):
             upvotes = []
 
         return dict(
+            query=query,
             paginator=paginator,
             upvotes=upvotes,
             logged_in=self.request.authenticated_userid,

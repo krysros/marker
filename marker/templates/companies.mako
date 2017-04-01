@@ -4,7 +4,7 @@
   <div class="panel-body">
     <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i> Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
+        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i> Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <ul class="dropdown-menu" role="menu">
         <li><a href="${request.route_url('companies', _query={'sort': 'added'})}">wg daty dodania</a></li>
@@ -35,7 +35,11 @@
               <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>
             </td>
             <td>${company.city}</td>
-            <td>${company.added.strftime('%Y-%m-%d %H:%M:%S') if company.edited else ""}</td>
+            % if query == 'added':
+              <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
+            % elif query == 'edited':
+              <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
+            % endif
           </tr>
         % endfor
         </tbody>
