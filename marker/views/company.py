@@ -137,7 +137,7 @@ class CompanyView(object):
             voivodeship = colander.SchemaNode(
                 colander.String(),
                 title='Województwo',
-                widget=deform.widget.Select2Widget(values=VOIVODESHIPS),
+                widget=deform.widget.SelectWidget(values=VOIVODESHIPS),
                 )
             phone = colander.SchemaNode(
                 colander.String(),

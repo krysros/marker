@@ -49,7 +49,7 @@ class UserView(object):
             role = colander.SchemaNode(
                 colander.String(),
                 title="Rola",
-                widget=deform.widget.Select2Widget(values=choices)
+                widget=deform.widget.SelectWidget(values=choices)
                 )
             password = colander.SchemaNode(
                 colander.String(),
