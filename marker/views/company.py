@@ -208,6 +208,9 @@ class CompanyView(object):
         elif query == 'edited':
             companies = self.request.dbsession.query(Company).\
                 order_by(Company.edited.desc(), Company.id)
+        elif query == 'alpha':
+            companies = self.request.dbsession.query(Company).\
+                order_by(Company.name, Company.id)
         else:
             return HTTPNotFound()
 

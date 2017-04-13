@@ -9,6 +9,7 @@
       <ul class="dropdown-menu" role="menu">
         <li><a href="${request.route_url('companies', _query={'sort': 'added'})}">wg daty dodania</a></li>
         <li><a href="${request.route_url('companies', _query={'sort': 'edited'})}">wg daty edycji</a></li>
+        <li><a href="${request.route_url('companies', _query={'sort': 'alpha'})}">alfabetycznie</a></li>
       </ul>
     </div>
   </div>
@@ -20,9 +21,14 @@
       <table id="companies" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-6">Nazwa firmy</th>
-            <th class="col-sm-3">Miasto</th>
-            <th class="col-sm-3">Data</th>
+            % if query == 'alpha':
+              <th class="col-sm-8">Nazwa firmy</th>
+              <th class="col-sm-5">Miasto</th>
+            % else:
+              <th class="col-sm-6">Nazwa firmy</th>
+              <th class="col-sm-3">Miasto</th>
+              <th class="col-sm-3">Data</th>
+            % endif
           </tr>
         </thead>
         <tbody>
