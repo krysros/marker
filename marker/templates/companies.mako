@@ -21,14 +21,9 @@
       <table id="companies" class="table table-striped">
         <thead>
           <tr>
-            % if query == 'alpha':
-              <th class="col-sm-8">Nazwa firmy</th>
-              <th class="col-sm-5">Miasto</th>
-            % else:
-              <th class="col-sm-6">Nazwa firmy</th>
-              <th class="col-sm-3">Miasto</th>
-              <th class="col-sm-3">Data</th>
-            % endif
+            <th class="col-sm-6">Nazwa firmy</th>
+            <th class="col-sm-3">Miasto</th>
+            <th class="col-sm-3">Data</th>
           </tr>
         </thead>
         <tbody>
@@ -41,7 +36,7 @@
               <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>
             </td>
             <td>${company.city}</td>
-            % if query == 'added':
+            % if query == 'added' or 'alpha':
               <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % elif query == 'edited':
               <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
