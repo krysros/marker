@@ -36,7 +36,7 @@
               <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>
             </td>
             <td>${company.city}</td>
-            % if query == 'added' or 'alpha':
+            % if query == 'added' or query == 'alpha':
               <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % elif query == 'edited':
               <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
