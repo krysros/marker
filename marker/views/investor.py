@@ -152,3 +152,27 @@ class InvestorView(object):
         items = query.filter(Investor.name.ilike('%' + term + '%'))
         data = [i.name for i in items]
         return data
+
+    @view_config(
+        route_name='investor_search',
+        renderer='investor_search.mako',
+        permission='view'
+    )
+    def search(self):
+        return {'logged_in': self.request.authenticated_userid}
+
+    @view_config(
+        route_name='investor_search_results',
+        renderer='investor_search_results.mako',
+        permission='view'
+    )
+    def search_results(self):
+        name = self.request.params.get('name')
+        page = self.request.params.get('page', 1)
+        results = self.request.dbsession.query(Investor).\
+            filter(Investor.name.ilike('%' + name + '%'))
+        paginator = get_paginator(self.request, results, page=page)
+        return dict(
+            paginator=paginator,
+            logged_in=self.request.authenticated_userid,
+        )

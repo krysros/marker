@@ -269,3 +269,27 @@ class BranchView(object):
         items = query.filter(Branch.name.ilike('%' + term + '%'))
         data = [i.name for i in items]
         return data
+
+    @view_config(
+        route_name='branch_search',
+        renderer='branch_search.mako',
+        permission='view'
+    )
+    def search(self):
+        return {'logged_in': self.request.authenticated_userid}
+
+    @view_config(
+        route_name='branch_search_results',
+        renderer='branch_search_results.mako',
+        permission='view'
+    )
+    def search_results(self):
+        name = self.request.params.get('name')
+        page = self.request.params.get('page', 1)
+        results = self.request.dbsession.query(Branch).\
+            filter(Branch.name.ilike('%' + name + '%'))
+        paginator = get_paginator(self.request, results, page=page)
+        return dict(
+            paginator=paginator,
+            logged_in=self.request.authenticated_userid,
+        )

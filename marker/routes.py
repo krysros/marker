@@ -42,6 +42,10 @@ def includeme(config):
     config.add_route('branch_export', '/branch/{branch_id:\d+}/{slug}/export',
                      factory=branch_factory)
     config.add_route('branch_add', '/branch/add', factory=default_factory)
+    config.add_route('branch_search', '/branch/search',
+                     factory=default_factory)
+    config.add_route('branch_search_results', '/branch/search/results',
+                     factory=default_factory)
     config.add_route('branch_select', '/branch/select',
                      factory=default_factory)
     config.add_route('branch_edit', '/branch/{branch_id:\d+}/{slug}/edit',
@@ -51,6 +55,10 @@ def includeme(config):
 
     config.add_route('companies', '/companies', factory=default_factory)
     config.add_route('company_add', '/company/add',
+                     factory=default_factory)
+    config.add_route('company_search', '/company/search',
+                     factory=default_factory)
+    config.add_route('company_search_results', '/company/search/results',
                      factory=default_factory)
     config.add_route('company_select', '/company/select',
                      factory=default_factory)
@@ -65,8 +73,17 @@ def includeme(config):
                      '/company/{company_id:\d+}/{slug}/upvote',
                      factory=company_factory)
 
+    config.add_route('person_search', '/person/search',
+                     factory=default_factory)
+    config.add_route('person_search_results', '/person/search/results',
+                     factory=default_factory)
+
     config.add_route('investors', '/investors', factory=default_factory)
     config.add_route('investor_add', '/investor/add', factory=default_factory)
+    config.add_route('investor_search', '/investor/search',
+                     factory=default_factory)
+    config.add_route('investor_search_results', '/investor/search/results',
+                     factory=default_factory)
     config.add_route('investor_select', '/investor/select',
                      factory=default_factory)
     config.add_route('investor_view', '/investor/{investor_id:\d+}/{slug}',
@@ -80,6 +97,10 @@ def includeme(config):
 
     config.add_route('tenders', '/tenders', factory=default_factory)
     config.add_route('tender_add', '/tender/add', factory=default_factory)
+    config.add_route('tender_search', '/tender/search',
+                     factory=default_factory)
+    config.add_route('tender_search_results', '/tender/search/results',
+                     factory=default_factory)
     config.add_route('tender_select', '/tender/select',
                      factory=default_factory)
     config.add_route('tender_view', '/tender/{tender_id:\d+}/{slug}',
@@ -100,6 +121,10 @@ def includeme(config):
 
     config.add_route('users', '/users', factory=default_factory)
     config.add_route('user_add', '/user/add', factory=default_factory)
+    config.add_route('user_search', '/user/search',
+                     factory=default_factory)
+    config.add_route('user_search_results', '/user/search/results',
+                     factory=default_factory)
     config.add_route('user_view', '/user/{username}',
                      factory=user_factory)
     config.add_route('user_edit', '/user/{username}/edit',

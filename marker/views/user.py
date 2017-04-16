@@ -190,3 +190,27 @@ class UserView(object):
         self.request.dbsession.delete(user)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('users'))
+
+    @view_config(
+        route_name='user_search',
+        renderer='user_search.mako',
+        permission='view'
+    )
+    def search(self):
+        return {'logged_in': self.request.authenticated_userid}
+
+    @view_config(
+        route_name='user_search_results',
+        renderer='user_search_results.mako',
+        permission='view'
+    )
+    def search_results(self):
+        username = self.request.params.get('username')
+        page = self.request.params.get('page', 1)
+        results = self.request.dbsession.query(User).\
+            filter(User.username.ilike('%' + username + '%'))
+        paginator = get_paginator(self.request, results, page=page)
+        return dict(
+            paginator=paginator,
+            logged_in=self.request.authenticated_userid,
+        )

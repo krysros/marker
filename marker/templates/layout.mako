@@ -70,6 +70,21 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-search" aria-hidden="true"></i> Szukaj <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="${request.route_url('branch_search')}"><i class="fa fa-cube" aria-hidden="true"></i> branżę</a></li>
+                <li><a href="${request.route_url('company_search')}"><i class="fa fa-industry" aria-hidden="true"></i> firmę</a></li>
+                <li><a href="${request.route_url('investor_search')}"><i class="fa fa-euro" aria-hidden="true"></i> inwestora</a></li>
+                <li><a href="${request.route_url('tender_search')}"><i class="fa fa-briefcase" aria-hidden="true"></i> przetarg</a></li>
+                <li><a href="${request.route_url('person_search')}"><i class="fa fa-user-o" aria-hidden="true"></i> osobę</a></li>
+                <li><a href="${request.route_url('user_search')}"><i class="fa fa-user" aria-hidden="true"></i> użytkownika</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-plus" aria-hidden="true"></i> Dodaj <i class="fa fa-caret-down" aria-hidden="true"></i>
               </a>
               <ul class="dropdown-menu" role="menu">

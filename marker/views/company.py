@@ -447,3 +447,89 @@ class CompanyView(object):
         items = query.filter(Company.name.ilike('%' + term + '%'))
         data = [i.name for i in items]
         return data
+
+    @view_config(
+        route_name='company_search',
+        renderer='company_search.mako',
+        permission='view'
+    )
+    def company_search(self):
+        voivodeships = dict(VOIVODESHIPS)
+        return dict(
+            voivodeships=voivodeships,
+            logged_in=self.request.authenticated_userid,
+        )
+
+    @view_config(
+        route_name='company_search_results',
+        renderer='company_search_results.mako',
+        permission='view'
+    )
+    def company_search_results(self):
+        name = self.request.params.get('name')
+        city = self.request.params.get('city')
+        voivodeship = self.request.params.get('voivodeship')
+        phone = self.request.params.get('phone')
+        email = self.request.params.get('email')
+        www = self.request.params.get('www')
+        nip = self.request.params.get('nip')
+        regon = self.request.params.get('regon')
+        krs = self.request.params.get('krs')
+        page = self.request.params.get('page', 1)
+        results = self.request.dbsession.query(Company).\
+            filter(Company.name.ilike('%' + name + '%')).\
+            filter(Company.city.ilike('%' + city + '%')).\
+            filter(Company.voivodeship.ilike('%' + voivodeship + '%')).\
+            filter(Company.phone.ilike('%' + phone + '%')).\
+            filter(Company.email.ilike('%' + email + '%')).\
+            filter(Company.www.ilike('%' + www + '%')).\
+            filter(Company.nip.ilike('%' + nip + '%')).\
+            filter(Company.regon.ilike('%' + regon + '%')).\
+            filter(Company.krs.ilike('%' + krs + '%'))
+        paginator = get_paginator(self.request, results, page=page)
+        voivodeships = dict(VOIVODESHIPS)
+
+        username = self.request.authenticated_userid
+        user = self.request.dbsession.query(User).\
+            filter_by(username=username).one()
+        try:
+            upvotes = user.upvotes
+        except AttributeError:
+            upvotes = []
+
+        return dict(
+            paginator=paginator,
+            voivodeships=voivodeships,
+            upvotes=upvotes,
+            logged_in=self.request.authenticated_userid,
+        )
+
+    @view_config(
+        route_name='person_search',
+        renderer='person_search.mako',
+        permission='view'
+    )
+    def person_search(self):
+        return {'logged_in': self.request.authenticated_userid}
+
+    @view_config(
+        route_name='person_search_results',
+        renderer='person_search_results.mako',
+        permission='view'
+    )
+    def person_search_results(self):
+        fullname = self.request.params.get('fullname')
+        position = self.request.params.get('position')
+        phone = self.request.params.get('phone')
+        email = self.request.params.get('email')
+        page = self.request.params.get('page', 1)
+        results = self.request.dbsession.query(Person).\
+            filter(Person.fullname.ilike('%' + fullname + '%')).\
+            filter(Person.position.ilike('%' + position + '%')).\
+            filter(Person.phone.ilike('%' + phone + '%')).\
+            filter(Person.email.ilike('%' + email + '%'))
+        paginator = get_paginator(self.request, results, page=page)
+        return dict(
+            paginator=paginator,
+            logged_in=self.request.authenticated_userid,
+        )
