@@ -5,7 +5,7 @@ import deform
 import colander
 
 from ..models import Investor
-from ..csrf import CSRFSchema
+from deform.schema import CSRFSchema
 from ..paginator import get_paginator
 
 

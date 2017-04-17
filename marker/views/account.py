@@ -4,7 +4,7 @@ from pyramid.httpexceptions import HTTPFound
 import colander
 import deform
 
-from ..csrf import CSRFSchema
+from deform.schema import CSRFSchema
 from ..models import User
 
 

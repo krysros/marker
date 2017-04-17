@@ -13,7 +13,7 @@ from ..models import (
     Investor,
     User,
     )
-from ..csrf import CSRFSchema
+from deform.schema import CSRFSchema
 from ..paginator import get_paginator
 
 

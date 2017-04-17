@@ -12,7 +12,7 @@ import deform
 import colander
 
 from ..models import User
-from ..csrf import CSRFSchema
+from deform.schema import CSRFSchema
 
 
 class Schema(CSRFSchema):
