@@ -74,4 +74,27 @@
           href="${request.route_url('stats')}"
           role="button">Pokaż &raquo;</a></p>
   </div>
+  <div class="col-xs-6 col-lg-4">
+    <h2><i class="fa fa-search" aria-hidden="true"></i> Wyszukiwarka</h2>
+    <p>
+      Wyszukaj dane kontaktowe, informacje o firmach, inwestorach,
+      przetargach i relacjach pomiędzy nimi.
+    </p>
+  </div>
+  <div class="col-xs-6 col-lg-4">
+    <h2><i class="fa fa-file-excel-o" aria-hidden="true"></i> Eksport</h2>
+    <p>
+      Wyeksportuj wybrane dane kontaktowe do Excela.
+      Skorzystaj z korespondencji seryjnej.
+    </p>
+  </div>
+  <div class="col-xs-6 col-lg-4">
+    <h2><i class="fa fa-users" aria-hidden="true"></i> Użytkownicy</h2>
+    <p>
+      Wyświetl listę użytkowników bazy danych.
+    </p>
+    <p><a class="btn btn-default"
+          href="${request.route_url('users')}"
+          role="button">Pokaż &raquo;</a></p>
+  </div>
 </div>
