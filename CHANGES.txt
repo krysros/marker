@@ -2,3 +2,9 @@
 ---
 
 -  Initial version
+
+0.1
+---
+
+- Add preparers for NIP, REGON and KRS
+- Extend searching
