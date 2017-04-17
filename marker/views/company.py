@@ -485,7 +485,8 @@ class CompanyView(object):
             filter(Company.www.ilike('%' + www + '%')).\
             filter(Company.nip.ilike('%' + nip + '%')).\
             filter(Company.regon.ilike('%' + regon + '%')).\
-            filter(Company.krs.ilike('%' + krs + '%'))
+            filter(Company.krs.ilike('%' + krs + '%')).\
+            order_by(Company.name)
         paginator = get_paginator(self.request, results, page=page)
         voivodeships = dict(VOIVODESHIPS)
 
@@ -527,7 +528,8 @@ class CompanyView(object):
             filter(Person.fullname.ilike('%' + fullname + '%')).\
             filter(Person.position.ilike('%' + position + '%')).\
             filter(Person.phone.ilike('%' + phone + '%')).\
-            filter(Person.email.ilike('%' + email + '%'))
+            filter(Person.email.ilike('%' + email + '%')).\
+            order_by(Person.fullname)
         paginator = get_paginator(self.request, results, page=page)
         return dict(
             paginator=paginator,

@@ -287,7 +287,8 @@ class BranchView(object):
         name = self.request.params.get('name')
         page = self.request.params.get('page', 1)
         results = self.request.dbsession.query(Branch).\
-            filter(Branch.name.ilike('%' + name + '%'))
+            filter(Branch.name.ilike('%' + name + '%')).\
+            order_by(Branch.name)
         paginator = get_paginator(self.request, results, page=page)
         return dict(
             paginator=paginator,

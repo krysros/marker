@@ -208,7 +208,8 @@ class UserView(object):
         username = self.request.params.get('username')
         page = self.request.params.get('page', 1)
         results = self.request.dbsession.query(User).\
-            filter(User.username.ilike('%' + username + '%'))
+            filter(User.username.ilike('%' + username + '%')).\
+            order_by(User.username)
         paginator = get_paginator(self.request, results, page=page)
         return dict(
             paginator=paginator,

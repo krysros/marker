@@ -170,7 +170,8 @@ class InvestorView(object):
         name = self.request.params.get('name')
         page = self.request.params.get('page', 1)
         results = self.request.dbsession.query(Investor).\
-            filter(Investor.name.ilike('%' + name + '%'))
+            filter(Investor.name.ilike('%' + name + '%')).\
+            order_by(Investor.name)
         paginator = get_paginator(self.request, results, page=page)
         return dict(
             paginator=paginator,
