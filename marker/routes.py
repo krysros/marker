@@ -27,7 +27,6 @@ def includeme(config):
     config.add_route('password', '/user/{username}/password',
                      factory=account_factory)
 
-    config.add_route('search', '/search', factory=default_factory)
     config.add_route('stats', '/stats', factory=default_factory)
 
     config.add_route('branches', '/branches', factory=default_factory)

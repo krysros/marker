@@ -97,12 +97,6 @@
               </ul>
             </li>
           </ul>
-          <form class="navbar-form navbar-right" action="${request.route_url('search')}">
-            <input type="text" name="q" class="form-control" placeholder="Szukaj...">
-            % if tab:
-            <input type="hidden" name="tab" value="${tab}">
-            % endif
-          </form>
         </div>
       </div>
     </div>
