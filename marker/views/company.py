@@ -20,12 +20,19 @@ from ..paginator import get_paginator
 from .voivodeships import VOIVODESHIPS
 
 
-# removes whitespace, newlines, and tabs from the beginning/end of a string
-strip_whitespace = lambda v: v.strip(' \t\n\r') if v is not colander.null else v
-# removes dashes
-remove_dashes = lambda v: v.replace('-', '').replace(' ', '') if v is not colander.null else v
-# replaces multiple spaces with a single space
-remove_multiple_spaces = lambda v: re.sub(' +', ' ', v) if v is not colander.null else v
+def strip_whitespace(v):
+    """Removes whitespace, newlines, and tabs from the beginning/end of a string."""
+    return v.strip(' \t\n\r') if v is not colander.null else v
+
+
+def remove_multiple_spaces(v):
+    """Replaces multiple spaces with a single space."""
+    return re.sub(' +', ' ', v) if v is not colander.null else v
+
+
+def remove_dashes_and_spaces(v):
+    """Removes dashes and spaces from a string."""
+    return v.replace('-', '').replace(' ', '') if v is not colander.null else v
 
 
 class CompanyView(object):
@@ -168,21 +175,21 @@ class CompanyView(object):
                 colander.String(),
                 title='NIP',
                 missing='',
-                preparer=[strip_whitespace, remove_dashes, remove_multiple_spaces],
+                preparer=[strip_whitespace, remove_multiple_spaces, remove_dashes_and_spaces],
                 validator=validate_nip,
                 )
             regon = colander.SchemaNode(
                 colander.String(),
                 title='REGON',
                 missing='',
-                preparer=[strip_whitespace, remove_dashes, remove_multiple_spaces],
+                preparer=[strip_whitespace, remove_multiple_spaces, remove_dashes_and_spaces],
                 validator=validate_regon,
                 )
             krs = colander.SchemaNode(
                 colander.String(),
                 title='KRS',
                 missing='',
-                preparer=[strip_whitespace, remove_dashes, remove_multiple_spaces],
+                preparer=[strip_whitespace, remove_multiple_spaces, remove_dashes_and_spaces],
                 validator=validate_krs,
                 )
             branches = Branches(title="Branże")
