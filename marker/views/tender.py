@@ -101,9 +101,7 @@ class TenderView(object):
         permission='view'
     )
     def view(self):
-        tender_id = self.request.matchdict['tender_id']
-        query = self.request.dbsession.query(Tender)
-        tender = query.filter_by(id=tender_id).one()
+        tender = self.request.context.tender
         return {'tender': tender}
 
     @view_config(
@@ -151,9 +149,7 @@ class TenderView(object):
         permission='edit'
     )
     def edit(self):
-        tender_id = self.request.matchdict['tender_id']
-        query = self.request.dbsession.query(Tender)
-        tender = query.filter_by(id=tender_id).one()
+        tender = self.request.context.tender
         form = self.tender_form
         rendered_form = None
 
@@ -197,9 +193,7 @@ class TenderView(object):
         permission='edit'
     )
     def delete(self):
-        tender_id = self.request.matchdict['tender_id']
-        query = self.request.dbsession.query(Tender)
-        tender = query.filter_by(id=tender_id).one()
+        tender = self.request.context.tender
         self.request.dbsession.delete(tender)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('home'))

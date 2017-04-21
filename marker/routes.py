@@ -139,7 +139,7 @@ class DefaultResource(object):
         ]
 
 
-class UserResource(object):
+class AccountResource(object):
     def __init__(self, user):
         self.user = user
 
@@ -147,6 +147,78 @@ class UserResource(object):
         return [
             (Allow, str(self.user.id), 'view'),
             (Allow, str(self.user.id), 'edit'),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
+
+class BranchResource(object):
+    def __init__(self, branch):
+        self.branch = branch
+
+    def __acl__(self):
+        return [
+            (Allow, Authenticated, 'view'),
+            (Allow, 'role:editor', ('add', 'edit')),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
+
+class CompanyResource(object):
+    def __init__(self, company):
+        self.company = company
+
+    def __acl__(self):
+        return [
+            (Allow, Authenticated, 'view'),
+            (Allow, 'role:editor', ('add', 'edit')),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
+
+class InvestorResource(object):
+    def __init__(self, investor):
+        self.investor = investor
+
+    def __acl__(self):
+        return [
+            (Allow, Authenticated, 'view'),
+            (Allow, 'role:editor', ('add', 'edit')),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
+
+class TenderResource(object):
+    def __init__(self, tender):
+        self.tender = tender
+
+    def __acl__(self):
+        return [
+            (Allow, Authenticated, 'view'),
+            (Allow, 'role:editor', ('add', 'edit')),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
+
+class OfferResource(object):
+    def __init__(self, offer):
+        self.offer = offer
+
+    def __acl__(self):
+        return [
+            (Allow, Authenticated, 'view'),
+            (Allow, 'role:editor', ('add', 'edit')),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
+
+class UserResource(object):
+    def __init__(self, user):
+        self.user = user
+
+    def __acl__(self):
+        return [
+            (Allow, Authenticated, 'view'),
+            (Allow, 'role:editor', ('add', 'edit')),
             (Allow, 'role:admin', ALL_PERMISSIONS),
         ]
 
@@ -159,7 +231,7 @@ def account_factory(request):
     user = request.user
     if not user:
         raise HTTPNotFound
-    return UserResource(user)
+    return AccountResource(user)
 
 
 def branch_factory(request):
@@ -168,7 +240,7 @@ def branch_factory(request):
     branch = query.filter_by(id=branch_id).one_or_none()
     if not branch:
         raise HTTPNotFound
-    return DefaultResource()
+    return BranchResource(branch)
 
 
 def company_factory(request):
@@ -177,7 +249,7 @@ def company_factory(request):
     company = query.filter_by(id=company_id).one_or_none()
     if not company:
         raise HTTPNotFound
-    return DefaultResource()
+    return CompanyResource(company)
 
 
 def investor_factory(request):
@@ -186,7 +258,7 @@ def investor_factory(request):
     investor = query.filter_by(id=investor_id).one_or_none()
     if not investor:
         raise HTTPNotFound
-    return DefaultResource()
+    return InvestorResource(investor)
 
 
 def tender_factory(request):
@@ -195,7 +267,7 @@ def tender_factory(request):
     tender = query.filter_by(id=tender_id).one_or_none()
     if not tender:
         raise HTTPNotFound
-    return DefaultResource()
+    return TenderResource(tender)
 
 
 def offer_factory(request):
@@ -204,7 +276,7 @@ def offer_factory(request):
     offer = query.filter_by(id=offer_id).one_or_none()
     if not offer:
         raise HTTPNotFound
-    return DefaultResource()
+    return OfferResource(offer)
 
 
 def user_factory(request):
@@ -213,4 +285,4 @@ def user_factory(request):
     user = query.filter_by(username=username).one_or_none()
     if not user:
         raise HTTPNotFound
-    return DefaultResource()
+    return UserResource(user)

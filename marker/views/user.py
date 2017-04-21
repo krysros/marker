@@ -80,9 +80,7 @@ class UserView(object):
         permission='view'
     )
     def view(self):
-        username = self.request.matchdict['username']
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
+        user = self.request.context.user
         return {'user': user}
 
     @view_config(
@@ -130,9 +128,7 @@ class UserView(object):
         permission='admin'
     )
     def edit(self):
-        username = self.request.matchdict['username']
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
+        user = self.request.context.user
         form = self.user_form
         rendered_form = None
 
@@ -176,9 +172,7 @@ class UserView(object):
         permission='admin'
     )
     def delete(self):
-        username = self.request.matchdict['username']
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
+        user = self.request.context.user
         self.request.dbsession.delete(user)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('users'))

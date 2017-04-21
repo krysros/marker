@@ -239,9 +239,7 @@ class CompanyView(object):
         permission='view'
     )
     def view(self):
-        company_id = self.request.matchdict['company_id']
-        query = self.request.dbsession.query(Company)
-        company = query.filter_by(id=company_id).one()
+        company = self.request.context.company
         voivodeships = dict(VOIVODESHIPS)
         upvote = company in self.request.user.upvotes
         return dict(
@@ -325,9 +323,7 @@ class CompanyView(object):
         permission='edit'
     )
     def edit(self):
-        company_id = self.request.matchdict['company_id']
-        query = self.request.dbsession.query(Company)
-        company = query.filter_by(id=company_id).one()
+        company = self.request.context.company
         form = self.company_form
         rendered_form = None
 
@@ -400,9 +396,7 @@ class CompanyView(object):
         permission='edit'
     )
     def delete(self):
-        company_id = self.request.matchdict['company_id']
-        query = self.request.dbsession.query(Company)
-        company = query.filter_by(id=company_id).one()
+        company = self.request.context.company
         self.request.dbsession.delete(company)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('home'))
@@ -414,9 +408,7 @@ class CompanyView(object):
         permission='view'
     )
     def upvote(self):
-        company_id = self.request.matchdict['company_id']
-        query = self.request.dbsession.query(Company)
-        company = query.filter_by(id=company_id).one()
+        company = self.request.context.company
 
         if company in self.request.user.upvotes:
             self.request.user.upvotes.remove(company)

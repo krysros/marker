@@ -103,9 +103,7 @@ class OfferView(object):
         permission='view'
     )
     def view(self):
-        offer_id = self.request.matchdict['offer_id']
-        query = self.request.dbsession.query(Offer)
-        offer = query.filter_by(id=offer_id).one()
+        offer = self.request.context.offer
         return {'offer': offer}
 
     @view_config(
@@ -150,9 +148,7 @@ class OfferView(object):
         permission='edit'
     )
     def edit(self):
-        offer_id = self.request.matchdict['offer_id']
-        query = self.request.dbsession.query(Offer)
-        offer = query.filter_by(id=offer_id).one()
+        offer = self.request.context.offer
         form = self.offer_form
         rendered_form = None
 
@@ -193,9 +189,7 @@ class OfferView(object):
         permission='edit'
     )
     def delete(self):
-        offer_id = self.request.matchdict['offer_id']
-        query = self.request.dbsession.query(Offer)
-        offer = query.filter_by(id=offer_id).one()
+        offer = self.request.context.offer
         self.request.dbsession.delete(offer)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('home'))

@@ -73,10 +73,8 @@ class BranchView(object):
     )
     def view_companies(self):
         from .voivodeships import VOIVODESHIPS
-        branch_id = self.request.matchdict['branch_id']
+        branch = self.request.context.branch
         page = self.request.params.get('page', 1)
-        branch = self.request.dbsession.query(Branch).\
-            filter_by(id=branch_id).one()
         query = self.request.params.get('sort', 'name')
         if query in ['name', 'city', 'voivodeship']:
             companies = self.request.dbsession.query(Company).\
@@ -107,10 +105,8 @@ class BranchView(object):
         permission='view'
     )
     def view_offers(self):
-        branch_id = self.request.matchdict['branch_id']
+        branch = self.request.context.branch
         page = self.request.params.get('page', 1)
-        branch = self.request.dbsession.query(Branch).\
-            filter_by(id=branch_id).one()
         paginator = get_paginator(self.request, branch.offers, page=page)
 
         return dict(
@@ -123,9 +119,7 @@ class BranchView(object):
         permission='view'
     )
     def export(self):
-        branch_id = self.request.matchdict['branch_id']
-        branch = self.request.dbsession.query(Branch).\
-            filter_by(id=branch_id).one()
+        branch = self.request.context.branch
         query = self.request.params.get('sort', 'name')
         if query in ['name', 'city', 'voivodeship']:
             companies = self.request.dbsession.query(Company).\
@@ -209,9 +203,7 @@ class BranchView(object):
         permission='edit'
     )
     def edit(self):
-        branch_id = self.request.matchdict['branch_id']
-        query = self.request.dbsession.query(Branch)
-        branch = query.filter_by(id=branch_id).one()
+        branch = self.request.context.branch
         form = self.branch_form
         rendered_form = None
 
@@ -242,9 +234,7 @@ class BranchView(object):
         permission='edit'
     )
     def delete(self):
-        branch_id = self.request.matchdict['branch_id']
-        query = self.request.dbsession.query(Branch)
-        branch = query.filter_by(id=branch_id).one()
+        branch = self.request.context.branch
         self.request.dbsession.delete(branch)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('home'))

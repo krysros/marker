@@ -52,9 +52,7 @@ class InvestorView(object):
         permission='view'
     )
     def view(self):
-        investor_id = self.request.matchdict['investor_id']
-        query = self.request.dbsession.query(Investor)
-        investor = query.filter_by(id=investor_id).one()
+        investor = self.request.context.investor
         return {'investor': investor}
 
     @view_config(
@@ -92,9 +90,7 @@ class InvestorView(object):
         permission='edit'
     )
     def edit(self):
-        investor_id = self.request.matchdict['investor_id']
-        query = self.request.dbsession.query(Investor)
-        investor = query.filter_by(id=investor_id).one()
+        investor = self.request.context.investor
         form = self.investor_form
         rendered_form = None
 
@@ -125,9 +121,7 @@ class InvestorView(object):
         permission='edit'
     )
     def delete(self):
-        investor_id = self.request.matchdict['investor_id']
-        query = self.request.dbsession.query(Investor)
-        investor = query.filter_by(id=investor_id).one()
+        investor = self.request.context.investor
         self.request.dbsession.delete(investor)
         self.request.session.flash('success:Usunięto z bazy danych')
         return HTTPFound(location=self.request.route_url('home'))
