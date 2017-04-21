@@ -58,13 +58,4 @@ class TestMyViewSuccessCondition(BaseTest):
         from .views.home import home_view
         self.config.testing_securitypolicy('nowak')
         info = home_view(dummy_request(self.session))
-        assert info['user'].username == 'nowak'
         assert info['project'] == 'marker'
-
-
-class TestMyViewFailureCondition(BaseTest):
-
-    def test_failing_view(self):
-        from .views.home import home_view
-        info = home_view(dummy_request(self.session))
-        assert info.status_int == 500
