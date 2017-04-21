@@ -28,8 +28,12 @@ class BranchView(object):
         def check_name(node, value):
             query = self.request.dbsession.query(Branch)
             exists = query.filter_by(name=value).one_or_none()
-            if exists:
+            current_id = self.request.matchdict.get('branch_id', None)
+            if current_id:
+                current_id = int(current_id)
+            if exists and current_id != exists.id:
                 raise colander.Invalid(node, 'Ta nazwa branży jest już zajęta')
+
 
         class Schema(CSRFSchema):
             name = colander.SchemaNode(

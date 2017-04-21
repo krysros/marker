@@ -19,7 +19,8 @@ class UserView(object):
         def check_name(node, value):
             query = self.request.dbsession.query(User)
             exists = query.filter_by(username=value).one_or_none()
-            if exists:
+            username = self.request.matchdict.get('username', None)
+            if exists and username != exists.username:
                 raise colander.Invalid(node,
                                        'Ta nazwa użytkownika jest już zajęta')
 
