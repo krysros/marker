@@ -48,13 +48,13 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-          % if logged_in:
+          % if request.user is not None:
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user" aria-hidden="true"></i> ${logged_in} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-user" aria-hidden="true"></i> ${request.user.username} <i class="fa fa-caret-down" aria-hidden="true"></i>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="${request.route_url('account', username=logged_in)}">
+                <li><a href="${request.route_url('account', username=request.user.username)}">
                   <i class="fa fa-edit" aria-hidden="true"></i> Konto</a>
                 </li>
                 <li class="divider"></li>

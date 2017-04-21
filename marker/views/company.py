@@ -13,7 +13,6 @@ from ..models import (
     Company,
     Person,
     Branch,
-    User,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -223,11 +222,8 @@ class CompanyView(object):
 
         paginator = get_paginator(self.request, companies, page=page)
 
-        username = self.request.authenticated_userid
-        user = self.request.dbsession.query(User).\
-            filter_by(username=username).one()
         try:
-            upvotes = user.upvotes
+            upvotes = self.request.user.upvotes
         except AttributeError:
             upvotes = []
 
@@ -235,7 +231,6 @@ class CompanyView(object):
             query=query,
             paginator=paginator,
             upvotes=upvotes,
-            logged_in=self.request.authenticated_userid,
             )
 
     @view_config(
@@ -248,15 +243,11 @@ class CompanyView(object):
         query = self.request.dbsession.query(Company)
         company = query.filter_by(id=company_id).one()
         voivodeships = dict(VOIVODESHIPS)
-        username = self.request.authenticated_userid
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
-        upvote = company in user.upvotes
+        upvote = company in self.request.user.upvotes
         return dict(
             company=company,
             upvote=upvote,
             voivodeships=voivodeships,
-            logged_in=self.request.authenticated_userid,
             )
 
     def _get_branches(self, appstruct):
@@ -312,9 +303,7 @@ class CompanyView(object):
                     branches=self._get_branches(appstruct),
                     people=self._get_people(appstruct),
                     )
-                username = self.request.authenticated_userid
-                company.added_by = self.request.dbsession.query(User).\
-                    filter_by(username=username).first()
+                company.added_by = self.request.user
                 self.request.dbsession.add(company)
                 self.request.session.flash('success:Dodano do bazy danych')
                 return HTTPFound(location=self.request.route_url('companies'))
@@ -326,7 +315,6 @@ class CompanyView(object):
         return dict(
             heading='Dodaj firmę',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -361,9 +349,7 @@ class CompanyView(object):
                 company.krs = appstruct['krs']
                 company.branches = self._get_branches(appstruct)
                 company.people = self._get_people(appstruct)
-                username = self.request.authenticated_userid
-                company.edited_by = self.request.dbsession.query(User).\
-                    filter_by(username=username).first()
+                company.edited_by = self.request.user
                 self.request.session.flash('success:Zmiany zostały zapisane')
                 return HTTPFound(location=self.request.route_url('company_view',
                                                                  company_id=company.id,
@@ -404,7 +390,6 @@ class CompanyView(object):
         return dict(
             heading='Edytuj dane firmy',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -432,15 +417,12 @@ class CompanyView(object):
         company_id = self.request.matchdict['company_id']
         query = self.request.dbsession.query(Company)
         company = query.filter_by(id=company_id).one()
-        username = self.request.authenticated_userid
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
 
-        if company in user.upvotes:
-            user.upvotes.remove(company)
+        if company in self.request.user.upvotes:
+            self.request.user.upvotes.remove(company)
             return {'upvote': False}
         else:
-            user.upvotes.append(company)
+            self.request.user.upvotes.append(company)
             return {'upvote': True}
 
     @view_config(
@@ -462,10 +444,7 @@ class CompanyView(object):
     )
     def company_search(self):
         voivodeships = dict(VOIVODESHIPS)
-        return dict(
-            voivodeships=voivodeships,
-            logged_in=self.request.authenticated_userid,
-        )
+        return {'voivodeships': voivodeships}
 
     @view_config(
         route_name='company_search_results',
@@ -497,11 +476,8 @@ class CompanyView(object):
         paginator = get_paginator(self.request, results, page=page)
         voivodeships = dict(VOIVODESHIPS)
 
-        username = self.request.authenticated_userid
-        user = self.request.dbsession.query(User).\
-            filter_by(username=username).one()
         try:
-            upvotes = user.upvotes
+            upvotes = self.request.user.upvotes
         except AttributeError:
             upvotes = []
 
@@ -509,7 +485,6 @@ class CompanyView(object):
             paginator=paginator,
             voivodeships=voivodeships,
             upvotes=upvotes,
-            logged_in=self.request.authenticated_userid,
         )
 
     @view_config(
@@ -518,7 +493,7 @@ class CompanyView(object):
         permission='view'
     )
     def person_search(self):
-        return {'logged_in': self.request.authenticated_userid}
+        return {}
 
     @view_config(
         route_name='person_search_results',
@@ -538,7 +513,4 @@ class CompanyView(object):
             filter(Person.email.ilike('%' + email + '%')).\
             order_by(Person.fullname)
         paginator = get_paginator(self.request, results, page=page)
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-        )
+        return {'paginator': paginator}

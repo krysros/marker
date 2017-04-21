@@ -44,11 +44,7 @@ class InvestorView(object):
         query = self.request.dbsession.query(Investor)
         investors = query.order_by(Investor.name)
         paginator = get_paginator(self.request, investors, page=page)
-
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'paginator': paginator}
 
     @view_config(
         route_name='investor_view',
@@ -59,10 +55,7 @@ class InvestorView(object):
         investor_id = self.request.matchdict['investor_id']
         query = self.request.dbsession.query(Investor)
         investor = query.filter_by(id=investor_id).one()
-        return dict(
-            investor=investor,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'investor': investor}
 
     @view_config(
         route_name='investor_add',
@@ -91,7 +84,6 @@ class InvestorView(object):
         return dict(
             heading='Dodaj inwestora',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid
             )
 
     @view_config(
@@ -125,7 +117,6 @@ class InvestorView(object):
         return dict(
             heading='Edytuj dane inwestora',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid
             )
 
     @view_config(
@@ -159,7 +150,7 @@ class InvestorView(object):
         permission='view'
     )
     def search(self):
-        return {'logged_in': self.request.authenticated_userid}
+        return {}
 
     @view_config(
         route_name='investor_search_results',
@@ -173,7 +164,4 @@ class InvestorView(object):
             filter(Investor.name.ilike('%' + name + '%')).\
             order_by(Investor.name)
         paginator = get_paginator(self.request, results, page=page)
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-        )
+        return {'paginator': paginator}

@@ -56,7 +56,7 @@ def login(request):
                 query = request.dbsession.query(User)
                 user = query.filter_by(username=login).one_or_none()
                 if user is not None and user.check_password(password):
-                    headers = remember(request, login)
+                    headers = remember(request, user.id)
                     request.session.flash('success:Witaj w aplikacji Marker!')
                     return HTTPFound(location=next_url, headers=headers)
                 else:

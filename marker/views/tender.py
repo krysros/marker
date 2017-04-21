@@ -11,7 +11,6 @@ import colander
 from ..models import (
     Tender,
     Investor,
-    User,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -94,11 +93,7 @@ class TenderView(object):
         else:
             return HTTPNotFound()
         paginator = get_paginator(self.request, tenders, page=page)
-
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'paginator': paginator}
 
     @view_config(
         route_name='tender_view',
@@ -109,10 +104,7 @@ class TenderView(object):
         tender_id = self.request.matchdict['tender_id']
         query = self.request.dbsession.query(Tender)
         tender = query.filter_by(id=tender_id).one()
-        return dict(
-            tender=tender,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'tender': tender}
 
     @view_config(
         route_name='tender_add',
@@ -137,9 +129,7 @@ class TenderView(object):
                     investor=self._get_investor(appstruct['investor']),
                     deadline=appstruct['deadline'],
                     )
-                username = self.request.authenticated_userid
-                tender.added_by = self.request.dbsession.query(User).\
-                    filter_by(username=username).first()
+                tender.added_by = self.request.user
                 self.request.dbsession.add(tender)
                 self.request.session.flash('success:Dodano do bazy danych')
                 return HTTPFound(location=self.request.route_url('tenders'))
@@ -151,7 +141,6 @@ class TenderView(object):
         return dict(
             heading='Dodaj przetarg',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -179,9 +168,7 @@ class TenderView(object):
                 tender.city = appstruct['city']
                 tender.investor = self._get_investor(appstruct['investor'])
                 tender.deadline = appstruct['deadline']
-                username = self.request.authenticated_userid
-                tender.edited_by = self.request.dbsession.query(User).\
-                    filter_by(username=username).first()
+                tender.edited_by = self.request.user
                 self.request.session.flash('success:Dane przetargu zostały zmienione')
                 return HTTPFound(location=self.request.route_url('tender_edit',
                                                                  tender_id=tender.id,
@@ -200,7 +187,6 @@ class TenderView(object):
         return dict(
             heading='Edytuj dane przetargu',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -236,7 +222,7 @@ class TenderView(object):
         permission='view'
     )
     def search(self):
-        return {'logged_in': self.request.authenticated_userid}
+        return {}
 
     @view_config(
         route_name='tender_search_results',
@@ -250,7 +236,4 @@ class TenderView(object):
             filter(Tender.name.ilike('%' + name + '%')).\
             order_by(Tender.name)
         paginator = get_paginator(self.request, results, page=page)
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-        )
+        return {'paginator': paginator}

@@ -77,5 +77,4 @@ def stats_view(request):
     return dict(
         rel=rel,
         paginator=paginator,
-        logged_in=request.authenticated_userid,
         )

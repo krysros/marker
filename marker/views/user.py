@@ -72,10 +72,7 @@ class UserView(object):
         users = self.request.dbsession.query(User)
         paginator = get_paginator(self.request, users, page=page)
 
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'paginator': paginator}
 
     @view_config(
         route_name='user_view',
@@ -86,10 +83,7 @@ class UserView(object):
         username = self.request.matchdict['username']
         query = self.request.dbsession.query(User)
         user = query.filter_by(username=username).one()
-        return dict(
-            user=user,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'user': user}
 
     @view_config(
         route_name='user_add',
@@ -126,7 +120,6 @@ class UserView(object):
         return dict(
             heading='Dodaj użytkownika',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -173,7 +166,6 @@ class UserView(object):
         return dict(
             heading='Edytuj dane użytkownika',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -197,7 +189,7 @@ class UserView(object):
         permission='view'
     )
     def search(self):
-        return {'logged_in': self.request.authenticated_userid}
+        return {}
 
     @view_config(
         route_name='user_search_results',
@@ -211,7 +203,4 @@ class UserView(object):
             filter(User.username.ilike('%' + username + '%')).\
             order_by(User.username)
         paginator = get_paginator(self.request, results, page=page)
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-        )
+        return {'paginator': paginator}

@@ -22,10 +22,8 @@ def includeme(config):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
 
-    config.add_route('account', '/user/{username}/account',
-                     factory=account_factory)
-    config.add_route('password', '/user/{username}/password',
-                     factory=account_factory)
+    config.add_route('account', '/account', factory=account_factory)
+    config.add_route('password', '/password', factory=account_factory)
 
     config.add_route('stats', '/stats', factory=default_factory)
 
@@ -142,13 +140,13 @@ class DefaultResource(object):
 
 
 class UserResource(object):
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, user):
+        self.user = user
 
     def __acl__(self):
         return [
-            (Allow, self.username, 'view'),
-            (Allow, self.username, 'edit'),
+            (Allow, str(self.user.id), 'view'),
+            (Allow, str(self.user.id), 'edit'),
             (Allow, 'role:admin', ALL_PERMISSIONS),
         ]
 
@@ -158,12 +156,10 @@ def default_factory(request):
 
 
 def account_factory(request):
-    username = request.matchdict['username']
-    query = request.dbsession.query(User)
-    user = query.filter_by(username=username).one_or_none()
+    user = request.user
     if not user:
         raise HTTPNotFound
-    return UserResource(username)
+    return UserResource(user)
 
 
 def branch_factory(request):

@@ -9,7 +9,6 @@ from ..models import (
     Branch,
     Tender,
     Offer,
-    User,
     )
 
 from deform.schema import CSRFSchema
@@ -96,11 +95,7 @@ class OfferView(object):
         page = self.request.params.get('page', 1)
         offers = self.request.dbsession.query(Offer)
         paginator = get_paginator(self.request, offers, page=page)
-
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'paginator': paginator}
 
     @view_config(
         route_name='offer_view',
@@ -111,10 +106,7 @@ class OfferView(object):
         offer_id = self.request.matchdict['offer_id']
         query = self.request.dbsession.query(Offer)
         offer = query.filter_by(id=offer_id).one()
-        return dict(
-            offer=offer,
-            logged_in=self.request.authenticated_userid,
-            )
+        return {'offer': offer}
 
     @view_config(
         route_name='offer_add',
@@ -148,7 +140,6 @@ class OfferView(object):
         return dict(
             heading='Dodaj ofertę',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )
@@ -175,9 +166,7 @@ class OfferView(object):
                 offer.company = self._get_company(appstruct['company'])
                 offer.branch = self._get_branch(appstruct['branch'])
                 offer.tender = self._get_tender(appstruct['tender'])
-                username = self.request.authenticated_userid
-                offer.edited_by = self.request.dbsession.query(User).\
-                    filter_by(username=username).first()
+                offer.edited_by = self.request.user
                 self.request.session.flash('success:Dane przetargu zostały zmienione')
                 return HTTPFound(location=self.request.route_url('offer_view',
                                                                  offer_id=offer.id))
@@ -194,7 +183,6 @@ class OfferView(object):
         return dict(
             heading='Edytuj dane oferty',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid,
             css_links=reqts['css'],
             js_links=reqts['js'],
             )

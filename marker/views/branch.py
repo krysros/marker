@@ -13,7 +13,6 @@ import xlsxwriter
 from ..models import (
     Branch,
     Company,
-    User,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -65,7 +64,6 @@ class BranchView(object):
         return dict(
             selected_letter=letter,
             paginator=paginator,
-            logged_in=self.request.authenticated_userid,
             )
 
     @view_config(
@@ -90,11 +88,8 @@ class BranchView(object):
         voivodeships = dict(VOIVODESHIPS)
         paginator = get_paginator(self.request, companies, page=page)
 
-        username = self.request.authenticated_userid
-        user = self.request.dbsession.query(User).\
-            filter_by(username=username).one()
         try:
-            upvotes = user.upvotes
+            upvotes = self.request.user.upvotes
         except AttributeError:
             upvotes = []
 
@@ -104,7 +99,6 @@ class BranchView(object):
             paginator=paginator,
             upvotes=upvotes,
             voivodeships=voivodeships,
-            logged_in=self.request.authenticated_userid,
             )
 
     @view_config(
@@ -122,7 +116,6 @@ class BranchView(object):
         return dict(
             branch=branch,
             paginator=paginator,
-            logged_in=self.request.authenticated_userid,
             )
 
     @view_config(
@@ -208,7 +201,6 @@ class BranchView(object):
         return dict(
             heading='Dodaj branżę',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid
             )
 
     @view_config(
@@ -242,7 +234,6 @@ class BranchView(object):
         return dict(
             heading='Edytuj dane branży',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid
             )
 
     @view_config(
@@ -276,7 +267,7 @@ class BranchView(object):
         permission='view'
     )
     def search(self):
-        return {'logged_in': self.request.authenticated_userid}
+        return {}
 
     @view_config(
         route_name='branch_search_results',
@@ -290,7 +281,4 @@ class BranchView(object):
             filter(Branch.name.ilike('%' + name + '%')).\
             order_by(Branch.name)
         paginator = get_paginator(self.request, results, page=page)
-        return dict(
-            paginator=paginator,
-            logged_in=self.request.authenticated_userid,
-        )
+        return {'paginator': paginator}

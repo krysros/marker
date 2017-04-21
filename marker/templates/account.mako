@@ -2,10 +2,10 @@
 
 <ul class="nav nav-tabs" role="tablist">
   <li${' class="active"' if heading == 'Dane użytkownika' else '' | n}>
-    <a href="${request.route_url('account', username=user.username)}">Konto</a>
+    <a href="${request.route_url('account', username=request.user.username)}">Konto</a>
   </li>
   <li${' class="active"' if heading == 'Zmiana hasła' else '' | n}>
-    <a href="${request.route_url('password', username=user.username)}">Hasło</a>
+    <a href="${request.route_url('password', username=request.user.username)}">Hasło</a>
   </li>
 </ul>
 

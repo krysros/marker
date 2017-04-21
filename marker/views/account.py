@@ -5,7 +5,6 @@ import colander
 import deform
 
 from deform.schema import CSRFSchema
-from ..models import User
 
 
 class Account(CSRFSchema):
@@ -46,9 +45,7 @@ class AccountView(object):
         permission='edit'
     )
     def account_edit(self):
-        username = self.request.matchdict['username']
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
+        user = self.request.user
         form = self.account_form
 
         if self.request.method == 'POST':
@@ -62,17 +59,14 @@ class AccountView(object):
                     user.fullname = appstruct['fullname']
                     user.email = appstruct['email']
                     self.request.session.flash('success:Zmiany zostały zapisane')
-                    return HTTPFound(location=self.request.route_url('account',
-                                                                     username=username))
+                    return HTTPFound(location=self.request.route_url('account'))
         else:
             appstruct = {'fullname': user.fullname, 'email': user.email}
             rendered_form = form.render(appstruct=appstruct)
 
         return dict(
-            user=user,
             heading='Dane użytkownika',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid
             )
 
     @property
@@ -87,9 +81,7 @@ class AccountView(object):
         permission='edit'
     )
     def password_edit(self):
-        username = self.request.matchdict['username']
-        query = self.request.dbsession.query(User)
-        user = query.filter_by(username=username).one()
+        user = self.request.user
         form = self.password_form
 
         if self.request.method == 'POST':
@@ -102,14 +94,11 @@ class AccountView(object):
                 else:
                     user.password = appstruct['password']
                     self.request.session.flash('success:Zmiany zostały zapisane')
-                    return HTTPFound(location=self.request.route_url('password',
-                                                                     username=username))
+                    return HTTPFound(location=self.request.route_url('password'))
         else:
             rendered_form = form.render()
 
         return dict(
-            user=user,
             heading='Zmiana hasła',
             rendered_form=rendered_form,
-            logged_in=self.request.authenticated_userid
             )
