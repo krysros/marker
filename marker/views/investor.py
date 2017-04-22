@@ -25,7 +25,6 @@ class InvestorView(object):
             if exists and current_id != exists.id:
                 raise colander.Invalid(node, 'Ta nazwa inwestora jest już zajęta')
 
-
         class Schema(CSRFSchema):
             name = colander.SchemaNode(
                 colander.String(),

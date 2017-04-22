@@ -9,7 +9,7 @@ class TestMyAuthenticationPolicy:
 
         from ..security import MyAuthenticationPolicy
         policy = MyAuthenticationPolicy(None)
-        assert policy.authenticated_userid(request) == None
+        assert policy.authenticated_userid(request) is None
 
     def test_authenticated_user(self):
         from ..models import User
