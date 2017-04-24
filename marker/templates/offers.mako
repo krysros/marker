@@ -7,9 +7,9 @@
         <thead>
           <tr>
             <th class="col-sm-4">Firma</th>
+            <th class="col-sm-4">Przetarg</th>
             <th class="col-sm-3">Branża</th>
-            <th class="col-sm-3">Przetarg</th>
-            <th class="col-sm-2">Szczegóły</th>
+            <th class="col-sm-1">Szczegóły</th>
           </tr>
         </thead>
         <tbody>
@@ -23,15 +23,15 @@
               % endif
             </td>
             <td>
-              % if offer.branch:
-                <a href="${request.route_url('branch_offers', branch_id=offer.branch.id, slug=offer.branch.slug)}">${offer.branch.name}</a>
+              % if offer.tender:
+                <a href="${request.route_url('tender_view', tender_id=offer.tender.id, slug=offer.tender.slug)}">${offer.tender.name}
               % else:
                 ---
               % endif
             </td>
             <td>
-              % if offer.tender:
-                <a href="${request.route_url('tender_view', tender_id=offer.tender.id, slug=offer.tender.slug)}">${offer.tender.name}
+              % if offer.branch:
+                <a href="${request.route_url('branch_offers', branch_id=offer.branch.id, slug=offer.branch.slug)}">${offer.branch.name}</a>
               % else:
                 ---
               % endif
