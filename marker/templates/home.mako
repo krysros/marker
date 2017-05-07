@@ -3,12 +3,11 @@
 <div class="jumbotron">
   <h1>Marker <small>Katalog Generalnego Wykonawcy</small></h1>
   <p>
-    Stwórz bazę danych dostosowaną do Twoich potrzeb.
-    Dodaj informacje o firmach, przetargach, inwestorach i ofertach.
+    Informacje o firmach, przetargach, inwestorach i ofertach.
     Sprawdź, które regiony kraju są najbardziej przedsiębiorcze,
-    w jakich branżach jest największa konkurencja,
-    którzy inwestorzy zorganizowali najwięcej przetargów,
-    które firmy złożyły najwięcej ofert
+    w jakich branżach jest największa konkurencja.
+    Dowiedz się którzy inwestorzy zorganizowali najwięcej przetargów.
+    Zobacz które firmy złożyły najwięcej ofert
     i które są najczęściej rekomendowane.
   </p>
 </div>
