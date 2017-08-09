@@ -20,7 +20,7 @@ requires = [
     'waitress',
     'psycopg2',
     'passlib',
-    'bcrypt',    
+    'bcrypt',
     'deform',
     'paginate',
     'python-slugify',
@@ -31,6 +31,7 @@ tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest',  # includes virtualenv
     'pytest-cov',
+    'pylint',  # default linter used by Python ext for Visual Studio Code
     ]
 
 setup(name='marker',
@@ -60,4 +61,4 @@ setup(name='marker',
       [console_scripts]
       initialize_marker_db = marker.scripts.initializedb:main
       """,
-      )
+     )
