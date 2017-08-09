@@ -14,7 +14,11 @@
     % for person in paginator.items:
       <tr>
         <td>${person.fullname}</td>
+        % if person.companies:
         <td><a href="${request.route_url('company_view', company_id=person.companies.id, slug=person.companies.slug)}">${person.companies.name}</a></td>
+        % else:
+        <td>---</td>
+        % endif
         <td>${person.phone}</td>
         <td><a href="mailto:${person.email}">${person.email}</a></td>
       </tr>
