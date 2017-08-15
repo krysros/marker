@@ -51,8 +51,9 @@ class Company(Base):
     branches = relationship('Branch', secondary=companies_branches,
                             backref='companies')
     people = relationship('Person', secondary=companies_persons,
-                          backref=backref('companies', uselist=False),
-                          lazy='subquery')
+                          cascade='all, delete-orphan',
+                          single_parent=True, lazy='subquery',
+                          backref=backref('companies', uselist=False))
     added = Column(DateTime, default=datetime.datetime.now)
     edited = Column(DateTime, default=datetime.datetime.now,
                     onupdate=datetime.datetime.now)
