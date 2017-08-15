@@ -151,76 +151,34 @@ class AccountResource(object):
         ]
 
 
-class BranchResource(object):
+class BranchResource(DefaultResource):
     def __init__(self, branch):
         self.branch = branch
 
-    def __acl__(self):
-        return [
-            (Allow, Authenticated, 'view'),
-            (Allow, 'role:editor', ('add', 'edit')),
-            (Allow, 'role:admin', ALL_PERMISSIONS),
-        ]
 
-
-class CompanyResource(object):
+class CompanyResource(DefaultResource):
     def __init__(self, company):
         self.company = company
 
-    def __acl__(self):
-        return [
-            (Allow, Authenticated, 'view'),
-            (Allow, 'role:editor', ('add', 'edit')),
-            (Allow, 'role:admin', ALL_PERMISSIONS),
-        ]
 
-
-class InvestorResource(object):
+class InvestorResource(DefaultResource):
     def __init__(self, investor):
         self.investor = investor
 
-    def __acl__(self):
-        return [
-            (Allow, Authenticated, 'view'),
-            (Allow, 'role:editor', ('add', 'edit')),
-            (Allow, 'role:admin', ALL_PERMISSIONS),
-        ]
 
-
-class TenderResource(object):
+class TenderResource(DefaultResource):
     def __init__(self, tender):
         self.tender = tender
 
-    def __acl__(self):
-        return [
-            (Allow, Authenticated, 'view'),
-            (Allow, 'role:editor', ('add', 'edit')),
-            (Allow, 'role:admin', ALL_PERMISSIONS),
-        ]
 
-
-class OfferResource(object):
+class OfferResource(DefaultResource):
     def __init__(self, offer):
         self.offer = offer
 
-    def __acl__(self):
-        return [
-            (Allow, Authenticated, 'view'),
-            (Allow, 'role:editor', ('add', 'edit')),
-            (Allow, 'role:admin', ALL_PERMISSIONS),
-        ]
 
-
-class UserResource(object):
+class UserResource(DefaultResource):
     def __init__(self, user):
         self.user = user
-
-    def __acl__(self):
-        return [
-            (Allow, Authenticated, 'view'),
-            (Allow, 'role:editor', ('add', 'edit')),
-            (Allow, 'role:admin', ALL_PERMISSIONS),
-        ]
 
 
 def default_factory(request):
