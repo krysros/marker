@@ -8,15 +8,19 @@ from sqlalchemy import (
     Integer,
     Unicode,
     DateTime,
+    select,
+    func,
     )
 
 from sqlalchemy.orm import (
     relationship,
     backref,
+    object_session,
     )
 
 from slugify import slugify
 from .meta import Base
+from .user import upvotes
 
 
 companies_branches = Table(
@@ -80,3 +84,11 @@ class Company(Base):
     @property
     def slug(self):
         return slugify(self.name)
+
+    @property
+    def upvote_count(self):
+        return object_session(self).\
+            scalar(
+                select([func.count(upvotes.c.company_id)]).\
+                    where(upvotes.c.company_id==self.id)
+            )
