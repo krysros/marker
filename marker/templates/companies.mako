@@ -22,8 +22,9 @@
         <thead>
           <tr>
             <th class="col-sm-6">Nazwa firmy</th>
-            <th class="col-sm-3">Miasto</th>
-            <th class="col-sm-3">Data</th>
+            <th class="col-sm-2">Miasto</th>
+            <th class="col-sm-2">Data</th>
+            <th class="col-sm-2">Rekomendacje</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,7 @@
             % elif query == 'edited':
               <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % endif
+            <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
           </tr>
         % endfor
         </tbody>

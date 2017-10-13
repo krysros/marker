@@ -6,6 +6,7 @@ import zope.sqlalchemy
 # import or define all models here to ensure they are attached to the
 # Base.metadata prior to any initialization routines
 from .user import User  # noqa
+from .user import upvotes  # noqa
 from .branch import Branch  # noqa
 from .company import Company  # noqa
 from .investor import Investor  # noqa

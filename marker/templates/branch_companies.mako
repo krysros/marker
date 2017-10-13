@@ -44,8 +44,9 @@
           <thead>
             <tr>
               <th class="col-sm-6">Nazwa firmy</th>
-              <th class="col-sm-3">Miasto</th>
-              <th class="col-sm-3">Województwo</th>
+              <th class="col-sm-2">Miasto</th>
+              <th class="col-sm-2">Województwo</th>
+              <th class="col-sm-2">Rekomendacje</th>
             </tr>
           </thead>
           <tbody>
@@ -59,6 +60,7 @@
               </td>
               <td>${company.city}</td>
               <td>${voivodeships.get(company.voivodeship)}</td>
+              <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
             </tr>
           % endfor
           </tbody>
