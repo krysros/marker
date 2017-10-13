@@ -90,5 +90,5 @@ class Company(Base):
         return object_session(self).\
             scalar(
                 select([func.count(upvotes.c.company_id)]).\
-                    where(upvotes.c.company_id==self.id)
+                    where(upvotes.c.company_id == self.id)
             )

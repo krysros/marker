@@ -69,6 +69,9 @@ def includeme(config):
     config.add_route('company_upvote',
                      '/company/{company_id:\d+}/{slug}/upvote',
                      factory=company_factory)
+    config.add_route('company_upvotes',
+                     '/company/{company_id:\d+}/{slug}/upvotes',
+                     factory=company_factory)
 
     config.add_route('person_search', '/person/search',
                      factory=default_factory)

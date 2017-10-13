@@ -13,6 +13,8 @@ from ..models import (
     Company,
     Person,
     Branch,
+    User,
+    upvotes,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -416,6 +418,20 @@ class CompanyView(object):
         else:
             self.request.user.upvotes.append(company)
             return {'upvote': True}
+
+    @view_config(
+        route_name='company_upvotes',
+        renderer='users.mako',
+        permission='view'
+    )
+    def upvotes(self):
+        company = self.request.context.company
+        results = self.request.dbsession.query(User).\
+            join(upvotes).filter(company.id == upvotes.c.company_id)
+        page = self.request.params.get('page', 1)
+        paginator = get_paginator(self.request, results, page=page)
+
+        return {'paginator': paginator}
 
     @view_config(
         route_name='company_select',

@@ -42,7 +42,7 @@
             % elif query == 'edited':
               <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % endif
-            <td>${company.upvote_count}</td>
+            <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
           </tr>
         % endfor
         </tbody>
