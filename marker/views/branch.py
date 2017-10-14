@@ -137,7 +137,7 @@ class BranchView(object):
         worksheet = workbook.add_worksheet()
 
         # Write rows.
-        header = ['Firma', 'Miasto', 'Województwo',
+        header = ['Firma', 'Miasto', 'Województwo', 'Rekomendacje',
                   'Imię i nazwisko', 'Stanowisko', 'Telefon', 'Email']
 
         for j, col in enumerate(header):
@@ -146,12 +146,14 @@ class BranchView(object):
         i = 1
         for company in companies:
             cols = [company.name, company.city, company.voivodeship,
-                    '', 'BIURO', company.phone, company.email]
+                    company.upvote_count, '', 'BIURO',
+                    company.phone, company.email]
             for j, col in enumerate(cols):
                 worksheet.write(i, j, col)
             i += 1
             for person in company.people:
-                cols = [company.name, company.city, company.voivodeship,
+                cols = [company.name, company.city,
+                        company.voivodeship, company.upvote_count,
                         person.fullname, person.position,
                         person.phone, person.email]
                 for j, col in enumerate(cols):
