@@ -8,3 +8,9 @@
 
 - Add preparers for NIP, REGON and KRS
 - Extend searching
+
+0.2
+---
+
+- Show number of upvotes
+- Show who recommended the company
