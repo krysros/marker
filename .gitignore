@@ -90,6 +90,3 @@ ENV/
 .ropeproject
 
 marker.sqlite
-
-# Visual Studio Code project settings
-.vscode
