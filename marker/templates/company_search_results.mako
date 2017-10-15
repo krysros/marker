@@ -15,7 +15,7 @@
         % for company in paginator.items:
           <tr>
             <td>
-            % if company in upvotes:
+            % if company in user_upvotes:
               <i class="fa fa-thumbs-up" aria-hidden="true"></i>
             % endif
               <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>

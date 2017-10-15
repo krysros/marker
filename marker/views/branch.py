@@ -90,15 +90,15 @@ class BranchView(object):
         paginator = get_paginator(self.request, companies, page=page)
 
         try:
-            upvotes = self.request.user.upvotes
+            user_upvotes = self.request.user.upvotes
         except AttributeError:
-            upvotes = []
+            user_upvotes = []
 
         return dict(
             branch=branch,
             query=query,
             paginator=paginator,
-            upvotes=upvotes,
+            user_upvotes=user_upvotes,
             voivodeships=voivodeships,
             )
 

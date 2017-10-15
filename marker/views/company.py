@@ -7,6 +7,7 @@ from pyramid.httpexceptions import (
     )
 
 import deform
+from deform.schema import CSRFSchema
 import colander
 
 from ..models import (
@@ -16,7 +17,7 @@ from ..models import (
     User,
     upvotes,
     )
-from deform.schema import CSRFSchema
+
 from ..paginator import get_paginator
 from .voivodeships import VOIVODESHIPS
 
@@ -114,7 +115,7 @@ class CompanyView(object):
                 validator=colander.Length(min=3, max=50),
                 )
 
-        class Person(colander.Schema):
+        class Persons(colander.Schema):
             fullname = colander.SchemaNode(
                 colander.String(),
                 title='Imię i nazwisko',
@@ -137,7 +138,7 @@ class CompanyView(object):
                 )
 
         class People(colander.SequenceSchema):
-            person = Person(title="Nowy kontakt")
+            person = Persons(title="Nowy kontakt")
 
         class Schema(CSRFSchema):
             name = colander.SchemaNode(
@@ -225,14 +226,14 @@ class CompanyView(object):
         paginator = get_paginator(self.request, companies, page=page)
 
         try:
-            upvotes = self.request.user.upvotes
+            user_upvotes = self.request.user.upvotes
         except AttributeError:
-            upvotes = []
+            user_upvotes = []
 
         return dict(
             query=query,
             paginator=paginator,
-            upvotes=upvotes,
+            user_upvotes=user_upvotes,
             )
 
     @view_config(
@@ -485,14 +486,14 @@ class CompanyView(object):
         voivodeships = dict(VOIVODESHIPS)
 
         try:
-            upvotes = self.request.user.upvotes
+            user_upvotes = self.request.user.upvotes
         except AttributeError:
-            upvotes = []
+            user_upvotes = []
 
         return dict(
             paginator=paginator,
             voivodeships=voivodeships,
-            upvotes=upvotes,
+            user_upvotes=user_upvotes,
         )
 
     @view_config(
