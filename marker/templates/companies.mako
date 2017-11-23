@@ -9,6 +9,7 @@
       <ul class="dropdown-menu" role="menu">
         <li><a href="${request.route_url('companies', _query={'sort': 'added'})}">wg daty dodania</a></li>
         <li><a href="${request.route_url('companies', _query={'sort': 'edited'})}">wg daty edycji</a></li>
+        <li><a href="${request.route_url('companies', _query={'sort': 'upvotes'})}">wg rekomendacji</a></li>
         <li><a href="${request.route_url('companies', _query={'sort': 'alpha'})}">alfabetycznie</a></li>
       </ul>
     </div>
@@ -37,10 +38,10 @@
               <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>
             </td>
             <td>${company.city}</td>
-            % if query == 'added' or query == 'alpha':
-              <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
-            % elif query == 'edited':
+            % if query == 'edited':
               <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
+            % else:
+              <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % endif
             <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
           </tr>

@@ -6,6 +6,8 @@ from pyramid.httpexceptions import (
     HTTPNotFound,
     )
 
+from sqlalchemy import func
+
 import deform
 from deform.schema import CSRFSchema
 import colander
@@ -220,6 +222,12 @@ class CompanyView(object):
         elif query == 'alpha':
             companies = self.request.dbsession.query(Company).\
                 order_by(Company.name, Company.id)
+        elif query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                join(upvotes).group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
         else:
             return HTTPNotFound()
 
