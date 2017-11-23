@@ -1,3 +1,4 @@
 {
-    "python.linting.pylintPath": "${workspaceRoot}/env/Scripts/pylint"
+    "python.linting.pylintPath": "${workspaceRoot}/env/Scripts/pylint",
+    "python.pythonPath": "${workspaceRoot}\\env\\Scripts\\python.exe"
 }
