@@ -1,3 +1,4 @@
+import io
 from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.httpexceptions import (
@@ -5,7 +6,8 @@ from pyramid.httpexceptions import (
     HTTPNotFound,
     )
 
-import io
+from sqlalchemy import func
+
 import deform
 import colander
 import xlsxwriter
@@ -13,6 +15,7 @@ import xlsxwriter
 from ..models import (
     Branch,
     Company,
+    upvotes,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -83,6 +86,13 @@ class BranchView(object):
             companies = self.request.dbsession.query(Company).\
                 filter(Company.branches.any(name=branch.name)).\
                 order_by(query, Company.id)
+        elif query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                filter(Company.branches.any(name=branch.name)).\
+                join(upvotes).group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
         else:
             return HTTPNotFound()
 
@@ -128,6 +138,13 @@ class BranchView(object):
             companies = self.request.dbsession.query(Company).\
                 filter(Company.branches.any(name=branch.name)).\
                 order_by(query, Company.id)
+        elif query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                filter(Company.branches.any(name=branch.name)).\
+                join(upvotes).group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
         else:
             return HTTPNotFound()
 

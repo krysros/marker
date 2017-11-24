@@ -9,7 +9,6 @@
       <ul class="dropdown-menu" role="menu">
         <li><a href="${request.route_url('companies', _query={'sort': 'added'})}">wg daty dodania</a></li>
         <li><a href="${request.route_url('companies', _query={'sort': 'edited'})}">wg daty edycji</a></li>
-        <li><a href="${request.route_url('companies', _query={'sort': 'upvotes'})}">wg rekomendacji</a></li>
         <li><a href="${request.route_url('companies', _query={'sort': 'alpha'})}">alfabetycznie</a></li>
       </ul>
     </div>
