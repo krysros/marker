@@ -44,13 +44,13 @@
     <p>
       Utworzono: ${investor.added.strftime('%Y-%m-%d %H:%M:%S')}
       % if investor.added_by:
-        przez <a href="${request.route_url('user_view', username=tender.added_by.username, what='info')}">${investor.added_by.username}</a>
+        przez <a href="${request.route_url('user_view', username=investor.added_by.username, what='info')}">${investor.added_by.username}</a>
       % endif
       <br>
       % if investor.edited:
         Zmodyfikowano: ${investor.edited.strftime('%Y-%m-%d %H:%M:%S')}
         % if investor.edited_by:
-          przez <a href="${request.route_url('user_view', username=tender.edited_by.username, what='info')}">${investor.edited_by.username}</a>
+          przez <a href="${request.route_url('user_view', username=investor.edited_by.username, what='info')}">${investor.edited_by.username}</a>
         % endif
       % endif
     </p>
