@@ -82,11 +82,11 @@ class BranchView(object):
         branch = self.request.context.branch
         page = self.request.params.get('page', 1)
         query = self.request.params.get('sort', 'name')
-        if query in ['name', 'city', 'voivodeship']:
-            companies = self.request.dbsession.query(Company).\
-                filter(Company.branches.any(name=branch.name)).\
-                order_by(query, Company.id)
-        elif query == 'upvotes':
+
+        if query not in ['name', 'city', 'voivodeship', 'upvotes']:
+            return HTTPNotFound()
+
+        if query == 'upvotes':
             companies = self.request.dbsession.query(Company).\
                 filter(Company.branches.any(name=branch.name)).\
                 join(upvotes).group_by(Company).order_by(
@@ -94,7 +94,9 @@ class BranchView(object):
                     Company.id
                 )
         else:
-            return HTTPNotFound()
+            companies = self.request.dbsession.query(Company).\
+                filter(Company.branches.any(name=branch.name)).\
+                order_by(query, Company.id)
 
         voivodeships = dict(VOIVODESHIPS)
         paginator = get_paginator(self.request, companies, page=page)
@@ -134,11 +136,11 @@ class BranchView(object):
     def export(self):
         branch = self.request.context.branch
         query = self.request.params.get('sort', 'name')
-        if query in ['name', 'city', 'voivodeship']:
-            companies = self.request.dbsession.query(Company).\
-                filter(Company.branches.any(name=branch.name)).\
-                order_by(query, Company.id)
-        elif query == 'upvotes':
+
+        if query not in ['name', 'city', 'voivodeship', 'upvotes']:
+            return HTTPNotFound()
+
+        if query == 'upvotes':
             companies = self.request.dbsession.query(Company).\
                 filter(Company.branches.any(name=branch.name)).\
                 join(upvotes).group_by(Company).order_by(
@@ -146,7 +148,9 @@ class BranchView(object):
                     Company.id
                 )
         else:
-            return HTTPNotFound()
+            companies = self.request.dbsession.query(Company).\
+                filter(Company.branches.any(name=branch.name)).\
+                order_by(query, Company.id)
 
         # Create an in-memory output file for the new workbook.
         output = io.BytesIO()
