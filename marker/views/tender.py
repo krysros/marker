@@ -228,9 +228,11 @@ class TenderView(object):
     )
     def search_results(self):
         name = self.request.params.get('name')
+        city = self.request.params.get('city')
         page = self.request.params.get('page', 1)
         results = self.request.dbsession.query(Tender).\
             filter(Tender.name.ilike('%' + name + '%')).\
+            filter(Tender.city.ilike('%' + city + '%')).\
             order_by(Tender.name)
         paginator = get_paginator(self.request, results, page=page)
         return {'paginator': paginator}
