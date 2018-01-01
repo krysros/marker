@@ -21,7 +21,7 @@ class BaseTest:
     def setup_method(self):
         from ..models import get_tm_session
         self.config = testing.setUp(settings={
-            'sqlalchemy.url': 'sqlite:///:memory:'
+            'sqlalchemy.url': 'postgresql+psycopg2://postgres:passwd@localhost:5432/test_marker?client_encoding=utf8'
         })
         self.config.include('..models')
         self.config.include('..routes')
