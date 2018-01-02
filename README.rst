@@ -63,7 +63,7 @@ Czym różni się Marker od Panoramy Firm, Kompasu Inwestycji itp.?
 * Konkurencja nie ma dostępu do zasobów bazy danych
 * Jakość danych zależy od użytkowników aplikacji i może być kontrolowana
 * Dostęp do danych mają wyłącznie zalogowani użytkownicy zgodnie z uprawnieniami nadanymi przez administratora
-* Oprócz danych kontaktowych do firm aplikacja umożliwa również przypisanie im kontaktów do konkretnych osób (pracowników)
+* Oprócz danych kontaktowych do firm aplikacja umożliwia również przypisanie im kontaktów do konkretnych osób (pracowników)
 
 Licencja
 --------
