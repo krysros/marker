@@ -4,6 +4,7 @@
   <h1>Marker <small>Katalog Generalnego Wykonawcy</small></h1>
   <p>
     Informacje o firmach, przetargach, inwestorach i ofertach.
+    Znajdź firmy o określonym profilu działalności.
     Sprawdź, które regiony kraju są najbardziej przedsiębiorcze,
     w jakich branżach jest największa konkurencja.
     Dowiedz się którzy inwestorzy zorganizowali najwięcej przetargów.
