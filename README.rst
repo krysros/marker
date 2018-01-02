@@ -38,7 +38,7 @@ np. najczęściej polecane firmy z wybranej branży posortowane wg liczby rekome
 
 W ten sposób realizuje się trzy podstawowe cele aplikacji:
 
-- Maksymalizację wydajności i skuteczności poprzez dostarczenie odpowiedniej ilości danych oraz skrócenie czasu dostępu do nich
+- Maksymalizację wydajności i skuteczności poprzez dostarczenie odpowiedniej ilości danych oraz skrócenie czasu dostępu
 - Zwiększenie prawdopodobieństwa dotarcia do informacji gwarantujących osiągnięcie sukcesu
 - Zmniejszenie progu wejścia dla nowych pracowników
 
@@ -48,7 +48,7 @@ Dlaczego nie Excel?
 Relacje z inwestorami i kontrahentami są istotne.
 Do ich przedstawienia najlepszym rozwiązaniem jest relacyjna baza danych.
 Excel tego nie ułatwia. Swoboda umieszczania danych w skoroszycie oraz ich formatowania
-w dowolny sposób, często skutkuje tym, że w krótkim czasie zasoby stają się nieczytelne
+w dowolny sposób często skutkuje tym, że w krótkim czasie zasoby stają się nieczytelne
 i trudno wydobyć z nich interesujące informacje.
 Szczególnie jeśli arkusze uzupełniane są przez różne osoby.
 
