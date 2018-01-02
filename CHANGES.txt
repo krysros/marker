@@ -14,3 +14,11 @@
 
 - Show number of upvotes
 - Show who recommended the company
+
+0.3
+---
+
+- Simplify sorting
+- Search tender by city
+- Test on PostgreSQL
+- Update README
