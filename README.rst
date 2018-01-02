@@ -1,47 +1,71 @@
-marker
+Marker
 ======
 
-Getting Started
----------------
+Czym jest Marker?
+-----------------
 
-- Change directory into your newly created project.
+Marker to aplikacja bazodanowa dla Generalnych Wykonawców
+przeznaczona do przechowywania i przetwarzania informacji
+o kontrahentach, przetargach, inwestorach i ofertach.
+Szczególnie przydatna w procesie ofertowania oraz analizy rynku.
 
-.. code-block:: bash
+Znajdź firmy o określonym profilu działalności.
+Sprawdź, które regiony kraju są najbardziej przedsiębiorcze,
+w jakich branżach jest największa konkurencja.
+Dowiedz się którzy inwestorzy zorganizowali najwięcej przetargów.
+Zobacz które firmy złożyły najwięcej ofert
+i które są najczęściej rekomendowane.
 
-    cd marker
+Zalety aplikacji
+----------------
 
-- Create a Python virtual environment.
+* Intuicyjność obsługi
+* Przejrzystość i responsywność interfejsu
+* Wydajność i niezawodność
+* Dostępność z poziomu dowolnej przeglądarki internetowej
+* Kompletność i poprawność wprowadzanych danych dzięki zastosowaniu walidacji
+* Dostęp do danych zgodnie z uprawnieniami nadanymi przez administratora
+* Eksport kontaktów do pliku Excela w formie odpowiedniej do wykorzystania w `korespondencji seryjnej <https://support.office.com/pl-pl/article/Tworzenie-korespondencji-seryjnej-za-pomocą-arkusza-kalkulacyjnego-programu-Excel-858c7d7f-5cc0-4ba1-9a7b-0a948fa3d7d3>`_
+* Wbudowana wyszukiwarka
 
-.. code-block:: bash
+Dlaczego Marker?
+----------------
 
-    python3 -m venv env
+Nazwa Marker pochodzi od angielskiego czasownika *mark*. Jedną z podstawowych funkcjonalności aplikacji
+jest możliwość zaznaczania przez użytkowników rekomendowanych pozycji za pomocą przycisku 👍.
+Dzięki temu z gąszczu danych można w szybki sposób wybrać te najbardziej interesujące,
+np. najczęściej polecane firmy z wybranej branży posortowane wg liczby rekomendacji.
 
-- Upgrade packaging tools.
+W ten sposób realizuje się trzy podstawowe cele aplikacji:
 
-.. code-block:: bash
+- Maksymalizację wydajności i skuteczności poprzez dostarczenie odpowiedniej ilości danych oraz skrócenie czasu dostępu do nich
+- Zwiększenie prawdopodobieństwa dotarcia do informacji gwarantujących osiągnięcie sukcesu
+- Zmniejszenie progu wejścia dla nowych pracowników
 
-    env/bin/pip install --upgrade pip setuptools
+Dlaczego nie Excel?
+-------------------
 
-- Install the project in editable mode with its testing requirements.
+Relacje z inwestorami i kontrahentami są istotne.
+Do ich przedstawienia najlepszym rozwiązaniem jest relacyjna baza danych.
+Excel tego nie ułatwia. Swoboda umieszczania danych w skoroszycie oraz ich formatowania
+w dowolny sposób, często skutkuje tym, że w krótkim czasie zasoby stają się nieczytelne
+i trudno wydobyć z nich interesujące informacje.
+Szczególnie jeśli arkusze uzupełniane są przez różne osoby.
 
-.. code-block:: bash
+Marker dba o to aby wprowadzane dane były kompletne i poprawne, a dostęp do nich łatwy i szybki.
+Aplikacja przeprowadza walidację danych (m.in. adresów email, numerów NIP i REGON).
+Sprawdza czy wymagane pola zostały wypełnione oraz czy format danych jest prawidłowy.
+W razie potrzeby dokonuje korekty przed zapisem.
 
-    env/bin/pip install -e ".[testing]"
+Czym różni się Marker od Panoramy Firm, Kompasu Inwestycji itp.?
+----------------------------------------------------------------
 
-- Configure the database.
+* Konkurencja nie ma dostępu do zasobów bazy danych
+* Jakość danych zależy od użytkowników aplikacji i może być kontrolowana
+* Dostęp do danych mają wyłącznie zalogowani użytkownicy zgodnie z uprawnieniami nadanymi przez administratora
+* Oprócz danych kontaktowych do firm aplikacja umożliwa również przypisanie im kontaktów do konkretnych osób (pracowników)
 
-.. code-block:: bash
+Licencja
+--------
 
-    env/bin/initialize_marker_db development.ini
-
-- Run your project's tests.
-
-.. code-block:: bash
-
-    env/bin/pytest
-
-- Run your project.
-
-.. code-block:: bash
-
-    env/bin/pserve development.ini
+Wersja otwartoźródłowa udostępniona jest na licencji `GPLv3 <https://www.gnu.org/licenses/gpl-3.0.html>`_.
