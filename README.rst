@@ -16,6 +16,20 @@ Dowiedz się którzy inwestorzy zorganizowali najwięcej przetargów.
 Zobacz które firmy złożyły najwięcej ofert
 i które są najczęściej rekomendowane.
 
+Możliwości aplikacji
+--------------------
+
+* Wyświetl firmy o określonym profilu działalności. Pokaż listę ofert na wybrany zakres prac.
+* Wyświetl listę firm ostatnio dodanych do bazy danych. Pokaż firmy, których dane zostały ostatnio zmienione.
+* Pokaż listę inwestorów. Sprawdź, jakie przetargi zostały przez nich ogłoszone.
+* Pokaż listę przetargów. Filtruj przetargi, aby wyświetlić te, które są w trakcie lub zostały zakończone.
+* Wyświetl listę ofert ostatnio dodanych do bazy danych. Sprawdź, które firmy je złożyły i w jakich przetargach.
+* Wyświetl podsumowanie zawartości bazy danych. Analizuj dane o firmach, inwestorach i przetargach.
+* Wyszukaj dane kontaktowe, informacje o firmach, inwestorach, przetargach i relacjach pomiędzy nimi.
+* Wyeksportuj wybrane dane kontaktowe do Excela. Skorzystaj z `korespondencji seryjnej <https://support.office.com/pl-pl/article/Tworzenie-korespondencji-seryjnej-za-pomocą-arkusza-kalkulacyjnego-programu-Excel-858c7d7f-5cc0-4ba1-9a7b-0a948fa3d7d3>`_.
+* Wyświetl listę użytkowników bazy danych.
+* Sprawdź czy kontrahent znajduje się na wewnętrznej "czarnej liście".
+
 Zalety aplikacji
 ----------------
 
@@ -25,7 +39,6 @@ Zalety aplikacji
 * Dostępność z poziomu dowolnej przeglądarki internetowej
 * Kompletność i poprawność wprowadzanych danych dzięki zastosowaniu walidacji
 * Dostęp do danych zgodnie z uprawnieniami nadanymi przez administratora
-* Eksport kontaktów do pliku Excela w formie odpowiedniej do wykorzystania w `korespondencji seryjnej <https://support.office.com/pl-pl/article/Tworzenie-korespondencji-seryjnej-za-pomocą-arkusza-kalkulacyjnego-programu-Excel-858c7d7f-5cc0-4ba1-9a7b-0a948fa3d7d3>`_
 * Wbudowana wyszukiwarka
 
 Dlaczego Marker?
@@ -60,10 +73,31 @@ W razie potrzeby dokonuje korekty przed zapisem.
 Czym różni się Marker od Panoramy Firm, Kompasu Inwestycji itp.?
 ----------------------------------------------------------------
 
+* Dane nie są dostępne publicznie lub odpłatnie
 * Konkurencja nie ma dostępu do zasobów bazy danych
-* Jakość danych zależy od użytkowników aplikacji i może być kontrolowana
 * Dostęp do danych mają wyłącznie zalogowani użytkownicy zgodnie z uprawnieniami nadanymi przez administratora
+* Bazę danych uzupełniają pracownicy firmy ("ludzie z branży")
+* Użytkownicy aplikacji gwarantują jakość danych
+* Dane nie są wyłącznie zbiorem rekordów, lecz odzwierciedlają dotyczasową działalność firmy i wcześniejsze relacje
 * Oprócz danych kontaktowych do firm aplikacja umożliwia również przypisanie im kontaktów do konkretnych osób (pracowników)
+
+Czarna lista
+------------
+
+W aplikacji nie wprowadzono z góry zdefiniowanej listy branż.
+Jest jednak jedna nazwa o specjalnym znaczeniu -- BLACKLIST.
+
+Relacje z kontrahentami nie zawsze są dobre.
+Nie zamierzasz współpracować z firmą X?
+Firma Y nie życzy sobie zapytań ofertowych?
+Nie usuwaj danych. Dodaj je na czarną listę.
+Być może w przyszłości relacje się poprawią,
+a w międzyczasie zasygnalizuj innym użytkownikom,
+że mogą się spotkać z nieprzychylnością ze strony kontrahenta.
+
+Przy wyświetlaniu danych kontaktowych firmy przypisanej
+do branży o nazwie BLACKLIST aplikacja wyświetla ostrzeżenie
+o tym, że firma znajduje się na czarnej liście.
 
 Licencja
 --------
