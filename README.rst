@@ -39,7 +39,6 @@ Zalety aplikacji
 * Dostępność z poziomu dowolnej przeglądarki internetowej
 * Kompletność i poprawność wprowadzanych danych dzięki zastosowaniu walidacji
 * Dostęp do danych zgodnie z uprawnieniami nadanymi przez administratora
-* Wbudowana wyszukiwarka
 
 Dlaczego Marker?
 ----------------
