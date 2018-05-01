@@ -21,6 +21,15 @@ upvotes = Table(
 )
 
 
+marker = Table(
+    'marker', Base.metadata,
+    Column('company_id', Integer,
+           ForeignKey('companies.id', onupdate='CASCADE', ondelete='CASCADE')),
+    Column('user_id', Integer,
+           ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'))
+)
+
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -44,3 +53,7 @@ class User(Base):
     upvotes = relationship('Company',
                            secondary=upvotes,
                            backref='companies')
+
+    marker = relationship('Company',
+                          secondary=marker,
+                          backref='marker_companies')

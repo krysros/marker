@@ -21,7 +21,8 @@
       <table id="companies" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-6">Nazwa firmy</th>
+            <th class="col-sm-1">#</th>
+            <th class="col-sm-5">Nazwa firmy</th>
             <th class="col-sm-2">Miasto</th>
             <th class="col-sm-2">Data</th>
             <th class="col-sm-2">Rekomendacje</th>
@@ -30,6 +31,13 @@
         <tbody>
         % for company in paginator.items:
           <tr>
+            <td>
+            % if company in user_marker:
+              <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}" checked>
+            % else:
+              <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}">
+            % endif
+            </td>
             <td>
             % if company in user_upvotes:
               <i class="fa fa-thumbs-up" aria-hidden="true"></i>

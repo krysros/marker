@@ -4,7 +4,12 @@ from pyramid.httpexceptions import HTTPFound
 import deform
 import colander
 
-from ..models import User
+from ..models import (
+    User,
+    marker,
+    upvotes,
+    Company,
+    )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
 
@@ -199,3 +204,69 @@ class UserView(object):
             order_by(User.username)
         paginator = get_paginator(self.request, results, page=page)
         return {'paginator': paginator}
+
+    @view_config(
+        route_name='user_marked',
+        renderer='user_marked.mako',
+        permission='view'
+    )
+    def marked(self):
+        from .voivodeships import VOIVODESHIPS
+        user = self.request.context.user
+        results = self.request.dbsession.query(Company).\
+            join(marker).filter(user.id == marker.c.user_id)
+        page = self.request.params.get('page', 1)
+        paginator = get_paginator(self.request, results, page=page)
+
+        voivodeships = dict(VOIVODESHIPS)
+        paginator = get_paginator(self.request, results, page=page)
+
+        try:
+            user_upvotes = self.request.user.upvotes
+        except AttributeError:
+            user_upvotes = []
+
+        try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
+        return dict(
+            paginator=paginator,
+            user_upvotes=user_upvotes,
+            user_marker=user_marker,
+            voivodeships=voivodeships,
+            )
+
+    @view_config(
+        route_name='user_recommended',
+        renderer='user_marked.mako',
+        permission='view'
+    )
+    def recommended(self):
+        from .voivodeships import VOIVODESHIPS
+        user = self.request.context.user
+        results = self.request.dbsession.query(Company).\
+            join(upvotes).filter(user.id == upvotes.c.user_id)
+        page = self.request.params.get('page', 1)
+        paginator = get_paginator(self.request, results, page=page)
+
+        voivodeships = dict(VOIVODESHIPS)
+        paginator = get_paginator(self.request, results, page=page)
+
+        try:
+            user_upvotes = self.request.user.upvotes
+        except AttributeError:
+            user_upvotes = []
+
+        try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
+        return dict(
+            paginator=paginator,
+            user_upvotes=user_upvotes,
+            user_marker=user_marker,
+            voivodeships=voivodeships,
+            )

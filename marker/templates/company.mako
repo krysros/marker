@@ -10,7 +10,7 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <button class="btn btn-default js-upvote">
+    <button class="btn btn-default js-upvote" value="${company.id}">
     % if upvote:
       <span class="upvote fa fa-thumbs-up fa-lg"></span>
     % else:
@@ -183,33 +183,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $(function() {
-    var submitForm = function(e) {
-      var csrfToken = "${request.session.get_csrf_token()}";
-      $.ajax({
-        url: "${request.route_url('company_upvote', company_id=company.id, slug=company.slug)}",
-        type: 'post',
-        dataType: 'json',
-        headers: { 'X-CSRF-Token': csrfToken },
-        success: function(data) {
-          $('.upvote').removeClass('fa-thumbs-up fa-thumbs-o-up');
-          if (data.upvote) {
-            $('.upvote').addClass('fa-thumbs-up');
-            // var num = parseInt($('.num-of-upvotes span').text()) + 1;
-            // $('.num-of-upvotes span').html(num);
-          } else {
-            $('.upvote').addClass('fa-thumbs-o-up');
-            // var num = parseInt($('.num-of-upvotes span').text()) - 1;
-            // $('.num-of-upvotes span').html(num);
-          }
-        },
-      });
-    };
-    $('.js-upvote').on('click', function(event) {
-      event.preventDefault();
-      submitForm(event);
-    });
-  });
-</script>

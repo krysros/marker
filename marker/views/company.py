@@ -226,6 +226,11 @@ class CompanyView(object):
         paginator = get_paginator(self.request, companies, page=page)
 
         try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
+        try:
             user_upvotes = self.request.user.upvotes
         except AttributeError:
             user_upvotes = []
@@ -233,6 +238,7 @@ class CompanyView(object):
         return dict(
             query=query,
             paginator=paginator,
+            user_marker=user_marker,
             user_upvotes=user_upvotes,
             )
 
@@ -421,6 +427,21 @@ class CompanyView(object):
             return {'upvote': True}
 
     @view_config(
+        route_name='company_mark',
+        request_method='POST',
+        renderer='json',
+        permission='view'
+    )
+    def mark(self):
+        company = self.request.context.company
+        if company in self.request.user.marker:
+            self.request.user.marker.remove(company)
+            return {'mark': False}
+        else:
+            self.request.user.marker.append(company)
+            return {'mark': True}
+
+    @view_config(
         route_name='company_upvotes',
         renderer='users.mako',
         permission='view'
@@ -486,6 +507,11 @@ class CompanyView(object):
         voivodeships = dict(VOIVODESHIPS)
 
         try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
+        try:
             user_upvotes = self.request.user.upvotes
         except AttributeError:
             user_upvotes = []
@@ -493,6 +519,7 @@ class CompanyView(object):
         return dict(
             paginator=paginator,
             voivodeships=voivodeships,
+            user_marker=user_marker,
             user_upvotes=user_upvotes,
         )
 

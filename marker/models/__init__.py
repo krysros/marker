@@ -7,6 +7,7 @@ import zope.sqlalchemy
 # Base.metadata prior to any initialization routines
 from .user import User  # noqa
 from .user import upvotes  # noqa
+from .user import marker  # noqa
 from .branch import Branch  # noqa
 from .company import Company  # noqa
 from .investor import Investor  # noqa

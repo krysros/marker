@@ -106,11 +106,17 @@ class BranchView(object):
         except AttributeError:
             user_upvotes = []
 
+        try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
         return dict(
             branch=branch,
             query=query,
             paginator=paginator,
             user_upvotes=user_upvotes,
+            user_marker=user_marker,
             voivodeships=voivodeships,
             )
 

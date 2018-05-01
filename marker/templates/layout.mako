@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Katalog Generalnego Wykonawcy">
     <meta name="author" content="krysros">
+    <meta name="csrf_token" content="${request.session.get_csrf_token()}">
     <link rel="shortcut icon" href="${request.static_url('marker:static/img/favicon.png')}">
     <title>Marker</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -35,6 +36,8 @@
       <script src="${request.static_url(reqt)}" type="text/javascript"></script>
       % endfor
     % endif
+    <script src="${request.static_url('marker:static/js/company_mark.js')}" type="text/javascript"></script>
+    <script src="${request.static_url('marker:static/js/company_upvote.js')}" type="text/javascript"></script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -97,6 +100,12 @@
               </ul>
             </li>
           </ul>
+          % if request.user is not None:
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="${request.route_url('user_marked', username=request.user.username)}"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Zaznaczone</a></li>
+              <li><a href="${request.route_url('user_recommended', username=request.user.username)}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Rekomendowane</a></li>
+          </ul>
+          % endif
         </div>
       </div>
     </div>

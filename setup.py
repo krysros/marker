@@ -25,6 +25,7 @@ requires = [
     'paginate',
     'python-slugify',
     'xlsxwriter',
+    'alembic',
     ]
 
 tests_require = [

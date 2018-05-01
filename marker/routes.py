@@ -66,11 +66,12 @@ def includeme(config):
     config.add_route('company_delete',
                      '/company/{company_id:\d+}/{slug}/delete',
                      factory=company_factory)
-    config.add_route('company_upvote',
-                     '/company/{company_id:\d+}/{slug}/upvote',
-                     factory=company_factory)
     config.add_route('company_upvotes',
                      '/company/{company_id:\d+}/{slug}/upvotes',
+                     factory=company_factory)
+    config.add_route('company_upvote', '/upvote/company/{company_id:\d+}',
+                     factory=company_factory)
+    config.add_route('company_mark', '/mark/company/{company_id:\d+}',
                      factory=company_factory)
 
     config.add_route('person_search', '/person/search',
@@ -130,6 +131,10 @@ def includeme(config):
     config.add_route('user_edit', '/user/{username}/edit',
                      factory=user_factory)
     config.add_route('user_delete', '/user/{username}/delete',
+                     factory=user_factory)
+    config.add_route('user_marked', '/user/{username}/marked',
+                     factory=user_factory)
+    config.add_route('user_recommended', '/user/{username}/recommended',
                      factory=user_factory)
 
 
