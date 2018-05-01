@@ -22,3 +22,8 @@
 - Search tender by city
 - Test on PostgreSQL
 - Update README
+
+0.4
+---
+
+- Show marked and recommended companies
