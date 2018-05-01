@@ -11,15 +11,6 @@
     </a>
     <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        Widok <i class="fa fa-caret-down" aria-hidden="true"></i>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a role="menuitem" tabindex="-1" data-toggle="modal" href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug)}">firmy</a></li>
-        <li><a role="menuitem" tabindex="-1" data-toggle="modal" href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug)}">oferty</a></li>
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <ul class="dropdown-menu" role="menu">
@@ -27,6 +18,15 @@
         <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'city'})}">wg miasta</a></li>
         <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'voivodeship'})}">wg województwa</a></li>
         <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'upvotes'})}">wg liczby rekomendacji</a></li>
+      </ul>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        Widok <i class="fa fa-caret-down" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a role="menuitem" tabindex="-1" data-toggle="modal" href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug)}">firmy</a></li>
+        <li><a role="menuitem" tabindex="-1" data-toggle="modal" href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug)}">oferty</a></li>
       </ul>
     </div>
     <div class="pull-right">
