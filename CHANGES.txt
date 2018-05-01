@@ -27,3 +27,8 @@
 ---
 
 - Show marked and recommended companies
+
+0.5
+---
+
+- Sort marked items
