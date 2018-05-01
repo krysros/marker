@@ -32,3 +32,8 @@
 ---
 
 - Sort marked items
+
+0.6
+---
+
+- Reorder buttons
