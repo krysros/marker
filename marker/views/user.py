@@ -1,5 +1,10 @@
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import (
+    HTTPFound,
+    HTTPNotFound,
+    )
+
+from sqlalchemy import func
 
 import deform
 import colander
@@ -214,13 +219,26 @@ class UserView(object):
     def marked(self):
         from .voivodeships import VOIVODESHIPS
         user = self.request.context.user
-        results = self.request.dbsession.query(Company).\
-            join(marker).filter(user.id == marker.c.user_id)
         page = self.request.params.get('page', 1)
-        paginator = get_paginator(self.request, results, page=page)
+        query = self.request.params.get('sort', 'name')
+
+        if query not in ['name', 'city', 'voivodeship', 'upvotes']:
+            return HTTPNotFound()
+
+        if query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                join(marker).filter(user.id == marker.c.user_id).\
+                join(upvotes).group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
+        else:
+            companies = self.request.dbsession.query(Company).\
+                join(marker).filter(user.id == marker.c.user_id).\
+                order_by(query, Company.id)
 
         voivodeships = dict(VOIVODESHIPS)
-        paginator = get_paginator(self.request, results, page=page)
+        paginator = get_paginator(self.request, companies, page=page)
 
         try:
             user_upvotes = self.request.user.upvotes
@@ -234,6 +252,7 @@ class UserView(object):
 
         return dict(
             user=user,
+            query=query,
             paginator=paginator,
             user_upvotes=user_upvotes,
             user_marker=user_marker,
@@ -246,8 +265,23 @@ class UserView(object):
     )
     def export(self):
         user = self.request.context.user
-        companies = self.request.dbsession.query(Company).\
-            join(marker).filter(user.id == marker.c.user_id)
+        query = self.request.params.get('sort', 'name')
+
+        if query not in ['name', 'city', 'voivodeship', 'upvotes']:
+            return HTTPNotFound()
+
+        if query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                join(marker).filter(user.id == marker.c.user_id).\
+                join(upvotes).group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
+        else:
+            companies = self.request.dbsession.query(Company).\
+                join(marker).filter(user.id == marker.c.user_id).\
+                order_by(query, Company.id)
+
         response = export_to_xlsx(companies)
         return response
 

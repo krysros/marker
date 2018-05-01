@@ -2,9 +2,24 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
+    % if query:
+    <a href="${request.route_url('user_marked_export', username=user.username, _query={'sort': query})}" class="btn btn-primary" role="button">
+    % else:
     <a href="${request.route_url('user_marked_export', username=user.username)}" class="btn btn-primary" role="button">
-      <i class="fa fa-download" aria-hidden="true"></i> Eksportuj
+    % endif
+    <i class="fa fa-download" aria-hidden="true"></i> Eksportuj
     </a>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="${request.route_url('user_marked', username=user.username, _query={'sort': 'name'})}">wg nazwy</a></li>
+        <li><a href="${request.route_url('user_marked', username=user.username, _query={'sort': 'city'})}">wg miasta</a></li>
+        <li><a href="${request.route_url('user_marked', username=user.username, _query={'sort': 'voivodeship'})}">wg województwa</a></li>
+        <li><a href="${request.route_url('user_marked', username=user.username, _query={'sort': 'upvotes'})}">wg liczby rekomendacji</a></li>
+      </ul>
+    </div>
     <div class="pull-right">
       <a data-toggle="modal" href="#clearModal" class="btn btn-danger" role="button"><i class="fa fa-times" aria-hidden="true"></i> Wyczyść</a>
     </div>
@@ -64,7 +79,7 @@
         <h4 class="modal-title">Wyczyść</h4>
       </div>
       <div class="modal-body">
-        Wyczyścić zaznaczone pozycje?
+        Wyczyścić zaznaczone pozycje?<br>Ta operacja nie usuwa firm z bazy danych. 
       </div>
       <div class="modal-footer">
         <form action="${request.route_url('user_marked_clear', username=user.username)}" method="post">
