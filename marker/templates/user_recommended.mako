@@ -1,19 +1,8 @@
 <%inherit file="layout.mako"/>
 
 <div class="panel panel-default">
-  <div class="panel-body">
-    <a href="${request.route_url('user_marked_export', username=user.username)}" class="btn btn-primary" role="button">
-      <i class="fa fa-download" aria-hidden="true"></i> Eksportuj
-    </a>
-    <div class="pull-right">
-      <a data-toggle="modal" href="#clearModal" class="btn btn-danger" role="button"><i class="fa fa-times" aria-hidden="true"></i> Wyczyść</a>
-    </div>
-  </div>
-</div>
-
-<div class="panel panel-default">
   <div class="panel-heading">
-    <i class="fa fa-check-circle-o" aria-hidden="true"></i> Zaznaczone firmy
+    <i class="fa fa-thumbs-up" aria-hidden="true"></i> Rekomendowane firmy
   </div>
   <div class="panel-body">
     <div class="row">
@@ -51,27 +40,6 @@
           % endfor
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Wyczyść</h4>
-      </div>
-      <div class="modal-body">
-        Wyczyścić zaznaczone pozycje?
-      </div>
-      <div class="modal-footer">
-        <form action="${request.route_url('user_marked_clear', username=user.username)}" method="post">
-          <input type="hidden" name="csrf_token" value="${request.session.get_csrf_token()}">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
-          <button type="submit" class="btn btn-primary" name="submit" value="clear">Tak</button>
-        </form>
       </div>
     </div>
   </div>

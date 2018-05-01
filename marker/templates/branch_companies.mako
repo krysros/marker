@@ -23,7 +23,7 @@
         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug,  query={'sort': 'name'})}">wg nazwy</a></li>
+        <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'name'})}">wg nazwy</a></li>
         <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'city'})}">wg miasta</a></li>
         <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'voivodeship'})}">wg województwa</a></li>
         <li><a href="${request.route_url('branch_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': 'upvotes'})}">wg liczby rekomendacji</a></li>

@@ -12,6 +12,7 @@ from ..models import (
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
+from ..helpers import export_to_xlsx
 
 
 class UserView(object):
@@ -232,6 +233,7 @@ class UserView(object):
             user_marker = []
 
         return dict(
+            user=user,
             paginator=paginator,
             user_upvotes=user_upvotes,
             user_marker=user_marker,
@@ -239,8 +241,29 @@ class UserView(object):
             )
 
     @view_config(
+        route_name='user_marked_export',
+        permission='view'
+    )
+    def export(self):
+        user = self.request.context.user
+        companies = self.request.dbsession.query(Company).\
+            join(marker).filter(user.id == marker.c.user_id)
+        response = export_to_xlsx(companies)
+        return response
+
+    @view_config(
+        route_name='user_marked_clear',
+        request_method='POST',
+        permission='view'
+    )
+    def clear(self):
+        user = self.request.context.user
+        user.marker = []
+        return HTTPFound(location=self.request.route_url('user_marked', username=user.username))
+
+    @view_config(
         route_name='user_recommended',
-        renderer='user_marked.mako',
+        renderer='user_recommended.mako',
         permission='view'
     )
     def recommended(self):
@@ -265,6 +288,7 @@ class UserView(object):
             user_marker = []
 
         return dict(
+            user=user,
             paginator=paginator,
             user_upvotes=user_upvotes,
             user_marker=user_marker,

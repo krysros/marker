@@ -134,6 +134,10 @@ def includeme(config):
                      factory=user_factory)
     config.add_route('user_marked', '/user/{username}/marked',
                      factory=user_factory)
+    config.add_route('user_marked_export', '/user/{username}/marked/export',
+                     factory=user_factory)
+    config.add_route('user_marked_clear', '/user/{username}/marked/clear',
+                     factory=user_factory)
     config.add_route('user_recommended', '/user/{username}/recommended',
                      factory=user_factory)
 
