@@ -140,6 +140,10 @@ def includeme(config):
                      factory=user_factory)
     config.add_route('user_recommended', '/user/{username}/recommended',
                      factory=user_factory)
+    config.add_route('user_recommended_export', '/user/{username}/recommended/export',
+                     factory=user_factory)
+    config.add_route('user_recommended_clear', '/user/{username}/recommended/clear',
+                     factory=user_factory)
 
 
 class DefaultResource(object):

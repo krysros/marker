@@ -263,7 +263,7 @@ class UserView(object):
         route_name='user_marked_export',
         permission='view'
     )
-    def export(self):
+    def export_marked(self):
         user = self.request.context.user
         query = self.request.params.get('sort', 'name')
 
@@ -290,7 +290,7 @@ class UserView(object):
         request_method='POST',
         permission='view'
     )
-    def clear(self):
+    def clear_marked(self):
         user = self.request.context.user
         user.marker = []
         return HTTPFound(location=self.request.route_url('user_marked', username=user.username))
@@ -303,13 +303,26 @@ class UserView(object):
     def recommended(self):
         from .voivodeships import VOIVODESHIPS
         user = self.request.context.user
-        results = self.request.dbsession.query(Company).\
-            join(upvotes).filter(user.id == upvotes.c.user_id)
         page = self.request.params.get('page', 1)
-        paginator = get_paginator(self.request, results, page=page)
+        query = self.request.params.get('sort', 'name')
+
+        if query not in ['name', 'city', 'voivodeship', 'upvotes']:
+            return HTTPNotFound()
+
+        if query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                join(upvotes).filter(user.id == upvotes.c.user_id).\
+                group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
+        else:
+            companies = self.request.dbsession.query(Company).\
+                join(upvotes).filter(user.id == upvotes.c.user_id).\
+                order_by(query, Company.id)            
 
         voivodeships = dict(VOIVODESHIPS)
-        paginator = get_paginator(self.request, results, page=page)
+        paginator = get_paginator(self.request, companies, page=page)
 
         try:
             user_upvotes = self.request.user.upvotes
@@ -323,8 +336,45 @@ class UserView(object):
 
         return dict(
             user=user,
+            query=query,
             paginator=paginator,
             user_upvotes=user_upvotes,
             user_marker=user_marker,
             voivodeships=voivodeships,
             )
+
+    @view_config(
+        route_name='user_recommended_export',
+        permission='view'
+    )
+    def export_recommended(self):
+        user = self.request.context.user
+        query = self.request.params.get('sort', 'name')
+
+        if query not in ['name', 'city', 'voivodeship', 'upvotes']:
+            return HTTPNotFound()
+
+        if query == 'upvotes':
+            companies = self.request.dbsession.query(Company).\
+                join(upvotes).filter(user.id == upvotes.c.user_id).\
+                group_by(Company).order_by(
+                    func.count(upvotes.c.company_id).desc(),
+                    Company.id
+                )
+        else:
+            companies = self.request.dbsession.query(Company).\
+                join(upvotes).filter(user.id == upvotes.c.user_id).\
+                order_by(query, Company.id) 
+
+        response = export_to_xlsx(companies)
+        return response
+
+    @view_config(
+        route_name='user_recommended_clear',
+        request_method='POST',
+        permission='view'
+    )
+    def clear_recommended(self):
+        user = self.request.context.user
+        user.upvotes = []
+        return HTTPFound(location=self.request.route_url('user_recommended', username=user.username))
