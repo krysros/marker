@@ -21,14 +21,14 @@
       </ul>
     </div>
     <div class="pull-right">
-      <a data-toggle="modal" href="#clearModal" class="btn btn-danger" role="button"><i class="fa fa-times" aria-hidden="true"></i> Wyczyść</a>
+      <a data-toggle="modal" href="#clearModal" class="btn btn-danger" role="button"><i class="fa fa-square-o" aria-hidden="true"></i> Wyczyść</a>
     </div>
   </div>
 </div>
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <i class="fa fa-check-circle-o" aria-hidden="true"></i> Zaznaczone firmy
+    <i class="fa fa-check-square-o" aria-hidden="true"></i> Zaznaczone firmy
   </div>
   <div class="panel-body">
     <div class="row">

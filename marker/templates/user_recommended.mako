@@ -21,7 +21,7 @@
       </ul>
     </div>
     <div class="pull-right">
-      <a data-toggle="modal" href="#clearModal" class="btn btn-danger" role="button"><i class="fa fa-times" aria-hidden="true"></i> Wyczyść</a>
+      <a data-toggle="modal" href="#clearModal" class="btn btn-danger" role="button"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Wyczyść</a>
     </div>
   </div>
 </div>
