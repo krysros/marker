@@ -103,7 +103,7 @@
           % if request.user is not None:
           <ul class="nav navbar-nav navbar-right">
               <li><a href="${request.route_url('user_marked', username=request.user.username)}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Zaznaczone</a></li>
-              <li><a href="${request.route_url('user_recommended', username=request.user.username)}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Rekomendowane</a></li>
+              <li><a href="${request.route_url('user_upvotes', username=request.user.username)}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Rekomendowane</a></li>
           </ul>
           % endif
         </div>

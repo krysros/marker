@@ -296,11 +296,11 @@ class UserView(object):
         return HTTPFound(location=self.request.route_url('user_marked', username=user.username))
 
     @view_config(
-        route_name='user_recommended',
-        renderer='user_recommended.mako',
+        route_name='user_upvotes',
+        renderer='user_upvotes.mako',
         permission='view'
     )
-    def recommended(self):
+    def upvotes(self):
         from .voivodeships import VOIVODESHIPS
         user = self.request.context.user
         page = self.request.params.get('page', 1)
@@ -344,10 +344,10 @@ class UserView(object):
             )
 
     @view_config(
-        route_name='user_recommended_export',
+        route_name='user_upvotes_export',
         permission='view'
     )
-    def export_recommended(self):
+    def export_upvotes(self):
         user = self.request.context.user
         query = self.request.params.get('sort', 'name')
 
@@ -370,11 +370,11 @@ class UserView(object):
         return response
 
     @view_config(
-        route_name='user_recommended_clear',
+        route_name='user_upvotes_clear',
         request_method='POST',
         permission='view'
     )
-    def clear_recommended(self):
+    def clear_upvotes(self):
         user = self.request.context.user
         user.upvotes = []
-        return HTTPFound(location=self.request.route_url('user_recommended', username=user.username))
+        return HTTPFound(location=self.request.route_url('user_upvotes', username=user.username))

@@ -138,11 +138,11 @@ def includeme(config):
                      factory=user_factory)
     config.add_route('user_marked_clear', '/user/{username}/marked/clear',
                      factory=user_factory)
-    config.add_route('user_recommended', '/user/{username}/recommended',
+    config.add_route('user_upvotes', '/user/{username}/upvotes',
                      factory=user_factory)
-    config.add_route('user_recommended_export', '/user/{username}/recommended/export',
+    config.add_route('user_upvotes_export', '/user/{username}/upvotes/export',
                      factory=user_factory)
-    config.add_route('user_recommended_clear', '/user/{username}/recommended/clear',
+    config.add_route('user_upvotes_clear', '/user/{username}/upvotes/clear',
                      factory=user_factory)
 
 
