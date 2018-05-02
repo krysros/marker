@@ -37,3 +37,8 @@
 ---
 
 - Reorder buttons
+
+0.7
+---
+
+- Export and clear recommended companies
