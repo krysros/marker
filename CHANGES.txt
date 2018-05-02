@@ -42,3 +42,8 @@
 ---
 
 - Export and clear recommended companies
+
+0.8
+---
+
+- Update route names
