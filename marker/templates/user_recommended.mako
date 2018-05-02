@@ -79,7 +79,7 @@
         <h4 class="modal-title">Wyczyść</h4>
       </div>
       <div class="modal-body">
-        Wyczyścić rekomendacje dla wszystkich pozycji?<br>Ta operacja nie usuwa firm z bazy danych. 
+        Wyczyścić wszystkie rekomendacje?<br>Ta operacja nie usuwa firm z bazy danych. 
       </div>
       <div class="modal-footer">
         <form action="${request.route_url('user_recommended_clear', username=user.username)}" method="post">
