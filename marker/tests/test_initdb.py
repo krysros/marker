@@ -1,9 +1,9 @@
-import pytest
+import unittest
 
 
-class TestInitializeDB:
+class TestInitializeDB(unittest.TestCase):
 
     def test_usage(self):
         from ..scripts.initializedb import main
-        with pytest.raises(SystemExit):
+        with self.assertRaises(SystemExit):
             main(argv=['foo'])
