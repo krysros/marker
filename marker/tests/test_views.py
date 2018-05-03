@@ -52,6 +52,14 @@ class BaseTest:
         from ..models import Branch
         return Branch(name)
 
+    def make_company(self, name, city, voivodeship,
+                     phone, email, www, nip, regon, krs,
+                     branches, people):
+        from ..models import Company
+        return Company(name, city, voivodeship,
+                       phone, email, www, nip, regon, krs,
+                       branches, people)
+
 
 class TestViewHome:
     def setup_method(self):
@@ -83,7 +91,190 @@ class TestBranch(BaseTest):
         self.session.add_all([foo, bar, baz])
 
         request = testing.DummyRequest(DummyPostData(), dbsession=self.session)
-        request.matchdict = {'letter': 'b', 'page': 1}
+        request.matchdict = {'letter': 'b'}
+        request.params = {'page': 1}
         res = self._callFUT(request).all()
         assert res['selected_letter'] == 'b'
         assert res['paginator'].items == [bar, baz]
+
+    def test_it_view_companies_sorted_by_default(self):
+        from ..models import Branch
+        from ..routes import BranchResource
+        from marker.views.voivodeships import VOIVODESHIPS
+        foo = self.make_branch('foo')
+        bar = self.make_company(
+            name='bar',
+            city='Poznań',
+            voivodeship='WP',
+            phone='123 123 123',
+            email='bar@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        baz = self.make_company(
+            name='baz',
+            city='Bydgoszcz',
+            voivodeship='KP',
+            phone='321 321 321',
+            email='baz@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        self.session.add_all([bar, baz])
+        request = testing.DummyRequest(DummyPostData(), dbsession=self.session)
+        request.context = BranchResource(foo)
+        voivodeships = dict(VOIVODESHIPS)
+        res = self._callFUT(request).view_companies()
+        branch = self.session.query(Branch).filter_by(name='foo').one()
+        assert res['branch'] == branch
+        assert res['query'] == 'name'
+        assert res['paginator'].items == [bar, baz]
+        assert res['user_upvotes'] == []
+        assert res['user_marker'] == []
+        assert res['voivodeships'] == voivodeships
+
+    def test_it_view_companies_sorted_by_name(self):
+        from ..models import Branch
+        from ..routes import BranchResource
+        from marker.views.voivodeships import VOIVODESHIPS
+        foo = self.make_branch('foo')
+        bar = self.make_company(
+            name='bar',
+            city='Poznań',
+            voivodeship='WP',
+            phone='123 123 123',
+            email='bar@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        baz = self.make_company(
+            name='baz',
+            city='Bydgoszcz',
+            voivodeship='KP',
+            phone='321 321 321',
+            email='baz@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        self.session.add_all([bar, baz])
+        request = testing.DummyRequest(DummyPostData(), dbsession=self.session)
+        request.context = BranchResource(foo)
+        request.params = {'sort': 'name', 'page': 1}
+        voivodeships = dict(VOIVODESHIPS)
+        res = self._callFUT(request).view_companies()
+        branch = self.session.query(Branch).filter_by(name='foo').one()
+        assert res['branch'] == branch
+        assert res['query'] == 'name'
+        assert res['paginator'].items == [bar, baz]
+        assert res['user_upvotes'] == []
+        assert res['user_marker'] == []
+        assert res['voivodeships'] == voivodeships
+
+    def test_it_view_companies_sorted_by_city(self):
+        from ..models import Branch
+        from ..routes import BranchResource
+        from marker.views.voivodeships import VOIVODESHIPS
+        foo = self.make_branch('foo')
+        bar = self.make_company(
+            name='bar',
+            city='Poznań',
+            voivodeship='WP',
+            phone='123 123 123',
+            email='bar@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        baz = self.make_company(
+            name='baz',
+            city='Bydgoszcz',
+            voivodeship='KP',
+            phone='321 321 321',
+            email='baz@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        self.session.add_all([bar, baz])
+        request = testing.DummyRequest(DummyPostData(), dbsession=self.session)
+        request.context = BranchResource(foo)
+        request.params = {'sort': 'city', 'page': 1}
+        voivodeships = dict(VOIVODESHIPS)
+        res = self._callFUT(request).view_companies()
+        branch = self.session.query(Branch).filter_by(name='foo').one()
+        assert res['branch'] == branch
+        assert res['query'] == 'city'
+        assert res['paginator'].items == [baz, bar]
+        assert res['user_upvotes'] == []
+        assert res['user_marker'] == []
+        assert res['voivodeships'] == voivodeships
+
+    def test_it_view_companies_sorted_by_voivodeship(self):
+        from ..models import Branch
+        from ..routes import BranchResource
+        from marker.views.voivodeships import VOIVODESHIPS
+        foo = self.make_branch('foo')
+        bar = self.make_company(
+            name='bar',
+            city='Poznań',
+            voivodeship='WP',
+            phone='123 123 123',
+            email='bar@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        baz = self.make_company(
+            name='baz',
+            city='Bydgoszcz',
+            voivodeship='KP',
+            phone='321 321 321',
+            email='baz@example.com',
+            www='',
+            nip='',
+            regon='',
+            krs='',
+            branches=[foo],
+            people=[],
+            )
+        self.session.add_all([bar, baz])
+        request = testing.DummyRequest(DummyPostData(), dbsession=self.session)
+        request.context = BranchResource(foo)
+        request.params = {'sort': 'voivodeship', 'page': 1}
+        voivodeships = dict(VOIVODESHIPS)
+        res = self._callFUT(request).view_companies()
+        branch = self.session.query(Branch).filter_by(name='foo').one()
+        assert res['branch'] == branch
+        assert res['query'] == 'voivodeship'
+        assert res['paginator'].items == [baz, bar]
+        assert res['user_upvotes'] == []
+        assert res['user_marker'] == []
+        assert res['voivodeships'] == voivodeships
+
+    def test_it_view_companies_sorted_by_upvotes(self):
+        pass
