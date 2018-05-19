@@ -47,3 +47,8 @@
 ---
 
 - Update route names
+
+0.9
+---
+
+- Logging
