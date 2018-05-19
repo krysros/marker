@@ -103,7 +103,7 @@ class TestBranch(BaseTest):
         from marker.views.voivodeships import VOIVODESHIPS
         foo = self.make_branch('foo')
         bar = self.make_company(
-            name='bar',
+            name='Bar',
             city='Poznań',
             voivodeship='WP',
             phone='123 123 123',
@@ -116,7 +116,7 @@ class TestBranch(BaseTest):
             people=[],
             )
         baz = self.make_company(
-            name='baz',
+            name='Baz',
             city='Bydgoszcz',
             voivodeship='KP',
             phone='321 321 321',
@@ -147,7 +147,7 @@ class TestBranch(BaseTest):
         from marker.views.voivodeships import VOIVODESHIPS
         foo = self.make_branch('foo')
         bar = self.make_company(
-            name='bar',
+            name='Bar',
             city='Poznań',
             voivodeship='WP',
             phone='123 123 123',
@@ -160,7 +160,7 @@ class TestBranch(BaseTest):
             people=[],
             )
         baz = self.make_company(
-            name='baz',
+            name='Baz',
             city='Bydgoszcz',
             voivodeship='KP',
             phone='321 321 321',
@@ -192,7 +192,7 @@ class TestBranch(BaseTest):
         from marker.views.voivodeships import VOIVODESHIPS
         foo = self.make_branch('foo')
         bar = self.make_company(
-            name='bar',
+            name='Bar',
             city='Poznań',
             voivodeship='WP',
             phone='123 123 123',
@@ -205,7 +205,7 @@ class TestBranch(BaseTest):
             people=[],
             )
         baz = self.make_company(
-            name='baz',
+            name='Baz',
             city='Bydgoszcz',
             voivodeship='KP',
             phone='321 321 321',
@@ -237,7 +237,7 @@ class TestBranch(BaseTest):
         from marker.views.voivodeships import VOIVODESHIPS
         foo = self.make_branch('foo')
         bar = self.make_company(
-            name='bar',
+            name='Bar',
             city='Poznań',
             voivodeship='WP',
             phone='123 123 123',
@@ -250,7 +250,7 @@ class TestBranch(BaseTest):
             people=[],
             )
         baz = self.make_company(
-            name='baz',
+            name='Baz',
             city='Bydgoszcz',
             voivodeship='KP',
             phone='321 321 321',
