@@ -1,3 +1,4 @@
+import logging
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
@@ -7,6 +8,9 @@ import colander
 from ..models import Investor
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
+
+
+log = logging.getLogger(__name__)
 
 
 class InvestorView(object):
@@ -77,6 +81,7 @@ class InvestorView(object):
                 investor = Investor(appstruct['name'])
                 self.request.dbsession.add(investor)
                 self.request.session.flash('success:Dodano do bazy danych')
+                log.warn(f'Użytkownik {self.request.user.username} dodał inwestora {investor.name}')
                 return HTTPFound(location=self.request.route_url('investors'))
 
         if rendered_form is None:
@@ -106,6 +111,7 @@ class InvestorView(object):
             else:
                 investor.name = appstruct['name']
                 self.request.session.flash('success:Nazwa inwestora została zmieniona')
+                log.warn(f'Użytkownik {self.request.user.username} zmienił nazwę inwestora {investor.name}')
                 return HTTPFound(location=self.request.route_url('investor_edit',
                                                                  investor_id=investor.id,
                                                                  slug=investor.slug))
@@ -127,6 +133,7 @@ class InvestorView(object):
         investor = self.request.context.investor
         self.request.dbsession.delete(investor)
         self.request.session.flash('success:Usunięto z bazy danych')
+        log.warn(f'Użytkownik {self.request.user.username} usunął inwestora {investor.name}')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

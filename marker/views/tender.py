@@ -1,4 +1,5 @@
 import datetime
+import logging
 from pyramid.view import view_config
 from pyramid.httpexceptions import (
     HTTPFound,
@@ -14,6 +15,9 @@ from ..models import (
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
+
+
+log = logging.getLogger(__name__)
 
 
 class TenderView(object):
@@ -133,6 +137,7 @@ class TenderView(object):
                 tender.added_by = self.request.user
                 self.request.dbsession.add(tender)
                 self.request.session.flash('success:Dodano do bazy danych')
+                log.warn(f'Użytkownik {self.request.user.username} dodał przetarg {tender.name}')
                 return HTTPFound(location=self.request.route_url('tenders'))
 
         if rendered_form is None:
@@ -169,6 +174,7 @@ class TenderView(object):
                 tender.deadline = appstruct['deadline']
                 tender.edited_by = self.request.user
                 self.request.session.flash('success:Dane przetargu zostały zmienione')
+                log.warn(f'Użytkownik {self.request.user.username} zmienił dane przetargu {tender.name}')
                 return HTTPFound(location=self.request.route_url('tender_edit',
                                                                  tender_id=tender.id,
                                                                  slug=tender.slug))
@@ -199,6 +205,7 @@ class TenderView(object):
         tender = self.request.context.tender
         self.request.dbsession.delete(tender)
         self.request.session.flash('success:Usunięto z bazy danych')
+        log.warn(f'Użytkownik {self.request.user.username} usunął przetarg {tender.name}')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

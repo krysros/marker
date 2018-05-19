@@ -1,3 +1,4 @@
+import logging
 from pyramid.view import view_config
 from pyramid.httpexceptions import (
     HTTPFound,
@@ -17,6 +18,9 @@ from ..models import (
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
 from ..helpers import export_to_xlsx
+
+
+log = logging.getLogger(__name__)
 
 
 class BranchView(object):
@@ -157,6 +161,7 @@ class BranchView(object):
                 order_by(query, Company.id)
 
         response = export_to_xlsx(companies)
+        log.warn(f'Użytkownik {self.request.user.username} eksportował dane firm z branży {branch.name}')
         return response
 
     @view_config(
@@ -179,6 +184,7 @@ class BranchView(object):
                 branch = Branch(appstruct['name'])
                 self.request.dbsession.add(branch)
                 self.request.session.flash('success:Dodano do bazy danych')
+                log.warn(f'Użytkownik {self.request.user.username} dodał branżę {branch.name}')
                 return HTTPFound(location=self.request.route_url('branches'))
 
         if rendered_form is None:
@@ -208,6 +214,7 @@ class BranchView(object):
             else:
                 branch.name = appstruct['name']
                 self.request.session.flash('success:Nazwa branży została zmieniona')
+                log.warn(f'Użytkownik {self.request.user.username} zmienił nazwę branży {branch.name}')
                 return HTTPFound(location=self.request.route_url('branch_edit',
                                                                  branch_id=branch.id,
                                                                  slug=branch.slug))
@@ -229,6 +236,7 @@ class BranchView(object):
         branch = self.request.context.branch
         self.request.dbsession.delete(branch)
         self.request.session.flash('success:Usunięto z bazy danych')
+        log.warn(f'Użytkownik {self.request.user.username} usunął branżę {branch.name}')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

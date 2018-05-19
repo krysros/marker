@@ -1,4 +1,5 @@
 import re
+import logging
 from operator import mul
 from pyramid.view import view_config
 from pyramid.httpexceptions import (
@@ -20,6 +21,9 @@ from ..models import (
 
 from ..paginator import get_paginator
 from .voivodeships import VOIVODESHIPS
+
+
+log = logging.getLogger(__name__)
 
 
 def strip_whitespace(v):
@@ -313,6 +317,7 @@ class CompanyView(object):
                 company.added_by = self.request.user
                 self.request.dbsession.add(company)
                 self.request.session.flash('success:Dodano do bazy danych')
+                log.warn(f'Użytkownik {self.request.user.username} dodał firmę {company.name}')
                 return HTTPFound(location=self.request.route_url('companies'))
 
         if rendered_form is None:
@@ -356,6 +361,7 @@ class CompanyView(object):
                 company.people = self._get_people(appstruct)
                 company.edited_by = self.request.user
                 self.request.session.flash('success:Zmiany zostały zapisane')
+                log.warn(f'Użytkownik {self.request.user.username} zmienił dane firmy {company.name}')
                 return HTTPFound(location=self.request.route_url('company_view',
                                                                  company_id=company.id,
                                                                  slug=company.slug))
@@ -408,6 +414,7 @@ class CompanyView(object):
         company = self.request.context.company
         self.request.dbsession.delete(company)
         self.request.session.flash('success:Usunięto z bazy danych')
+        log.warn(f'Użytkownik {self.request.user.username} usunął firmę {company.name}')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

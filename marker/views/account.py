@@ -1,3 +1,4 @@
+import logging
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
@@ -5,6 +6,9 @@ import colander
 import deform
 
 from deform.schema import CSRFSchema
+
+
+log = logging.getLogger(__name__)
 
 
 class Account(CSRFSchema):
@@ -59,6 +63,7 @@ class AccountView(object):
                     user.fullname = appstruct['fullname']
                     user.email = appstruct['email']
                     self.request.session.flash('success:Zmiany zostały zapisane')
+                    log.warn(f'Użytkownik {user.username} zmienił swoje dane')
                     return HTTPFound(location=self.request.route_url('account'))
         else:
             appstruct = {'fullname': user.fullname, 'email': user.email}
@@ -94,6 +99,7 @@ class AccountView(object):
                 else:
                     user.password = appstruct['password']
                     self.request.session.flash('success:Zmiany zostały zapisane')
+                    log.warn(f'Użytkownik {user.username} zmienił hasło')
                     return HTTPFound(location=self.request.route_url('password'))
         else:
             rendered_form = form.render()

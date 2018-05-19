@@ -1,3 +1,4 @@
+import logging
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import (
     remember,
@@ -13,6 +14,9 @@ import colander
 
 from ..models import User
 from deform.schema import CSRFSchema
+
+
+log = logging.getLogger(__name__)
 
 
 class Schema(CSRFSchema):
@@ -58,6 +62,7 @@ def login(request):
                 if user is not None and user.check_password(password):
                     headers = remember(request, user.id)
                     request.session.flash('success:Witaj w aplikacji Marker!')
+                    log.warn(f'Użytkownik {user.username} zalogował się')
                     return HTTPFound(location=next_url, headers=headers)
                 else:
                     request.session.flash('danger:Logowanie nie powiodło się')
@@ -78,6 +83,7 @@ def logout(request):
     headers = forget(request)
     next_url = request.route_url('home')
     request.session.flash('success:Wylogowano z aplikacji Marker')
+    log.warn(f'Użytkownik {request.user.username} wylogował się')
     return HTTPFound(location=next_url, headers=headers)
 
 
