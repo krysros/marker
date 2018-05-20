@@ -57,3 +57,8 @@
 -----
 
 - Fix permissions
+
+0.9.2
+-----
+
+- Log info, not warn
