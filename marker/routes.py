@@ -196,6 +196,13 @@ class UserResource(DefaultResource):
     def __init__(self, user):
         self.user = user
 
+    def __acl__(self):
+        return [
+            (Allow, str(self.user.id), 'view'),
+            (Allow, str(self.user.id), 'edit'),
+            (Allow, 'role:admin', ALL_PERMISSIONS),
+        ]
+
 
 def default_factory(request):
     return DefaultResource()
