@@ -125,7 +125,7 @@ class UserView(object):
                     )
                 self.request.dbsession.add(user)
                 self.request.session.flash('success:Dodano do bazy danych')
-                log.warn(f'Użytkownik {self.request.user.username} dodał użytkownika {user.username}')
+                log.warning(f'Użytkownik {self.request.user.username} dodał użytkownika {user.username}')
                 return HTTPFound(location=self.request.route_url('users'))
 
         if rendered_form is None:
@@ -163,7 +163,7 @@ class UserView(object):
                 user.password = appstruct['password']
 
                 self.request.session.flash('success:Zmiany zostały zapisane')
-                log.warn(f'Użytkownik {self.request.user.username} zmienił dane użytkownika {user.username}')
+                log.warning(f'Użytkownik {self.request.user.username} zmienił dane użytkownika {user.username}')
                 return HTTPFound(location=self.request.route_url('users'))
 
         appstruct = {
@@ -193,7 +193,7 @@ class UserView(object):
         user = self.request.context.user
         self.request.dbsession.delete(user)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.warn(f'Użytkownik {self.request.user.username} usunął użytkownika {user.username}')
+        log.warning(f'Użytkownik {self.request.user.username} usunął użytkownika {user.username}')
         return HTTPFound(location=self.request.route_url('users'))
 
     @view_config(
@@ -290,7 +290,7 @@ class UserView(object):
                 order_by(query, Company.id)
 
         response = export_to_xlsx(companies)
-        log.warn(f'Użytkownik {self.request.user.username} eksportował dane zaznaczonych firm')
+        log.warning(f'Użytkownik {self.request.user.username} eksportował dane zaznaczonych firm')
         return response
 
     @view_config(
@@ -375,7 +375,7 @@ class UserView(object):
                 order_by(query, Company.id) 
 
         response = export_to_xlsx(companies)
-        log.warn(f'Użytkownik {self.request.user.username} eksportował dane rekomendowanych firm')
+        log.warning(f'Użytkownik {self.request.user.username} eksportował dane rekomendowanych firm')
         return response
 
     @view_config(
@@ -386,5 +386,5 @@ class UserView(object):
     def clear_upvotes(self):
         user = self.request.context.user
         user.upvotes = []
-        log.warn(f'Użytkownik {self.request.user.username} wyczyścił wszystkie rekomendacje')
+        log.warning(f'Użytkownik {self.request.user.username} wyczyścił wszystkie rekomendacje')
         return HTTPFound(location=self.request.route_url('user_upvotes', username=user.username))
