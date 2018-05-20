@@ -317,7 +317,7 @@ class CompanyView(object):
                 company.added_by = self.request.user
                 self.request.dbsession.add(company)
                 self.request.session.flash('success:Dodano do bazy danych')
-                log.warning(f'Użytkownik {self.request.user.username} dodał firmę {company.name}')
+                log.info(f'Użytkownik {self.request.user.username} dodał firmę {company.name}')
                 return HTTPFound(location=self.request.route_url('companies'))
 
         if rendered_form is None:
@@ -361,7 +361,7 @@ class CompanyView(object):
                 company.people = self._get_people(appstruct)
                 company.edited_by = self.request.user
                 self.request.session.flash('success:Zmiany zostały zapisane')
-                log.warning(f'Użytkownik {self.request.user.username} zmienił dane firmy {company.name}')
+                log.info(f'Użytkownik {self.request.user.username} zmienił dane firmy {company.name}')
                 return HTTPFound(location=self.request.route_url('company_view',
                                                                  company_id=company.id,
                                                                  slug=company.slug))
@@ -414,7 +414,7 @@ class CompanyView(object):
         company = self.request.context.company
         self.request.dbsession.delete(company)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.warning(f'Użytkownik {self.request.user.username} usunął firmę {company.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął firmę {company.name}')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

@@ -63,7 +63,7 @@ class AccountView(object):
                     user.fullname = appstruct['fullname']
                     user.email = appstruct['email']
                     self.request.session.flash('success:Zmiany zostały zapisane')
-                    log.warning(f'Użytkownik {user.username} zmienił swoje dane')
+                    log.info(f'Użytkownik {user.username} zmienił swoje dane')
                     return HTTPFound(location=self.request.route_url('account'))
         else:
             appstruct = {'fullname': user.fullname, 'email': user.email}
@@ -99,7 +99,7 @@ class AccountView(object):
                 else:
                     user.password = appstruct['password']
                     self.request.session.flash('success:Zmiany zostały zapisane')
-                    log.warning(f'Użytkownik {user.username} zmienił hasło')
+                    log.info(f'Użytkownik {user.username} zmienił hasło')
                     return HTTPFound(location=self.request.route_url('password'))
         else:
             rendered_form = form.render()

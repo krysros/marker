@@ -133,7 +133,7 @@ class OfferView(object):
                     )
                 self.request.dbsession.add(offer)
                 self.request.session.flash('success:Dodano do bazy danych')
-                log.warning(f'Użytkownik {self.request.user.username} dodał ofertę firmy {offer.company.name}')
+                log.info(f'Użytkownik {self.request.user.username} dodał ofertę firmy {offer.company.name}')
                 return HTTPFound(location=self.request.route_url('offers'))
 
         if rendered_form is None:
@@ -169,7 +169,7 @@ class OfferView(object):
                 offer.tender = self._get_tender(appstruct['tender'])
                 offer.edited_by = self.request.user
                 self.request.session.flash('success:Dane oferty zostały zmienione')
-                log.warning(f'Użytkownik {self.request.user.username} zmienił ofertę firmy {offer.company.name}')
+                log.info(f'Użytkownik {self.request.user.username} zmienił ofertę firmy {offer.company.name}')
                 return HTTPFound(location=self.request.route_url('offer_view',
                                                                  offer_id=offer.id))
         appstruct = {
@@ -198,5 +198,5 @@ class OfferView(object):
         offer = self.request.context.offer
         self.request.dbsession.delete(offer)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.warning(f'Użytkownik {self.request.user.username} usunął ofertę firmy {offer.company.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął ofertę firmy {offer.company.name}')
         return HTTPFound(location=self.request.route_url('home'))
