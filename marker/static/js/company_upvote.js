@@ -8,11 +8,10 @@ $(function() {
       dataType: 'json',
       headers: {'X-CSRF-Token': csrfToken},
       success: function(data) {
-        $('.upvote').removeClass('fa-thumbs-up fa-thumbs-o-up');
         if (data.upvote) {
-          $('.upvote').addClass('fa-thumbs-up');
+          $('.upvote').removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
         } else {
-          $('.upvote').addClass('fa-thumbs-o-up');
+          $('.upvote').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
         }
       },
     });

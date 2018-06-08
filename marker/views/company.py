@@ -255,9 +255,11 @@ class CompanyView(object):
         company = self.request.context.company
         voivodeships = dict(VOIVODESHIPS)
         upvote = company in self.request.user.upvotes
+        marker = company in self.request.user.marker
         return dict(
             company=company,
             upvote=upvote,
+            marker=marker,
             voivodeships=voivodeships,
             )
 
@@ -425,7 +427,6 @@ class CompanyView(object):
     )
     def upvote(self):
         company = self.request.context.company
-
         if company in self.request.user.upvotes:
             self.request.user.upvotes.remove(company)
             return {'upvote': False}
@@ -443,10 +444,10 @@ class CompanyView(object):
         company = self.request.context.company
         if company in self.request.user.marker:
             self.request.user.marker.remove(company)
-            return {'mark': False}
+            return {'marker': False}
         else:
             self.request.user.marker.append(company)
-            return {'mark': True}
+            return {'marker': True}
 
     @view_config(
         route_name='company_upvotes',

@@ -36,7 +36,7 @@
               <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}" checked>
             % else:
               <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}">
-            % endif
+            % endif 
             </td>
             <td>
             % if company in user_upvotes:

@@ -10,6 +10,13 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
+    <button class="btn btn-default js-mark-button" value="${company.id}">
+    % if marker:
+      <span class="marker fa fa-check-square-o fa-lg"></span>
+    % else:
+      <span class="marker fa fa-square-o fa-lg"></span>
+    % endif
+    </button>
     <button class="btn btn-default js-upvote" value="${company.id}">
     % if upvote:
       <span class="upvote fa fa-thumbs-up fa-lg"></span>
