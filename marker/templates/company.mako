@@ -10,7 +10,7 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <button class="btn btn-default js-mark-button" value="${company.id}">
+    <button class="btn btn-default js-mark" value="${company.id}">
     % if marker:
       <span class="marker fa fa-check-square-o fa-lg"></span>
     % else:
