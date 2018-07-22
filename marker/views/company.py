@@ -128,16 +128,19 @@ class CompanyView(object):
             position = colander.SchemaNode(
                 colander.String(),
                 title='Stanowisko',
+                missing='',
                 validator=colander.Length(max=50),
                 )
             phone = colander.SchemaNode(
                 colander.String(),
                 title='Telefon',
+                missing='',
                 validator=colander.Length(max=50),
                 )
             email = colander.SchemaNode(
                 colander.String(),
                 title='Email',
+                missing='',
                 validator=colander.Email(),
                 )
 
@@ -154,21 +157,25 @@ class CompanyView(object):
             city = colander.SchemaNode(
                 colander.String(),
                 title='Miasto',
+                missing='',
                 validator=colander.Length(max=100),
                 )
             voivodeship = colander.SchemaNode(
                 colander.String(),
                 title='Województwo',
+                missing='',
                 widget=deform.widget.SelectWidget(values=VOIVODESHIPS),
                 )
             phone = colander.SchemaNode(
                 colander.String(),
                 title='Telefon',
+                missing='',
                 validator=colander.Length(max=50),
                 )
             email = colander.SchemaNode(
                 colander.String(),
                 title='Email',
+                missing='',
                 validator=colander.Email(),
                 )
             www = colander.SchemaNode(
