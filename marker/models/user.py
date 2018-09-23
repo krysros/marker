@@ -45,7 +45,7 @@ class User(Base):
 
     @password.setter
     def password(self, pw):
-        self._password = pwd_context.encrypt(pw)
+        self._password = pwd_context.hash(pw)
 
     def check_password(self, pw):
         return pwd_context.verify(pw, self._password)
