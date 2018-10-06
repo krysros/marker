@@ -15,7 +15,7 @@ Co wyróżnia aplikację?
 
 * Dane nie są wyłącznie zbiorem rekordów, lecz odzwierciedlają dotychczasową działalność
 * Dostęp do danych mają wyłącznie zalogowani użytkownicy zgodnie z uprawnieniami nadanymi przez administratora
-* Eksportowanie danych kontaktowych do Excela w formie umożliwiającej skorzystanie z [korespondencji seryjnej](https://support.office.com/pl-pl/article/Tworzenie-korespondencji-seryjnej-za-pomoc%C4%85-arkusza-kalkulacyjnego-programu-Excel-858c7d7f-5cc0-4ba1-9a7b-0a948fa3d7d3)
+* Eksportowanie danych kontaktowych do Excela w formie umożliwiającej skorzystanie z `korespondencji seryjnej <https://support.office.com/pl-pl/article/Tworzenie-korespondencji-seryjnej-za-pomoc%C4%85-arkusza-kalkulacyjnego-programu-Excel-858c7d7f-5cc0-4ba1-9a7b-0a948fa3d7d3>`_
 
 Dlaczego Marker?
 ----------------
