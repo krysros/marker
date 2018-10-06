@@ -22,3 +22,7 @@ Nazwa Marker pochodzi od angielskiego czasownika *mark*. Jedną z podstawowych f
 
 Do przedstawienia wyżej wymienionych relacji najlepszym rozwiązaniem jest relacyjna baza danych. Swoboda umieszczania danych w skoroszycie Excela oraz ich formatowania w dowolny sposób często skutkuje tym, że w krótkim czasie zasoby stają się nieczytelne i trudno wydobyć z nich interesujące informacje. Szczególnie jeśli arkusze uzupełniane są przez różne osoby.
 Marker dba o to, aby wprowadzane dane były kompletne i poprawne, a dostęp do nich łatwy i szybki. Aplikacja przeprowadza walidację danych (m.in. adresów email, numerów NIP i REGON). Sprawdza czy wymagane pola zostały wypełnione oraz czy format danych jest prawidłowy. W razie potrzeby dokonuje korekty przed zapisem.
+
+### Zrzuty ekranu
+
+![Strona główna](screenshots/home.png)
