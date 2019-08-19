@@ -170,6 +170,49 @@
   </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">Podobne</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <table id="companies" class="table table-striped">
+          <thead>
+            <tr>
+              <th class="col-sm-1">#</th>
+              <th class="col-sm-5">Nazwa firmy</th>
+              <th class="col-sm-2">Miasto</th>
+              <th class="col-sm-2">Województwo</th>
+              <th class="col-sm-2">Rekomendacje</th>
+            </tr>
+          </thead>
+          <tbody>
+          % for similar_company in similar_companies:
+            <tr>
+              <td>
+              % if similar_company in user_marker:
+                <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}" checked>
+              % else:
+                <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}">
+              % endif
+              </td>
+              <td>
+              % if similar_company in user_upvotes:
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+              % endif
+                <a href="${request.route_url('company_view', company_id=similar_company.id, slug=similar_company.slug)}">${similar_company.name}</a>
+              </td>
+              <td>${similar_company.city}</td>
+              <td>${voivodeships.get(similar_company.voivodeship)}</td>
+              <td><a href="${request.route_url('company_upvotes', company_id=similar_company.id, slug=similar_company.slug)}">Pokaż</a> (${similar_company.upvote_count})</td>
+            </tr>
+          % endfor
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

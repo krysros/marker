@@ -73,3 +73,8 @@
 
 - Use SQLite as default database
 - Update README
+
+Unreleased
+----------
+
+- Suggest similar companies

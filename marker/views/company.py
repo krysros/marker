@@ -1,6 +1,9 @@
 import re
 import logging
 from operator import mul
+from collections import Counter
+from sqlalchemy import func
+
 from pyramid.view import view_config
 from pyramid.httpexceptions import (
     HTTPFound,
@@ -263,10 +266,36 @@ class CompanyView(object):
         voivodeships = dict(VOIVODESHIPS)
         upvote = company in self.request.user.upvotes
         marker = company in self.request.user.marker
+
+        # Suggest similar companies.
+        # TODO Reimplement as SQL query.
+        company_branches_ids = [obj.id for obj in company.branches]
+        similar_companies_ids = [self.request.dbsession.query(Company.id).\
+            filter(Company.branches.any(id=branch_id)).all() for branch_id in company_branches_ids]
+        similar_companies_ids = [item[0] for sublist in similar_companies_ids for item in sublist]
+        counter = Counter(similar_companies_ids)
+        most_common_ids = counter.most_common()
+        similar_ids = [item[0] for item in most_common_ids]
+        similar_ids.remove(company.id)
+        similar_companies = [self.request.dbsession.query(Company).filter_by(id=company_id).one() for company_id in similar_ids]
+
+        try:
+            user_upvotes = self.request.user.upvotes
+        except AttributeError:
+            user_upvotes = []
+
+        try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
         return dict(
             company=company,
             upvote=upvote,
             marker=marker,
+            user_upvotes=user_upvotes,
+            user_marker=user_marker,
+            similar_companies=similar_companies,
             voivodeships=voivodeships,
             )
 
