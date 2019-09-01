@@ -1,7 +1,6 @@
 import re
 import logging
 from operator import mul
-from collections import Counter
 from sqlalchemy import func
 
 from pyramid.view import view_config
@@ -267,17 +266,12 @@ class CompanyView(object):
         upvote = company in self.request.user.upvotes
         marker = company in self.request.user.marker
 
-        # Suggest similar companies.
-        # TODO Reimplement as SQL query.
-        company_branches_ids = [obj.id for obj in company.branches]
-        similar_companies_ids = [self.request.dbsession.query(Company.id).\
-            filter(Company.branches.any(id=branch_id)).all() for branch_id in company_branches_ids]
-        similar_companies_ids = [item[0] for sublist in similar_companies_ids for item in sublist]
-        counter = Counter(similar_companies_ids)
-        most_common_ids = counter.most_common()
-        similar_ids = [item[0] for item in most_common_ids]
-        similar_ids.remove(company.id)
-        similar_companies = [self.request.dbsession.query(Company).filter_by(id=company_id).one() for company_id in similar_ids]
+        similar_companies = self.request.dbsession.query(Company).\
+            join(Branch, Company.branches).\
+            filter(Branch.companies.any(Company.id == company.id)).\
+            group_by(Company).\
+            order_by(func.count(Branch.companies.any(Company.id == company.id)).desc()).\
+            limit(100)
 
         try:
             user_upvotes = self.request.user.upvotes

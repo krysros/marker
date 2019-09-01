@@ -187,6 +187,7 @@
           </thead>
           <tbody>
           % for similar_company in similar_companies:
+            % if similar_company.id != company.id:
             <tr>
               <td>
               % if similar_company in user_marker:
@@ -205,6 +206,7 @@
               <td>${voivodeships.get(similar_company.voivodeship)}</td>
               <td><a href="${request.route_url('company_upvotes', company_id=similar_company.id, slug=similar_company.slug)}">Pokaż</a> (${similar_company.upvote_count})</td>
             </tr>
+            % endif
           % endfor
           </tbody>
         </table>
