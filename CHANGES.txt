@@ -74,7 +74,7 @@
 - Use SQLite as default database
 - Update README
 
-Unreleased
-----------
+0.9.5
+-----
 
 - Suggest similar companies
