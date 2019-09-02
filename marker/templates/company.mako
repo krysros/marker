@@ -186,32 +186,35 @@
             </tr>
           </thead>
           <tbody>
-          % for similar_company in similar_companies:
-            % if similar_company.id != company.id:
-            <tr>
-              <td>
-              % if similar_company in user_marker:
-                <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}" checked>
-              % else:
-                <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}">
-              % endif
-              </td>
-              <td>
-              % if similar_company in user_upvotes:
-                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-              % endif
-                <a href="${request.route_url('company_view', company_id=similar_company.id, slug=similar_company.slug)}">${similar_company.name}</a>
-              </td>
-              <td>${similar_company.city}</td>
-              <td>${voivodeships.get(similar_company.voivodeship)}</td>
-              <td><a href="${request.route_url('company_upvotes', company_id=similar_company.id, slug=similar_company.slug)}">Pokaż</a> (${similar_company.upvote_count})</td>
-            </tr>
+          % for similar_company in paginator.items:
+          <tr>
+            <td>
+            % if similar_company in user_marker:
+              <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}" checked>
+            % else:
+              <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}">
             % endif
+            </td>
+            <td>
+            % if similar_company in user_upvotes:
+              <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            % endif
+              <a href="${request.route_url('company_view', company_id=similar_company.id, slug=similar_company.slug)}">${similar_company.name}</a>
+            </td>
+            <td>${similar_company.city}</td>
+            <td>${voivodeships.get(similar_company.voivodeship)}</td>
+            <td><a href="${request.route_url('company_upvotes', company_id=similar_company.id, slug=similar_company.slug)}">Pokaż</a> (${similar_company.upvote_count})</td>
+          </tr>
           % endfor
           </tbody>
         </table>
       </div>
     </div>
+  </div>
+  <div class="text-center">
+    <ul class="pagination">
+      ${paginator.pager() | n}
+    </ul>
   </div>
 </div>
 

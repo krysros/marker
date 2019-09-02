@@ -2,6 +2,7 @@ import re
 import logging
 from operator import mul
 from sqlalchemy import func
+from sqlalchemy import and_
 
 from pyramid.view import view_config
 from pyramid.httpexceptions import (
@@ -261,6 +262,7 @@ class CompanyView(object):
         permission='view'
     )
     def view(self):
+        page = self.request.params.get('page', 1)
         company = self.request.context.company
         voivodeships = dict(VOIVODESHIPS)
         upvote = company in self.request.user.upvotes
@@ -268,10 +270,12 @@ class CompanyView(object):
 
         similar_companies = self.request.dbsession.query(Company).\
             join(Branch, Company.branches).\
-            filter(Branch.companies.any(Company.id == company.id)).\
+            filter(and_(Branch.companies.any(Company.id == company.id),
+                        Company.id.isnot(company.id))).\
             group_by(Company).\
-            order_by(func.count(Branch.companies.any(Company.id == company.id)).desc()).\
-            limit(100)
+            order_by(func.count(Branch.companies.any(Company.id == company.id)).desc())
+
+        paginator = get_paginator(self.request, similar_companies, page=page)
 
         try:
             user_upvotes = self.request.user.upvotes
@@ -289,7 +293,7 @@ class CompanyView(object):
             marker=marker,
             user_upvotes=user_upvotes,
             user_marker=user_marker,
-            similar_companies=similar_companies,
+            paginator=paginator,
             voivodeships=voivodeships,
             )
 
