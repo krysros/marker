@@ -271,7 +271,7 @@ class CompanyView(object):
         similar_companies = self.request.dbsession.query(Company).\
             join(Branch, Company.branches).\
             filter(and_(Branch.companies.any(Company.id == company.id),
-                        Company.id.isnot(company.id))).\
+                        Company.id != company.id)).\
             group_by(Company).\
             order_by(func.count(Branch.companies.any(Company.id == company.id)).desc())
 
