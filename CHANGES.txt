@@ -78,3 +78,8 @@
 -----
 
 - Suggest similar companies
+
+0.9.6
+-----
+
+- Add categories
