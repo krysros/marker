@@ -52,6 +52,7 @@ class Company(Base):
     nip = Column(Unicode(20))
     regon = Column(Unicode(20))
     krs = Column(Unicode(20))
+    category = Column(Unicode(10))
     branches = relationship('Branch', secondary=companies_branches,
                             backref='companies')
     people = relationship('Person', secondary=companies_persons,
@@ -68,7 +69,7 @@ class Company(Base):
 
     def __init__(self, name, city, voivodeship,
                  phone, email, www, nip, regon, krs,
-                 branches, people):
+                 category, branches, people):
         self.name = name
         self.city = city
         self.voivodeship = voivodeship
@@ -78,6 +79,7 @@ class Company(Base):
         self.nip = nip
         self.regon = regon
         self.krs = krs
+        self.category = category
         self.branches = branches
         self.people = people
 

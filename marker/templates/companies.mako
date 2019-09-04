@@ -29,8 +29,8 @@
           </tr>
         </thead>
         <tbody>
-        % for company in paginator.items:
-          <tr>
+          % for company in paginator.items:
+          <tr class="${company.category}">
             <td>
             % if company in user_marker:
               <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}" checked>
@@ -52,7 +52,7 @@
             % endif
             <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
           </tr>
-        % endfor
+          % endfor
         </tbody>
       </table>
     </div>

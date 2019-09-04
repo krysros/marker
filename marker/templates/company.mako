@@ -1,13 +1,5 @@
 <%inherit file="layout.mako"/>
 
-<% list_of_branches = [branch.name.lower() for branch in company.branches] %>
-
-% if 'blacklist' in list_of_branches:
-  <div class="alert alert-warning" role="alert">
-    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Firma znajduje się na czarnej liście!
-  </div>
-% endif
-
 <div class="panel panel-default">
   <div class="panel-body">
     <button class="btn btn-default js-mark" value="${company.id}">
@@ -32,7 +24,7 @@
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-${company.category}">
   <div class="panel-heading"><i class="fa fa-industry" aria-hidden="true"></i> Firma</div>
   <div class="panel-body">
     <h1>${company.name}</h1>
@@ -187,7 +179,7 @@
           </thead>
           <tbody>
           % for similar_company in paginator.items:
-          <tr>
+          <tr class="${similar_company.category}">
             <td>
             % if similar_company in user_marker:
               <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}" checked>

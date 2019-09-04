@@ -14,7 +14,7 @@
         </thead>
         <tbody>
         % for company in paginator.items:
-          <tr>
+          <tr class="${company.category}">
             <td>
             % if company in user_marker:
               <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}" checked>

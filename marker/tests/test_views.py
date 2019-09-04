@@ -54,11 +54,11 @@ class BaseTest:
 
     def make_company(self, name, city, voivodeship,
                      phone, email, www, nip, regon, krs,
-                     branches, people):
+                     category, branches, people):
         from ..models import Company
         return Company(name, city, voivodeship,
                        phone, email, www, nip, regon, krs,
-                       branches, people)
+                       category, branches, people)
 
 
 class TestViewHome:
@@ -112,6 +112,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -125,6 +126,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -156,6 +158,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -169,6 +172,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -201,6 +205,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -214,6 +219,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -246,6 +252,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )
@@ -259,6 +266,7 @@ class TestBranch(BaseTest):
             nip='',
             regon='',
             krs='',
+            category='default',
             branches=[foo],
             people=[],
             )

@@ -17,7 +17,7 @@ Aplikacja dla Generalnych Wykonawców usprawniająca proces ofertowania i analiz
 
 ### Dlaczego Marker?
 
-Nazwa Marker pochodzi od angielskiego czasownika *mark*. Jedną z podstawowych funkcjonalności aplikacji jest możliwość zaznaczania przez użytkowników rekomendowanych pozycji za pomocą przycisku 👍. Dzięki temu z gąszczu danych można w szybki sposób wybrać te najbardziej interesujące, np. firmy z wybranej branży posortowane wg liczby rekomendacji.
+Nazwa Marker pochodzi od angielskiego czasownika *mark*. Jedną z podstawowych funkcjonalności aplikacji jest możliwość zaznaczania przez użytkowników rekomendowanych pozycji za pomocą przycisku 👍. Dzięki temu z gąszczu danych można w szybki sposób wybrać te najbardziej interesujące, np. firmy z wybranej branży posortowane wg liczby rekomendacji. Dodatkowo firmy można przypisywać do kategorii oznaczonych kolorami, np. kategoria czerwona możne oznaczać firmy znadujące się na *czarnej liście*, a  pomarańczowa firmy konkurencyjne.
 
 ### Dlaczego nie Excel?
 

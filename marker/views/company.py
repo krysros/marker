@@ -24,6 +24,7 @@ from ..models import (
 
 from ..paginator import get_paginator
 from .voivodeships import VOIVODESHIPS
+from .categories import CATEGORIES
 
 
 log = logging.getLogger(__name__)
@@ -208,6 +209,12 @@ class CompanyView(object):
                 preparer=[strip_whitespace, remove_multiple_spaces, remove_dashes_and_spaces],
                 validator=validate_krs,
                 )
+            category = colander.SchemaNode(
+                colander.String(),
+                title='Kategoria',
+                missing='',
+                widget=deform.widget.SelectWidget(values=CATEGORIES),
+                )
             branches = Branches(title="Branże")
             people = People(title="Osoby do kontaktu")
 
@@ -347,6 +354,7 @@ class CompanyView(object):
                     nip=appstruct['nip'],
                     regon=appstruct['regon'],
                     krs=appstruct['krs'],
+                    category=appstruct['category'],
                     branches=self._get_branches(appstruct),
                     people=self._get_people(appstruct),
                     )
@@ -393,6 +401,7 @@ class CompanyView(object):
                 company.nip = appstruct['nip']
                 company.regon = appstruct['regon']
                 company.krs = appstruct['krs']
+                company.category = appstruct['category']
                 company.branches = self._get_branches(appstruct)
                 company.people = self._get_people(appstruct)
                 company.edited_by = self.request.user
@@ -426,6 +435,7 @@ class CompanyView(object):
             nip=company.nip,
             regon=company.regon,
             krs=company.krs,
+            category=company.category,
             branches=branches,
             people=people,
         )
