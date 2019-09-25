@@ -11,7 +11,7 @@ def export_to_xlsx(companies):
 
     # Write rows.
     header = ['Firma', 'Miasto', 'Województwo', 'Rekomendacje',
-                'Imię i nazwisko', 'Stanowisko', 'Telefon', 'Email']
+              'Imię i nazwisko', 'Stanowisko', 'Telefon', 'Email', 'WWW']
 
     for j, col in enumerate(header):
         worksheet.write(0, j, col)
@@ -20,7 +20,7 @@ def export_to_xlsx(companies):
     for company in companies:
         cols = [company.name, company.city, company.voivodeship,
                 company.upvote_count, '', 'BIURO',
-                company.phone, company.email]
+                company.phone, company.email, company.www]
         for j, col in enumerate(cols):
             worksheet.write(i, j, col)
         i += 1
