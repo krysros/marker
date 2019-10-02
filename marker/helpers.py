@@ -28,7 +28,7 @@ def export_to_xlsx(companies):
             cols = [company.name, company.city,
                     company.voivodeship, company.upvote_count,
                     person.fullname, person.position,
-                    person.phone, person.email]
+                    person.phone, person.email, company.www]
             for j, col in enumerate(cols):
                 worksheet.write(i, j, col)
             i += 1
