@@ -272,8 +272,6 @@ class CompanyView(object):
         page = self.request.params.get('page', 1)
         company = self.request.context.company
         voivodeships = dict(VOIVODESHIPS)
-        upvote = company in self.request.user.upvotes
-        marker = company in self.request.user.marker
 
         similar_companies = self.request.dbsession.query(Company).\
             join(Branch, Company.branches).\
@@ -293,6 +291,9 @@ class CompanyView(object):
             user_marker = self.request.user.marker
         except AttributeError:
             user_marker = []
+
+        upvote = company in user_upvotes
+        marker = company in user_marker
 
         return dict(
             company=company,
@@ -486,12 +487,17 @@ class CompanyView(object):
     )
     def mark(self):
         company = self.request.context.company
-        if company in self.request.user.marker:
+        try:
+            user_marker = self.request.user.marker
+        except AttributeError:
+            user_marker = []
+
+        if company in user_marker:
             self.request.user.marker.remove(company)
-            return {'marker': False}
+            return {'marked': False}
         else:
             self.request.user.marker.append(company)
-            return {'marker': True}
+            return {'marked': True}
 
     @view_config(
         route_name='company_upvotes',

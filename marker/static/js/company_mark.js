@@ -8,7 +8,7 @@ $(function() {
       dataType: 'json',
       headers: {'X-CSRF-Token': csrfToken},
       success: function(data) {
-        if (data.marker) {
+        if (data.marked) {
           $('.marker').removeClass('fa-square-o').addClass('fa-check-square-o');
           target.prop('checked', true);
         } else {
