@@ -182,9 +182,9 @@
           <tr class="${similar_company.category}">
             <td>
             % if similar_company in user_marker:
-              <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}" checked>
+              <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off" checked>
             % else:
-              <input class="js-mark" type="checkbox" id="marker" name="marker" value="${similar_company.id}">
+              <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off">
             % endif
             </td>
             <td>

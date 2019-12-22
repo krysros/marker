@@ -56,9 +56,9 @@
             <tr class="${company.category}">
               <td>
               % if company in user_marker:
-                <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}" checked>
+                <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off" checked>
               % else:
-                <input class="js-mark" type="checkbox" id="marker" name="marker" value="${company.id}">
+                <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off">
               % endif
               </td>
               <td>
