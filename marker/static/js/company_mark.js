@@ -9,10 +9,8 @@ $(function() {
       headers: {'X-CSRF-Token': csrfToken},
       success: function(data) {
         if (data.marked) {
-          $('.marker').removeClass('fa-square-o').addClass('fa-check-square-o');
           target.prop('checked', true);
         } else {
-          $('.marker').removeClass('fa-check-square-o').addClass('fa-square-o');
           target.prop('checked', false);
         }
       },

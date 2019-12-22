@@ -2,13 +2,13 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <button class="btn btn-default js-mark" value="${company.id}">
+    <label class="btn btn-default">
     % if marker:
-      <span class="marker fa fa-check-square-o fa-lg"></span>
+      <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off" checked>
     % else:
-      <span class="marker fa fa-square-o fa-lg"></span>
+      <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off">
     % endif
-    </button>
+    </label>
     <button class="btn btn-default js-upvote" value="${company.id}">
     % if upvote:
       <span class="upvote fa fa-thumbs-up fa-lg"></span>
