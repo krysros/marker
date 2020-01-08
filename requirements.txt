@@ -16,7 +16,7 @@ iso8601==0.1.12
 isort==4.3.21
 lazy-object-proxy==1.4.3
 Mako==1.1.0
--e git+https://github.com/krysros/marker.git@cee0af4088a34f715057171b9b616f7dc24a261f#egg=marker
+-e git+https://github.com/krysros/marker.git@269cc0f37325354a40cda12ba5e17d2afbc0d72f#egg=marker
 MarkupSafe==1.1.1
 mccabe==0.6.1
 more-itertools==8.0.2
@@ -52,7 +52,7 @@ transaction==3.0.0
 translationstring==1.3
 typed-ast==1.4.0
 venusian==3.0.0
-waitress==1.4.1
+waitress==1.4.2
 wcwidth==0.1.7
 WebOb==1.8.5
 WebTest==2.0.33
