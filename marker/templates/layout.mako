@@ -127,7 +127,7 @@
       <div class="container">
         <hr>
         <p class="pull-right"><a href="#top"><i class="fa fa-arrow-up"></i> Do góry</a></p>
-        <p><i class="fa fa-copyright"></i> Krystian Rosiński 2018</p>
+        <p><i class="fa fa-copyright"></i> Krystian Rosiński 2020</p>
       </div>
     </footer>
   </body>
