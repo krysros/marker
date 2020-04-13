@@ -39,6 +39,14 @@ companies_persons = Table(
            ForeignKey('persons.id', onupdate='CASCADE', ondelete='CASCADE'))
 )
 
+companies_comments = Table(
+    'companies_comments', Base.metadata,
+    Column('company_id', Integer,
+           ForeignKey('companies.id', onupdate='CASCADE', ondelete='CASCADE')),
+    Column('comment_id', Integer,
+           ForeignKey('comments.id', onupdate='CASCADE', ondelete='CASCADE')) 
+)
+
 
 class Company(Base):
     __tablename__ = 'companies'
@@ -59,6 +67,8 @@ class Company(Base):
                           cascade='all, delete-orphan',
                           single_parent=True, lazy='subquery',
                           backref=backref('companies', uselist=False))
+    comments = relationship('Comment', secondary=companies_comments,
+                            backref='companies')
     added = Column(DateTime, default=datetime.datetime.now)
     edited = Column(DateTime, default=datetime.datetime.now,
                     onupdate=datetime.datetime.now)

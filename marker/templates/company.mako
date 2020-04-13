@@ -18,6 +18,7 @@
     </button>
     <a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}" class="btn btn-default" role="button">Kto poleca?</a>
     <div class="pull-right">
+      <a href="${request.route_url('comment_add', company_id=company.id)}" class="btn btn-info" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Komentarz</a>
       <a href="${request.route_url('company_edit', company_id=company.id, slug=company.slug)}" class="btn btn-warning" role="button"><i class="fa fa-edit" aria-hidden="true"></i> Edytuj</a>
       <a data-toggle="modal" href="#deleteModal" class="btn btn-danger" role="button"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
     </div>
@@ -142,6 +143,22 @@
     </div>
   </div>
 </div>
+
+% for comment in company.comments:
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <i class="fa fa-comment" aria-hidden="true"></i> <a href="${request.route_url('user_view', username=comment.added_by.username, what='info')}">${comment.added_by.username}</a> ${comment.added.strftime('%Y-%m-%d %H:%M:%S')}
+    % if comment.added_by == request.user or request.user.username == 'admin':
+    <a href="${request.route_url('comment_delete', company_id=company.id, comment_id=comment.id)}">Usuń</a>
+    % endif
+  </div>
+  <div class="panel-body">
+    <p>  
+      ${comment.comment}
+    </p>    
+  </div>
+</div>
+% endfor
 
 <div class="panel panel-default">
   <div class="panel-heading"><i class="fa fa-clock-o" aria-hidden="true"></i> Data modyfikacji</div>

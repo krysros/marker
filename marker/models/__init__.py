@@ -14,6 +14,7 @@ from .investor import Investor  # noqa
 from .tender import Tender  # noqa
 from .offer import Offer  # noqa
 from .person import Person  # noqa
+from .comment import Comment  # noqa
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup

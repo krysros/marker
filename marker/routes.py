@@ -9,6 +9,7 @@ from .models import (
     User,
     Branch,
     Company,
+    Comment,
     Investor,
     Tender,
     Offer,
@@ -73,6 +74,10 @@ def includeme(config):
                      factory=company_factory)
     config.add_route('company_mark', '/mark/company/{company_id:\d+}',
                      factory=company_factory)
+    config.add_route('comment_add', '/company/{company_id:\d+}/comment/add',
+                     factory=company_factory)
+    config.add_route('comment_delete', '/company/{company_id:\d+}/comment/{comment_id:\d+}/delete',
+                     factory=comment_factory)
 
     config.add_route('person_search', '/person/search',
                      factory=default_factory)
@@ -177,6 +182,12 @@ class CompanyResource(DefaultResource):
         self.company = company
 
 
+class CommentResource(DefaultResource):
+    def __init__(self, company, comment):
+        self.company = company
+        self.comment = comment
+
+
 class InvestorResource(DefaultResource):
     def __init__(self, investor):
         self.investor = investor
@@ -231,6 +242,20 @@ def company_factory(request):
     if not company:
         raise HTTPNotFound
     return CompanyResource(company)
+
+
+def comment_factory(request):
+    company_id = request.matchdict['company_id']
+    comment_id = request.matchdict['comment_id']
+    query_1 = request.dbsession.query(Company)
+    company = query_1.filter_by(id=company_id).one_or_none()
+    query_2 = request.dbsession.query(Comment)
+    comment = query_2.filter_by(id=comment_id).one_or_none()
+    if not company:
+        raise HTTPNotFound
+    if not comment:
+        raise HTTPNotFound
+    return CommentResource(company, comment)
 
 
 def investor_factory(request):
