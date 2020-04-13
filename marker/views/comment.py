@@ -63,7 +63,7 @@ class CommentView(object):
         reqts = form.get_widget_resources()
 
         return dict(
-            heading=f'Dodaj komentarz dot. firmy {company.name}',
+            heading=f'Komentarz dot. firmy {company.name}',
             rendered_form=rendered_form,
             css_links=reqts['css'],
             js_links=reqts['js'],
