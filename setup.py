@@ -35,7 +35,7 @@ tests_require = [
     ]
 
 setup(name='marker',
-      version='0.9.7',
+      version='0.9.8',
       description='marker',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[

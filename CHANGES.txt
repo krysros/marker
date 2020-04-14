@@ -88,3 +88,8 @@
 -----
 
 - Off autocomplete for marker checkboxes
+
+0.9.8
+-----
+
+- Add comments to companies
