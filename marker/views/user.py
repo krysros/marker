@@ -15,6 +15,7 @@ from ..models import (
     marker,
     upvotes,
     Company,
+    Comment,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -96,8 +97,13 @@ class UserView(object):
         permission='view'
     )
     def view(self):
+        page = self.request.params.get('page', 1)
         user = self.request.context.user
-        return {'user': user}
+        results = self.request.dbsession.query(Comment).\
+            filter(Comment.added_by == user).\
+            order_by(Comment.added.desc())
+        paginator = get_paginator(self.request, results, page=page)
+        return {'user': user, 'paginator': paginator}
 
     @view_config(
         route_name='user_add',

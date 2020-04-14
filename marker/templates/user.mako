@@ -24,6 +24,25 @@
   </div>
 </div>
 
+% for comment in paginator.items:
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <i class="fa fa-comment" aria-hidden="true"></i> <a href="${request.route_url('company_view', company_id=comment.companies[0].id, slug=comment.companies[0].slug)}">${comment.companies[0].name}</a> ${comment.added.strftime('%Y-%m-%d %H:%M:%S')}
+  </div>
+  <div class="panel-body">
+    <p>  
+      ${comment.comment}
+    </p>    
+  </div>
+</div>
+% endfor
+
+<div class="text-center">
+  <ul class="pagination">
+    ${paginator.pager() | n}
+  </ul>
+</div>
+
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
