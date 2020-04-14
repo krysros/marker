@@ -21,7 +21,7 @@ def upgrade():
     op.create_table(
         'comments',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('comments', sa.Text),
+        sa.Column('comment', sa.Text),
         sa.Column('added', sa.DateTime, default=datetime.datetime.now),
         sa.Column('submitter_id', sa.Integer, sa.ForeignKey('users.id', ondelete='SET NULL')),
     )
