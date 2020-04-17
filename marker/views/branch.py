@@ -182,6 +182,7 @@ class BranchView(object):
                 rendered_form = e.render()
             else:
                 branch = Branch(appstruct['name'])
+                branch.added_by = self.request.user
                 self.request.dbsession.add(branch)
                 self.request.session.flash('success:Dodano do bazy danych')
                 log.info(f'Użytkownik {self.request.user.username} dodał branżę {branch.name}')
@@ -213,7 +214,8 @@ class BranchView(object):
                 rendered_form = e.render()
             else:
                 branch.name = appstruct['name']
-                self.request.session.flash('success:Nazwa branży została zmieniona')
+                branch.edited_by = self.request.user
+                self.request.session.flash('success:Zmiany zostały zapisane')
                 log.info(f'Użytkownik {self.request.user.username} zmienił nazwę branży {branch.name}')
                 return HTTPFound(location=self.request.route_url('branch_edit',
                                                                  branch_id=branch.id,

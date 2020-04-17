@@ -23,13 +23,15 @@
       <table id="tenders" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-12">Nazwa</th>
+            <th class="col-sm-9">Nazwa</th>
+            <th class="col-sm-3">Miasto</th>
           </tr>
         </thead>
         <tbody>
         % for tender in investor.tenders:
           <tr>
             <td><a href="${request.route_url('tender_view', tender_id=tender.id, slug=tender.slug)}">${tender.name}</a></td>
+            <td>${tender.city}</td>
           </tr>
         % endfor
         </tbody>

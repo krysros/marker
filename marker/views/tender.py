@@ -182,7 +182,7 @@ class TenderView(object):
                 tender.link = appstruct['link']
                 tender.deadline = appstruct['deadline']
                 tender.edited_by = self.request.user
-                self.request.session.flash('success:Dane przetargu zostały zmienione')
+                self.request.session.flash('success:Zmiany zostały zapisane')
                 log.info(f'Użytkownik {self.request.user.username} zmienił dane przetargu {tender.name}')
                 return HTTPFound(location=self.request.route_url('tender_edit',
                                                                  tender_id=tender.id,

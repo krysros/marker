@@ -14,8 +14,12 @@ from ..models import (
     User,
     marker,
     upvotes,
+    Branch,
     Company,
     Comment,
+    Offer,
+    Investor,
+    Tender,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
@@ -97,13 +101,37 @@ class UserView(object):
         permission='view'
     )
     def view(self):
+        rel = self.request.params.get('rel', 'comments')
         page = self.request.params.get('page', 1)
         user = self.request.context.user
-        results = self.request.dbsession.query(Comment).\
-            filter(Comment.added_by == user).\
-            order_by(Comment.added.desc())
+        if rel == 'comments':
+            results = self.request.dbsession.query(Comment).\
+                filter(Comment.added_by == user).\
+                order_by(Comment.added.desc())
+        elif rel == 'branches':
+            results = self.request.dbsession.query(Branch).\
+                filter(Branch.added_by == user).\
+                order_by(Branch.added.desc())
+        elif rel == 'companies':
+            results = self.request.dbsession.query(Company).\
+                filter(Company.added_by == user).\
+                order_by(Company.added.desc())
+        elif rel == 'offers':
+            results = self.request.dbsession.query(Offer).\
+                filter(Offer.added_by == user).\
+                order_by(Offer.added.desc())
+        elif rel == 'investors':
+            results = self.request.dbsession.query(Investor).\
+                filter(Investor.added_by == user).\
+                order_by(Investor.added.desc())
+        elif rel == 'tenders':
+            results = self.request.dbsession.query(Tender).\
+                filter(Tender.added_by == user).\
+                order_by(Tender.added.desc())
+        else:
+            raise HTTPNotFound
         paginator = get_paginator(self.request, results, page=page)
-        return {'user': user, 'paginator': paginator}
+        return {'user': user, 'rel': rel, 'paginator': paginator}
 
     @view_config(
         route_name='user_add',

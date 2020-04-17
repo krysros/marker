@@ -36,6 +36,12 @@ class InvestorView(object):
                 validator=colander.All(
                     colander.Length(min=3, max=100), check_name)
                 )
+            city = colander.SchemaNode(
+                colander.String(),
+                title='Miasto',
+                missing='',
+                validator=colander.Length(max=100),
+                )
 
         schema = Schema().bind(request=self.request)
         submit_btn = deform.form.Button(name='submit', title='Zapisz')
@@ -78,7 +84,11 @@ class InvestorView(object):
             except deform.exception.ValidationFailure as e:
                 rendered_form = e.render()
             else:
-                investor = Investor(appstruct['name'])
+                investor = Investor(
+                    name=appstruct['name'],
+                    city=appstruct['city'],
+                    )
+                investor.added_by = self.request.user
                 self.request.dbsession.add(investor)
                 self.request.session.flash('success:Dodano do bazy danych')
                 log.info(f'Użytkownik {self.request.user.username} dodał inwestora {investor.name}')
@@ -110,12 +120,14 @@ class InvestorView(object):
                 rendered_form = e.render()
             else:
                 investor.name = appstruct['name']
-                self.request.session.flash('success:Nazwa inwestora została zmieniona')
+                investor.city = appstruct['city']
+                investor.edited_by = self.request.user
+                self.request.session.flash('success:Zmiany zostały zapisane')
                 log.info(f'Użytkownik {self.request.user.username} zmienił nazwę inwestora {investor.name}')
                 return HTTPFound(location=self.request.route_url('investor_edit',
                                                                  investor_id=investor.id,
                                                                  slug=investor.slug))
-        appstruct = {'name': investor.name}
+        appstruct = {'name': investor.name, 'city': investor.city}
         if rendered_form is None:
             rendered_form = form.render(appstruct=appstruct)
 

@@ -131,6 +131,7 @@ class OfferView(object):
                     branch=self._get_branch(appstruct['branch']),
                     tender=self._get_tender(appstruct['tender']),
                     )
+                offer.added_by = self.request.user
                 self.request.dbsession.add(offer)
                 self.request.session.flash('success:Dodano do bazy danych')
                 log.info(f'Użytkownik {self.request.user.username} dodał ofertę firmy {offer.company.name}')
@@ -168,7 +169,7 @@ class OfferView(object):
                 offer.branch = self._get_branch(appstruct['branch'])
                 offer.tender = self._get_tender(appstruct['tender'])
                 offer.edited_by = self.request.user
-                self.request.session.flash('success:Dane oferty zostały zmienione')
+                self.request.session.flash('success:Zmiany zostały zapisane')
                 log.info(f'Użytkownik {self.request.user.username} zmienił ofertę firmy {offer.company.name}')
                 return HTTPFound(location=self.request.route_url('offer_view',
                                                                  offer_id=offer.id))
