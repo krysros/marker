@@ -3,6 +3,9 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="pull-right">
+      % if tender.link:
+        <a href="${tender.link}" class="btn btn-info" role="button" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Ogłoszenie</a>
+      % endif
       <a href="${request.route_url('tender_edit', tender_id=tender.id, slug=tender.slug)}" class="btn btn-warning" role="button"><i class="fa fa-edit" aria-hidden="true"></i> Edytuj</a>
       <a data-toggle="modal" href="#deleteModal" class="btn btn-danger" role="button"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
     </div>

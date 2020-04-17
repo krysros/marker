@@ -67,6 +67,13 @@ class TenderView(object):
                 widget=investor_widget,
                 validator=check_investor,
                 )
+            link = colander.SchemaNode(
+                colander.String(),
+                title='Link',
+                missing='',
+                validaror=colander.All(
+                    colander.url, colander.Length(max=2000)),
+                )
             deadline = colander.SchemaNode(
                 colander.Date(),
                 widget=deform.widget.DatePartsWidget(),
@@ -132,6 +139,7 @@ class TenderView(object):
                     name=appstruct['name'],
                     city=appstruct['city'],
                     investor=self._get_investor(appstruct['investor']),
+                    link=appstruct['link'],
                     deadline=appstruct['deadline'],
                     )
                 tender.added_by = self.request.user
@@ -171,6 +179,7 @@ class TenderView(object):
                 tender.name = appstruct['name']
                 tender.city = appstruct['city']
                 tender.investor = self._get_investor(appstruct['investor'])
+                tender.link = appstruct['link']
                 tender.deadline = appstruct['deadline']
                 tender.edited_by = self.request.user
                 self.request.session.flash('success:Dane przetargu zostały zmienione')
@@ -182,6 +191,7 @@ class TenderView(object):
             'name': tender.name,
             'city': tender.city,
             'investor': tender.investor.name if tender.investor else '',
+            'link': tender.link,
             'deadline': tender.deadline
             }
 
