@@ -9,6 +9,7 @@ from ..models import (
     Branch,
     Company,
     Investor,
+    Tender,
 )
 
 from ..models.company import companies_branches
@@ -70,6 +71,11 @@ def stats_view(request):
                                 join(investors_tenders).\
                                 group_by(Investor).\
                                 order_by(desc('ci'))
+    elif rel == 'tenders-cities':
+        data = request.dbsession.query(Tender.city, func.count(Tender.city).
+                                       label('tc')).\
+                                group_by(Tender.city).\
+                                order_by(desc('tc'))
     else:
         raise HTTPNotFound
 

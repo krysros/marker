@@ -12,7 +12,8 @@
              ('companies-upvotes', 'Rekomendacje'),
              ('companies-users', 'Użytkownicy'),
              ('offers-companies', 'Oferty'),
-             ('investors-tenders', 'Inwestorzy')]
+             ('investors-tenders', 'Inwestorzy'),
+             ('tenders-cities', 'Przetargi')]
 %>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -39,6 +40,8 @@
     <p>Zestawienie firm, które złożyły najwięcej ofert.</p>
   % elif rel == 'investors-tenders':
     <p>Zestawienie inwestorów, którzy zorganizowali najwięcej przetargów.</p>
+  % elif rel == 'tenders-cities':
+    <p>Zestawienie miast o największej liczbie przetargów.</p>
   % endif
   </div>
 </div>
