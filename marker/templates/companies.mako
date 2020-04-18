@@ -4,7 +4,7 @@
   <div class="panel-body">
     <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i> Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
+        Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <ul class="dropdown-menu" role="menu">
         <li><a href="${request.route_url('companies', _query={'sort': 'added'})}">wg daty dodania</a></li>
