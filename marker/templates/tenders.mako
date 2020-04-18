@@ -21,9 +21,9 @@
       <table id="tenders" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-6">Nazwa przetargu</th>
-            <th class="col-sm-3">Miasto</th>
-            <th class="col-sm-3">Termin składania ofert</th>
+            <th class="col-sm-8">Nazwa przetargu</th>
+            <th class="col-sm-2">Miasto</th>
+            <th class="col-sm-2">Termin składania ofert</th>
           </tr>
         </thead>
         <tbody>

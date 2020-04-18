@@ -1,6 +1,9 @@
 import logging
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import (
+    HTTPFound,
+    HTTPNotFound,
+    )
 
 import deform
 import colander
@@ -54,10 +57,21 @@ class InvestorView(object):
     )
     def all(self):
         page = self.request.params.get('page', 1)
-        query = self.request.dbsession.query(Investor)
-        investors = query.order_by(Investor.name)
+        query = self.request.params.get('sort', 'added')
+        if query == 'added':
+            investors = self.request.dbsession.query(Investor).\
+                order_by(Investor.id.desc())
+        elif query == 'edited':
+            investors = self.request.dbsession.query(Investor).\
+                order_by(Investor.edited.desc(), Investor.id)
+        elif query == 'alpha':
+            investors = self.request.dbsession.query(Investor).\
+                order_by(Investor.name, Investor.id)
+        else:
+            return HTTPNotFound()
+
         paginator = get_paginator(self.request, investors, page=page)
-        return {'paginator': paginator}
+        return {'paginator': paginator, 'query': query}
 
     @view_config(
         route_name='investor_view',

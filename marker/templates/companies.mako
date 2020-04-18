@@ -24,7 +24,11 @@
             <th class="col-sm-1">#</th>
             <th class="col-sm-5">Nazwa firmy</th>
             <th class="col-sm-2">Miasto</th>
-            <th class="col-sm-2">Data</th>
+            % if query == 'edited':
+            <th class="col-sm-2">Zmodyfikowano</th>
+            % else:
+            <th class="col-sm-2">Utworzono</th>
+            % endif
             <th class="col-sm-2">Rekomendacje</th>
           </tr>
         </thead>
@@ -46,9 +50,9 @@
             </td>
             <td>${company.city}</td>
             % if query == 'edited':
-              <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
+            <td>${company.edited.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % else:
-              <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
+            <td>${company.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
             % endif
             <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
           </tr>
