@@ -82,6 +82,7 @@
                 <li><a href="${request.route_url('tender_search')}"><i class="fa fa-briefcase" aria-hidden="true"></i> przetarg</a></li>
                 <li><a href="${request.route_url('person_search')}"><i class="fa fa-user-o" aria-hidden="true"></i> osobę</a></li>
                 <li><a href="${request.route_url('user_search')}"><i class="fa fa-user" aria-hidden="true"></i> użytkownika</a></li>
+                <li><a href="${request.route_url('comment_search')}"><i class="fa fa-comment" aria-hidden="true"></i> komentarz</a></li>
               </ul>
             </li>
           </ul>

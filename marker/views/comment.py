@@ -8,6 +8,7 @@ from deform.schema import CSRFSchema
 import colander
 
 from ..models import Comment
+from ..paginator import get_paginator
 
 
 log = logging.getLogger(__name__)
@@ -87,3 +88,25 @@ class CommentView(object):
             return HTTPFound(location=self.request.route_url('user_view', username=self.request.user.username))
         else:
             return HTTPFound(location=self.request.route_url('home'))
+
+    @view_config(
+        route_name='comment_search',
+        renderer='comment_search.mako',
+        permission='view'
+    )
+    def search(self):
+        return {}
+
+    @view_config(
+        route_name='comment_search_results',
+        renderer='comment_search_results.mako',
+        permission='view'
+    )
+    def search_results(self):
+        comment = self.request.params.get('comment')
+        page = self.request.params.get('page', 1)
+        results = self.request.dbsession.query(Comment).\
+            filter(Comment.comment.ilike('%' + comment + '%')).\
+            order_by(Comment.comment)
+        paginator = get_paginator(self.request, results, page=page)
+        return {'paginator': paginator}

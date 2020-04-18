@@ -78,6 +78,10 @@ def includeme(config):
                      factory=company_factory)
     config.add_route('comment_delete', '/comment/{comment_id:\d+}/delete',
                      factory=comment_factory)
+    config.add_route('comment_search', '/comment/search',
+                     factory=default_factory)
+    config.add_route('comment_search_results', '/comment/search/results',
+                     factory=default_factory)
 
     config.add_route('person_search', '/person/search',
                      factory=default_factory)
