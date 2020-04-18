@@ -74,6 +74,7 @@ def includeme(config):
                      factory=company_factory)
     config.add_route('company_mark', '/mark/company/{company_id:\d+}',
                      factory=company_factory)
+    config.add_route('comments', '/comments', factory=default_factory)
     config.add_route('comment_add', '/company/{company_id:\d+}/comment/add',
                      factory=company_factory)
     config.add_route('comment_delete', '/comment/{comment_id:\d+}/delete',

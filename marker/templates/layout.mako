@@ -107,12 +107,13 @@
                 <i class="fa fa-database" aria-hidden="true"></i> Baza danych <i class="fa fa-caret-down" aria-hidden="true"></i>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="${request.route_url('branches')}"><i class="fa fa-cube" aria-hidden="true"></i> Branże</a></li>
+                <li><a href="${request.route_url('branches')}"><i class="fa fa-cubes" aria-hidden="true"></i> Branże</a></li>
                 <li><a href="${request.route_url('companies')}"><i class="fa fa-industry" aria-hidden="true"></i> Firmy</a></li>
                 <li><a href="${request.route_url('investors')}"><i class="fa fa-euro" aria-hidden="true"></i> Inwestorzy</a></li>
                 <li><a href="${request.route_url('tenders')}"><i class="fa fa-briefcase" aria-hidden="true"></i> Przetargi</a></li>
                 <li><a href="${request.route_url('offers')}"><i class="fa fa-puzzle-piece" aria-hidden="true"></i> Oferty</a></li>
-                <li><a href="${request.route_url('users')}"><i class="fa fa-user" aria-hidden="true"></i> Użytkownicy</a></li>
+                <li><a href="${request.route_url('users')}"><i class="fa fa-users" aria-hidden="true"></i> Użytkownicy</a></li>
+                <li><a href="${request.route_url('comments')}"><i class="fa fa-comments" aria-hidden="true"></i> Komentarze</a></li>
               </ul>
             </li>
           </ul>

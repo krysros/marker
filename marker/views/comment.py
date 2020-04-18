@@ -32,6 +32,18 @@ class CommentView(object):
         return form
 
     @view_config(
+        route_name='comments',
+        renderer='comments.mako',
+        permission='view'
+    )
+    def all(self):
+        page = self.request.params.get('page', 1)
+        query = self.request.dbsession.query(Comment)
+        comments = query.order_by(Comment.added.desc())
+        paginator = get_paginator(self.request, comments, page=page)
+        return {'paginator': paginator}
+
+    @view_config(
         route_name='comment_add',
         renderer='form.mako',
         permission='edit'
