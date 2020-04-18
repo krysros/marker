@@ -75,9 +75,15 @@ class CommentView(object):
         permission='edit'
     )
     def delete(self):
-        company = self.request.context.company
         comment = self.request.context.comment
+        query = self.request.params['from']
+        company = comment.company
         self.request.dbsession.delete(comment)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.info(f'Użytkownik {self.request.user.username} usunął komentarz dot. firmy {company.name}')
-        return HTTPFound(location=self.request.route_url('company_view', company_id=company.id, slug=company.slug))
+        log.info(f'Użytkownik {self.request.user.username} usunął komentarz')
+        if query == 'company':
+            return HTTPFound(location=self.request.route_url('company_view', company_id=company.id, slug=company.slug))
+        elif query == 'user':
+            return HTTPFound(location=self.request.route_url('user_view', username=self.request.user.username))
+        else:
+            return HTTPFound(location=self.request.route_url('home'))

@@ -76,7 +76,7 @@ def includeme(config):
                      factory=company_factory)
     config.add_route('comment_add', '/company/{company_id:\d+}/comment/add',
                      factory=company_factory)
-    config.add_route('comment_delete', '/company/{company_id:\d+}/comment/{comment_id:\d+}/delete',
+    config.add_route('comment_delete', '/comment/{comment_id:\d+}/delete',
                      factory=comment_factory)
 
     config.add_route('person_search', '/person/search',
@@ -183,8 +183,7 @@ class CompanyResource(DefaultResource):
 
 
 class CommentResource(DefaultResource):
-    def __init__(self, company, comment):
-        self.company = company
+    def __init__(self, comment):
         self.comment = comment
 
 
@@ -245,17 +244,12 @@ def company_factory(request):
 
 
 def comment_factory(request):
-    company_id = request.matchdict['company_id']
     comment_id = request.matchdict['comment_id']
-    query_1 = request.dbsession.query(Company)
-    company = query_1.filter_by(id=company_id).one_or_none()
-    query_2 = request.dbsession.query(Comment)
-    comment = query_2.filter_by(id=comment_id).one_or_none()
-    if not company:
-        raise HTTPNotFound
+    query = request.dbsession.query(Comment)
+    comment = query.filter_by(id=comment_id).one_or_none()
     if not comment:
         raise HTTPNotFound
-    return CommentResource(company, comment)
+    return CommentResource(comment)
 
 
 def investor_factory(request):

@@ -66,9 +66,10 @@ class Company(Base):
     people = relationship('Person', secondary=companies_persons,
                           cascade='all, delete-orphan',
                           single_parent=True, lazy='subquery',
-                          backref=backref('companies', uselist=False))
+                          backref=backref('company', uselist=False))
     comments = relationship('Comment', secondary=companies_comments,
-                            backref='companies')
+                            single_parent=True, lazy='subquery',
+                            backref=backref('company', uselist=False))
     added = Column(DateTime, default=datetime.datetime.now)
     edited = Column(DateTime, default=datetime.datetime.now,
                     onupdate=datetime.datetime.now)
