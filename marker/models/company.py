@@ -68,6 +68,7 @@ class Company(Base):
                           single_parent=True, lazy='subquery',
                           backref=backref('company', uselist=False))
     comments = relationship('Comment', secondary=companies_comments,
+                            cascade='all, delete-orphan',
                             single_parent=True, lazy='subquery',
                             backref=backref('company', uselist=False))
     added = Column(DateTime, default=datetime.datetime.now)
