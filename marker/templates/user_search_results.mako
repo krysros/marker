@@ -6,10 +6,10 @@
       <table id="users" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-3">Nazwa użytkownika</th>
-            <th class="col-sm-3">Imię i nazwisko</th>
-            <th class="col-sm-3">Email</th>
-            <th class="col-sm-3">Rola</th>
+            <th>Nazwa użytkownika</th>
+            <th>Imię i nazwisko</th>
+            <th>Email</th>
+            <th>Rola</th>
           </tr>
         </thead>
         <tbody>

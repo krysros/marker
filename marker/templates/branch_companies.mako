@@ -44,11 +44,11 @@
         <table id="companies" class="table table-striped">
           <thead>
             <tr>
-              <th class="col-sm-1">#</th>
-              <th class="col-sm-5">Nazwa firmy</th>
-              <th class="col-sm-2">Miasto</th>
-              <th class="col-sm-2">Województwo</th>
-              <th class="col-sm-2">Rekomendacje</th>
+              <th>#</th>
+              <th>Firma</th>
+              <th>Miasto</th>
+              <th>Województwo</th>
+              <th>Rekomendacje</th>
             </tr>
           </thead>
           <tbody>

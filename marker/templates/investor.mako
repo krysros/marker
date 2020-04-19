@@ -23,8 +23,8 @@
       <table id="tenders" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-9">Nazwa</th>
-            <th class="col-sm-3">Miasto</th>
+            <th>Przetarg</th>
+            <th>Miasto</th>
           </tr>
         </thead>
         <tbody>

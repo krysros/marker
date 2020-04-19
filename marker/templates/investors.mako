@@ -21,12 +21,12 @@
       <table id="investors" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-8">Nazwa inwestora</th>
-            <th class="col-sm-2">Miasto</th>
+            <th>Inwestor</th>
+            <th>Miasto</th>
             % if query == 'edited':
-            <th class="col-sm-2">Zmodyfikowano</th>
+            <th>Zmodyfikowano</th>
             % else:
-            <th class="col-sm-2">Utworzono</th>
+            <th>Utworzono</th>
             % endif
           </tr>
         </thead>

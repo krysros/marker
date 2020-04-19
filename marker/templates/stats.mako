@@ -51,8 +51,8 @@
   <table id="companies" class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-9">Opis</th>
-        <th class="col-sm-3">Liczba</th>
+        <th>Opis</th>
+        <th>Liczba</th>
       </tr>
     </thead>
     <tbody>

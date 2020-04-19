@@ -5,6 +5,8 @@ from sqlalchemy import (
     Column,
     ForeignKey,
     Integer,
+    Unicode,
+    Numeric,
     UnicodeText,
     DateTime,
     )
@@ -47,6 +49,10 @@ offers_tenders = Table(
 class Offer(Base):
     __tablename__ = 'offers'
     id = Column(Integer, primary_key=True)
+    category = Column(Unicode(20))
+    unit = Column(Unicode(10))
+    cost = Column(Numeric(precision=10, scale=2))
+    currency = Column(Unicode(3))
     description = Column(UnicodeText)
     added = Column(DateTime, default=datetime.datetime.now)
     edited = Column(DateTime, default=datetime.datetime.now,
@@ -55,10 +61,20 @@ class Offer(Base):
     editor_id = Column(Integer, ForeignKey('users.id', ondelete='SET NULL'))
     added_by = relationship('User', foreign_keys=[submitter_id])
     edited_by = relationship('User', foreign_keys=[editor_id])
+    company = relationship('Company', secondary=offers_companies,
+                           backref='offers', uselist=False)
     branch = relationship('Branch', secondary=offers_branches,
                           backref=backref('offers', lazy='dynamic'),
                           uselist=False)
-    company = relationship('Company', secondary=offers_companies,
-                           backref='offers', uselist=False)
     tender = relationship('Tender', secondary=offers_tenders,
                           backref='offers', uselist=False)
+
+    def __init__(self, company, branch, tender, category, unit, cost, currency, description):
+        self.company = company
+        self.branch = branch
+        self.tender = tender
+        self.category = category
+        self.unit = unit
+        self.cost = cost
+        self.currency = currency
+        self.description = description

@@ -21,15 +21,15 @@
       <table id="companies" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-1">#</th>
-            <th class="col-sm-5">Nazwa firmy</th>
-            <th class="col-sm-2">Miasto</th>
+            <th>#</th>
+            <th>Firma</th>
+            <th>Miasto</th>
             % if query == 'edited':
-            <th class="col-sm-2">Zmodyfikowano</th>
+            <th>Zmodyfikowano</th>
             % else:
-            <th class="col-sm-2">Utworzono</th>
+            <th>Utworzono</th>
             % endif
-            <th class="col-sm-2">Rekomendacje</th>
+            <th>Rekomendacje</th>
           </tr>
         </thead>
         <tbody>

@@ -4,18 +4,18 @@
   <table id="persons" class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-3">Imię i nazwisko</th>
-        <th class="col-sm-3">Firma</th>
-        <th class="col-sm-3">Telefon</th>
-        <th class="col-sm-3">Email</th>
+        <th>Imię i nazwisko</th>
+        <th>Firma</th>
+        <th>Telefon</th>
+        <th>Email</th>
       </tr>
     </thead>
     <tbody>
     % for person in paginator.items:
       <tr>
         <td>${person.fullname}</td>
-        % if person.companies:
-        <td><a href="${request.route_url('company_view', company_id=person.companies.id, slug=person.companies.slug)}">${person.companies.name}</a></td>
+        % if person.company:
+        <td><a href="${request.route_url('company_view', company_id=person.company.id, slug=person.company.slug)}">${person.company.name}</a></td>
         % else:
         <td>---</td>
         % endif

@@ -6,10 +6,10 @@
       <table id="offers" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-4">Firma</th>
-            <th class="col-sm-4">Przetarg</th>
-            <th class="col-sm-3">Branża</th>
-            <th class="col-sm-1">Szczegóły</th>
+            <th>Firma</th>
+            <th>Przetarg</th>
+            <th>Branża</th>
+            <th>Szczegóły</th>
           </tr>
         </thead>
         <tbody>

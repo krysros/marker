@@ -19,6 +19,22 @@ from ..paginator import get_paginator
 log = logging.getLogger(__name__)
 
 
+CATEGORIES = [
+    ('RMS', 'RMS'),
+    ('Bez materiału', 'Bez materiału'),
+    ('Robocizna', 'Robocizna'),
+    ('Materiał', 'Materiał'),
+    ('Sprzęt', 'Sprzęt'),
+]
+
+
+CURRENCIES = [
+    ('PLN', 'PLN'),
+    ('EUR', 'EUR'),
+    ('USD', 'USD'),
+]
+
+
 class OfferView(object):
     def __init__(self, request):
         self.request = request
@@ -76,6 +92,32 @@ class OfferView(object):
                 widget=tender_widget,
                 validator=check_tender,
                 )
+            category = colander.SchemaNode(
+                colander.String(),
+                title='Kategoria',
+                widget=deform.widget.SelectWidget(values=CATEGORIES),
+                )
+            unit = colander.SchemaNode(
+                colander.String(),
+                title='Jednostka',
+                validator=colander.Length(max=10),
+                )
+            cost = colander.SchemaNode(
+                colander.Decimal(),
+                title='Cena',
+                )
+            currency = colander.SchemaNode(
+                colander.String(),
+                title='Waluta',
+                widget=deform.widget.SelectWidget(values=CURRENCIES),
+                )
+            description = colander.SchemaNode(
+                colander.String(),
+                title='Opis',
+                missing='',
+                widget=deform.widget.TextAreaWidget(rows=10),
+                description='W tym polu można umieścić dodatkowe uwagi dot. oferty.',
+            )
 
         schema = Schema().bind(request=self.request)
         submit_btn = deform.form.Button(name='submit', title='Zapisz')
@@ -130,6 +172,11 @@ class OfferView(object):
                     company=self._get_company(appstruct['company']),
                     branch=self._get_branch(appstruct['branch']),
                     tender=self._get_tender(appstruct['tender']),
+                    category=appstruct['category'],
+                    unit=appstruct['unit'],
+                    cost=appstruct['cost'],
+                    currency=appstruct['currency'],
+                    description=appstruct['description'],
                     )
                 offer.added_by = self.request.user
                 self.request.dbsession.add(offer)
@@ -168,6 +215,11 @@ class OfferView(object):
                 offer.company = self._get_company(appstruct['company'])
                 offer.branch = self._get_branch(appstruct['branch'])
                 offer.tender = self._get_tender(appstruct['tender'])
+                offer.category = appstruct['category']
+                offer.unit = appstruct['unit']
+                offer.cost = appstruct['cost']
+                offer.currency = appstruct['currency']
+                offer.description = appstruct['description']
                 offer.edited_by = self.request.user
                 self.request.session.flash('success:Zmiany zostały zapisane')
                 log.info(f'Użytkownik {self.request.user.username} zmienił ofertę firmy {offer.company.name}')
@@ -177,6 +229,11 @@ class OfferView(object):
             'company': offer.company.name if offer.company else '',
             'branch': offer.branch.name if offer.branch else '',
             'tender': offer.tender.name if offer.tender else '',
+            'category': offer.category,
+            'unit': offer.unit,
+            'cost': offer.cost,
+            'currency': offer.currency,
+            'description': offer.description,
             }
 
         if rendered_form is None:

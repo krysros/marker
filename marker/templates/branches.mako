@@ -26,7 +26,7 @@
       <table id="branches" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-12">Nazwa branży</th>
+            <th>Branża</th>
           </tr>
         </thead>
         <tbody>

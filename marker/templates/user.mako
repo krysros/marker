@@ -87,9 +87,9 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-8">Nazwa</th>
-        <th class="col-sm-2">Utworzono</th>
-        <th class="col-sm-2">Zmodyfikowano</th>
+        <th>Branża</th>
+        <th>Utworzono</th>
+        <th>Zmodyfikowano</th>
       </tr>
     </thead>
     <tbody>
@@ -110,10 +110,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-5">Nazwa</th>
-        <th class="col-sm-3">Miasto</th>
-        <th class="col-sm-2">Utworzono</th>
-        <th class="col-sm-2">Zmodyfikowano</th>
+        <th>Firma</th>
+        <th>Miasto</th>
+        <th>Utworzono</th>
+        <th>Zmodyfikowano</th>
       </tr>
     </thead>
     <tbody>
@@ -135,10 +135,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-5">Nazwa</th>
-        <th class="col-sm-3">Miasto</th>
-        <th class="col-sm-2">Utworzono</th>
-        <th class="col-sm-2">Zmodyfikowano</th>
+        <th>Inwestor</th>
+        <th>Miasto</th>
+        <th>Utworzono</th>
+        <th>Zmodyfikowano</th>
       </tr>
     </thead>
     <tbody>
@@ -160,10 +160,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-5">Nazwa</th>
-        <th class="col-sm-3">Miasto</th>
-        <th class="col-sm-2">Utworzono</th>
-        <th class="col-sm-2">Zmodyfikowano</th>
+        <th>Przetarg</th>
+        <th>Miasto</th>
+        <th>Utworzono</th>
+        <th>Zmodyfikowano</th>
       </tr>
     </thead>
     <tbody>
@@ -187,10 +187,10 @@
       <table id="offers" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-4">Firma</th>
-            <th class="col-sm-4">Przetarg</th>
-            <th class="col-sm-3">Branża</th>
-            <th class="col-sm-1">Szczegóły</th>
+            <th>Firma</th>
+            <th>Przetarg</th>
+            <th>Branża</th>
+            <th>Szczegóły</th>
           </tr>
         </thead>
         <tbody>

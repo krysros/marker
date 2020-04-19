@@ -39,10 +39,10 @@
       <table id="offers" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-4">Firma</th>
-            <th class="col-sm-4">Branża</th>
-            <th class="col-sm-2">Data</th>
-            <th class="col-sm-2">Szczegóły</th>
+            <th>Firma</th>
+            <th>Branża</th>
+            <th>Utworzono</th>
+            <th>Szczegóły</th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +61,7 @@
               % else:
                 ---
               % endif
-            </td> 
+            </td>
             <td>${offer.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
             <td><a href="${request.route_url('offer_view', offer_id=offer.id)}">Pokaż</a></td>
           </tr>

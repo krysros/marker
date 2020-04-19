@@ -37,9 +37,26 @@
         ---
       % endif
       </dd>
+      <dt>Kategoria</dt>
+      <dd>${offer.category}</dd>
+      <dt>Jednostka</dt>
+      <dd>${offer.unit}</dd>
+      <dt>Cena</dt>
+      <dd>${offer.cost}</dd>
+      <dt>Waluta</dt>
+      <dd>${offer.currency}</dd>
     </dl>
   </div>
 </div>
+
+% if offer.description:
+<div class="panel panel-default">
+  <div class="panel-heading"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> Opis</div>
+  <div class="panel-body">
+    <textarea readonly class="form-control" rows="10">${offer.description}</textarea>
+  </div>
+</div>
+% endif
 
 <div class="panel panel-default">
   <div class="panel-heading"><i class="fa fa-clock-o" aria-hidden="true"></i> Data modyfikacji</div>

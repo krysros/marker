@@ -69,7 +69,7 @@
       <table id="branches" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-12">Nazwa branży</th>
+            <th>Branża</th>
           </tr>
         </thead>
         <tbody>
@@ -91,10 +91,10 @@
       <table id="people" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-3">Imię i nazwisko</th>
-            <th class="col-sm-3">Stanowisko</th>
-            <th class="col-sm-2">Telefon</th>
-            <th class="col-sm-3">Email</th>
+            <th>Imię i nazwisko</th>
+            <th>Stanowisko</th>
+            <th>Telefon</th>
+            <th>Email</th>
           </tr>
         </thead>
         <tbody>
@@ -119,9 +119,10 @@
       <table id="offers" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-6">Przetarg</th>
-            <th class="col-sm-4">Data</th>
-            <th class="col-sm-2">Szczegóły</th>
+            <th>Przetarg</th>
+            <th>Branża</th>
+            <th>Utworzono</th>
+            <th>Szczegóły</th>
           </tr>
         </thead>
         <tbody>
@@ -130,6 +131,13 @@
             <td>
               % if offer.tender:
                 <a href="${request.route_url('tender_view', tender_id=offer.tender.id, slug=offer.tender.slug)}">${offer.tender.name}</a>
+              % else:
+                ---
+              % endif
+            </td>
+            <td>
+              % if offer.branch:
+                <a href="${request.route_url('branch_companies', branch_id=offer.branch.id, slug=offer.branch.slug)}">${offer.branch.name}</a>
               % else:
                 ---
               % endif
@@ -187,11 +195,11 @@
         <table id="companies" class="table table-striped">
           <thead>
             <tr>
-              <th class="col-sm-1">#</th>
-              <th class="col-sm-5">Nazwa firmy</th>
-              <th class="col-sm-2">Miasto</th>
-              <th class="col-sm-2">Województwo</th>
-              <th class="col-sm-2">Rekomendacje</th>
+              <th>#</th>
+              <th>Firma</th>
+              <th>Miasto</th>
+              <th>Województwo</th>
+              <th>Rekomendacje</th>
             </tr>
           </thead>
           <tbody>

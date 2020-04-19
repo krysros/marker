@@ -26,8 +26,14 @@
         <table id="companies" class="table table-striped">
           <thead>
             <tr>
-              <th class="col-sm-6">Nazwa firmy</th>
-              <th class="col-sm-6">Nazwa przetargu</th>
+              <th>Firma</th>
+              <th>Przetarg</th>
+              <th>Kategoria</th>
+              <th>Jedn.</th>
+              <th>Cena</th>
+              <th>Waluta</th>
+              <th>Utworzono</th>
+              <th>Szczegóły</th>
             </tr>
           </thead>
           <tbody>
@@ -47,6 +53,22 @@
                 ---
                 % endif
               </td>
+              <td>
+                ${offer.category}
+              </td>
+              <td>
+                ${offer.unit}
+              </td>
+              <td>
+                ${offer.cost}
+              </td>
+              <td>
+                ${offer.currency}
+              </td>
+              <td>
+                ${offer.added.strftime('%Y-%m-%d %H:%M:%S')}
+              </td>
+              <td><a href="${request.route_url('offer_view', offer_id=offer.id)}">Pokaż</a></td>
             </tr>
           % endfor
           </tbody>

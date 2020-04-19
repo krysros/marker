@@ -6,7 +6,7 @@
       <table id="investors" class="table table-striped">
         <thead>
           <tr>
-            <th class="col-sm-12">Nazwa inwestora</th>
+            <th>Inwestor</th>
           </tr>
         </thead>
         <tbody>
