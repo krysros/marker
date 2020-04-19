@@ -157,9 +157,11 @@ class InvestorView(object):
     )
     def delete(self):
         investor = self.request.context.investor
+        investor_id = investor.id
+        investor_name = investor.name
         self.request.dbsession.delete(investor)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.info(f'Użytkownik {self.request.user.username} usunął inwestora {investor.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął inwestora {investor_name} (id {investor_id})')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

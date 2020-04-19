@@ -236,9 +236,11 @@ class BranchView(object):
     )
     def delete(self):
         branch = self.request.context.branch
+        branch_id = branch.id
+        branch_name = branch.name
         self.request.dbsession.delete(branch)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.info(f'Użytkownik {self.request.user.username} usunął branżę {branch.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął branżę {branch_name} (id {branch_id})')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

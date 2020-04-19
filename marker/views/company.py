@@ -459,9 +459,11 @@ class CompanyView(object):
     )
     def delete(self):
         company = self.request.context.company
+        company_id = company.id
+        company_name = company.name
         self.request.dbsession.delete(company)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.info(f'Użytkownik {self.request.user.username} usunął firmę {company.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął firmę {company_name} (id {company_id})')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

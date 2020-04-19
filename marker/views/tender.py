@@ -213,9 +213,11 @@ class TenderView(object):
     )
     def delete(self):
         tender = self.request.context.tender
+        tender_id = tender.id
+        tender_name = tender.name
         self.request.dbsession.delete(tender)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.info(f'Użytkownik {self.request.user.username} usunął przetarg {tender.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął przetarg {tender_name} (id {tender_id})')
         return HTTPFound(location=self.request.route_url('home'))
 
     @view_config(

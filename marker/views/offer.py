@@ -197,7 +197,9 @@ class OfferView(object):
     )
     def delete(self):
         offer = self.request.context.offer
+        offer_id = offer.id
+        company_name = offer.company.name
         self.request.dbsession.delete(offer)
         self.request.session.flash('success:Usunięto z bazy danych')
-        log.info(f'Użytkownik {self.request.user.username} usunął ofertę firmy {offer.company.name}')
+        log.info(f'Użytkownik {self.request.user.username} usunął ofertę firmy {company_name} (id {offer_id})')
         return HTTPFound(location=self.request.route_url('home'))
