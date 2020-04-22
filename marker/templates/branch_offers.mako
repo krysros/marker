@@ -2,6 +2,27 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
+    % if query:
+    <a href="${request.route_url('branch_export_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': query})}" class="btn btn-primary" role="button">
+    % else:
+    <a href="${request.route_url('branch_export_offers', branch_id=branch.id, slug=branch.slug)}" class="btn btn-primary" role="button">
+    % endif
+      <i class="fa fa-download" aria-hidden="true"></i> Eksportuj
+    </a>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        Sortuj <i class="fa fa-caret-down" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'company'})}">wg nazwy firmy</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'tender'})}">wg nazwy przetargu</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'category'})}">wg kategorii</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'unit'})}">wg jednostki</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'cost'})}">wg ceny</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'currency'})}">wg waluty</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'added'})}">wg daty dodania</a></li>
+      </ul>
+    </div>
     <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
         Widok <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -23,7 +44,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
-        <table id="companies" class="table table-striped">
+        <table id="offers" class="table table-striped">
           <thead>
             <tr>
               <th>Firma</th>

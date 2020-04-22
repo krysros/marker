@@ -14,10 +14,15 @@ from ..models import (
     Branch,
     Company,
     upvotes,
+    Offer,
+    Tender,
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
-from ..helpers import export_to_xlsx
+from ..helpers import (
+    export_companies_to_xlsx,
+    export_offers_to_xlsx,
+    )
 
 
 log = logging.getLogger(__name__)
@@ -130,18 +135,40 @@ class BranchView(object):
     def view_offers(self):
         branch = self.request.context.branch
         page = self.request.params.get('page', 1)
-        paginator = get_paginator(self.request, branch.offers, page=page)
+        query = self.request.params.get('sort', 'added')
+
+        if query not in ['company', 'tender', 'category',
+                         'unit', 'cost', 'currency', 'added']:
+            return HTTPNotFound()
+
+        if query == 'company':
+            offers = branch.offers.filter(Offer.company).order_by(func.lower(Company.name))
+        elif query == 'tender':
+            offers = branch.offers.filter(Offer.tender).order_by(func.lower(Tender.name))
+        elif query == 'category':
+            offers = branch.offers.order_by(Offer.category)
+        elif query == 'unit':
+            offers = branch.offers.order_by(Offer.unit)
+        elif query == 'cost':
+            offers = branch.offers.order_by(Offer.cost)
+        elif query == 'currency':
+            offers = branch.offers.order_by(Offer.currency)
+        else:
+            offers = branch.offers.order_by(Offer.id.desc())
+
+        paginator = get_paginator(self.request, offers, page=page)
 
         return dict(
             branch=branch,
+            query=query,
             paginator=paginator,
             )
 
     @view_config(
-        route_name='branch_export',
+        route_name='branch_export_companies',
         permission='view'
     )
-    def export(self):
+    def export_companies(self):
         branch = self.request.context.branch
         query = self.request.params.get('sort', 'name')
 
@@ -160,8 +187,39 @@ class BranchView(object):
                 filter(Company.branches.any(name=branch.name)).\
                 order_by(query, Company.id)
 
-        response = export_to_xlsx(companies)
+        response = export_companies_to_xlsx(companies)
         log.info(f'Użytkownik {self.request.user.username} eksportował dane firm z branży {branch.name}')
+        return response
+
+    @view_config(
+        route_name='branch_export_offers',
+        permission='view'
+    )
+    def export_offers(self):
+        branch = self.request.context.branch
+        query = self.request.params.get('sort', 'added')
+
+        if query not in ['company', 'tender', 'category',
+                         'unit', 'cost', 'currency', 'added']:
+            return HTTPNotFound()
+
+        if query == 'company':
+            offers = branch.offers.filter(Offer.company).order_by(func.lower(Company.name))
+        elif query == 'tender':
+            offers = branch.offers.filter(Offer.tender).order_by(func.lower(Tender.name))
+        elif query == 'category':
+            offers = branch.offers.order_by(Offer.category)
+        elif query == 'unit':
+            offers = branch.offers.order_by(Offer.unit)
+        elif query == 'cost':
+            offers = branch.offers.order_by(Offer.cost)
+        elif query == 'currency':
+            offers = branch.offers.order_by(Offer.currency)
+        else:
+            offers = branch.offers.order_by(Offer.id.desc())
+
+        response = export_offers_to_xlsx(offers)
+        log.info(f'Użytkownik {self.request.user.username} eksportował oferty z branży {branch.name}')
         return response
 
     @view_config(

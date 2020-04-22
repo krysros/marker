@@ -37,7 +37,11 @@ def includeme(config):
     config.add_route('branch_offers',
                      '/branch/{branch_id:\d+}/{slug}/offers',
                      factory=branch_factory)
-    config.add_route('branch_export', '/branch/{branch_id:\d+}/{slug}/export',
+    config.add_route('branch_export_companies',
+                     '/branch/{branch_id:\d+}/{slug}/companies/export',
+                     factory=branch_factory)
+    config.add_route('branch_export_offers',
+                     '/branch/{branch_id:\d+}/{slug}/offers/export',
                      factory=branch_factory)
     config.add_route('branch_add', '/branch/add', factory=default_factory)
     config.add_route('branch_search', '/branch/search',

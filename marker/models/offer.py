@@ -69,7 +69,8 @@ class Offer(Base):
     tender = relationship('Tender', secondary=offers_tenders,
                           backref='offers', uselist=False)
 
-    def __init__(self, company, branch, tender, category, unit, cost, currency, description):
+    def __init__(self, company, branch, tender, category,
+                 unit, cost, currency, description):
         self.company = company
         self.branch = branch
         self.tender = tender

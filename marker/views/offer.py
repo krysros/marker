@@ -14,25 +14,12 @@ from ..models import (
 
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
-
+from .categories import (
+    CURRENCIES,
+    RMS,
+)
 
 log = logging.getLogger(__name__)
-
-
-CATEGORIES = [
-    ('RMS', 'RMS'),
-    ('Bez materiału', 'Bez materiału'),
-    ('Robocizna', 'Robocizna'),
-    ('Materiał', 'Materiał'),
-    ('Sprzęt', 'Sprzęt'),
-]
-
-
-CURRENCIES = [
-    ('PLN', 'PLN'),
-    ('EUR', 'EUR'),
-    ('USD', 'USD'),
-]
 
 
 class OfferView(object):
@@ -95,7 +82,7 @@ class OfferView(object):
             category = colander.SchemaNode(
                 colander.String(),
                 title='Kategoria',
-                widget=deform.widget.SelectWidget(values=CATEGORIES),
+                widget=deform.widget.SelectWidget(values=RMS),
                 )
             unit = colander.SchemaNode(
                 colander.String(),
@@ -105,6 +92,7 @@ class OfferView(object):
             cost = colander.SchemaNode(
                 colander.Decimal(),
                 title='Cena',
+                description='Pamiętaj: kropka, a nie przecinek!',
                 )
             currency = colander.SchemaNode(
                 colander.String(),

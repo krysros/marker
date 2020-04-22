@@ -3,9 +3,9 @@
 <div class="panel panel-default">
   <div class="panel-body">
     % if query:
-    <a href="${request.route_url('branch_export', branch_id=branch.id, slug=branch.slug, _query={'sort': query})}" class="btn btn-primary" role="button">
+    <a href="${request.route_url('branch_export_companies', branch_id=branch.id, slug=branch.slug, _query={'sort': query})}" class="btn btn-primary" role="button">
     % else:
-    <a href="${request.route_url('branch_export', branch_id=branch.id, slug=branch.slug)}" class="btn btn-primary" role="button">
+    <a href="${request.route_url('branch_export_companies', branch_id=branch.id, slug=branch.slug)}" class="btn btn-primary" role="button">
     % endif
       <i class="fa fa-download" aria-hidden="true"></i> Eksportuj
     </a>

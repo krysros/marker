@@ -23,7 +23,7 @@ from ..models import (
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
-from ..helpers import export_to_xlsx
+from ..helpers import export_companies_to_xlsx
 
 
 log = logging.getLogger(__name__)
@@ -325,7 +325,7 @@ class UserView(object):
                 join(marker).filter(user.id == marker.c.user_id).\
                 order_by(query, Company.id)
 
-        response = export_to_xlsx(companies)
+        response = export_companies_to_xlsx(companies)
         log.info(f'Użytkownik {self.request.user.username} eksportował dane zaznaczonych firm')
         return response
 
@@ -410,7 +410,7 @@ class UserView(object):
                 join(upvotes).filter(user.id == upvotes.c.user_id).\
                 order_by(query, Company.id) 
 
-        response = export_to_xlsx(companies)
+        response = export_companies_to_xlsx(companies)
         log.info(f'Użytkownik {self.request.user.username} eksportował dane rekomendowanych firm')
         return response
 
