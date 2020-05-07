@@ -18,8 +18,13 @@
 
 <ul class="nav nav-tabs" role="tablist">
 % for id, caption in tab_bar:
-  <li${' class="active"' if id == rel else '' | n}>
-  <a href="${request.route_url('stats', _query={'rel': id})}">${caption}</a></li>
+  % if id == rel:
+  <li class="active">
+  % else:
+  <li>
+  % endif
+    <a href="${request.route_url('stats', _query={'rel': id})}">${caption}</a>
+  </li>
 % endfor
 </ul>
 

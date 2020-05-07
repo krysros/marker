@@ -1,10 +1,18 @@
 <%inherit file="layout.mako"/>  
 
 <ul class="nav nav-tabs" role="tablist">
-  <li${' class="active"' if heading == 'Dane użytkownika' else '' | n}>
+  % if heading == 'Dane użytkownika':
+  <li class="active">
+  % else:
+  <li>
+  % endif
     <a href="${request.route_url('account', username=request.user.username)}">Konto</a>
   </li>
-  <li${' class="active"' if heading == 'Zmiana hasła' else '' | n}>
+  % if heading == 'Zmiana hasła':
+  <li class="active">
+  % else:
+  <li>
+  % endif
     <a href="${request.route_url('password', username=request.user.username)}">Hasło</a>
   </li>
 </ul>
