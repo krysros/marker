@@ -36,7 +36,9 @@
           <h3><i class="fa fa-map-marker" aria-hidden="true"></i> Adres</h3>
           ${company.city}<br>
           ${voivodeships.get(company.voivodeship)}<br>
-          <a href="https://maps.google.pl/maps?q=${company.city}">Pokaż na mapie</a>
+          % if company.city:
+            <a href="https://maps.google.pl/maps?q=${company.city}">Pokaż na mapie</a>
+          % endif
         </address>
       </div>
       <div class="col-md-4">
