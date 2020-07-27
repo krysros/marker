@@ -17,6 +17,7 @@
     % endif
     </button>
     <a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}" class="btn btn-default" role="button">Kto poleca?</a>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#plainModal">Zwykły tekst</button>
     <div class="pull-right">
       <a href="${request.route_url('comment_add', company_id=company.id)}" class="btn btn-info" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Komentarz</a>
       <a href="${request.route_url('company_edit', company_id=company.id, slug=company.slug)}" class="btn btn-warning" role="button"><i class="fa fa-edit" aria-hidden="true"></i> Edytuj</a>
@@ -255,3 +256,54 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="plainModal" tabindex="-1" role="dialog" aria-labelledby="plainModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Dane firmy w formie zwykłego testu</h4>
+      </div>
+      <div class="modal-body">
+<textarea readonly class="form-control" rows="5" id="plain_text">
+${company.name}
+% if company.city:
+${company.city}
+${voivodeships.get(company.voivodeship)}
+% endif
+
+T: ${company.phone}
+E: ${company.email}
+W: ${company.www}
+
+NIP: ${company.nip}
+REGON: ${company.regon}
+KRS: ${company.krs}
+
+Branże:
+% for branch in company.branches:
+- ${branch.name}
+% endfor
+
+% if company.people:
+Osoby do kontaktu:
+% for person in company.people:
+- ${person.fullname}, ${person.position}, T: ${person.phone}, E: ${person.email}
+% endfor
+% endif
+</textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="copyToClipboard()">Skopiuj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function copyToClipboard() {
+  $("textarea").select();
+  document.execCommand('copy');
+}
+</script>
