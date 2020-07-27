@@ -3,6 +3,9 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="pull-right">
+      % if investor.link:
+        <a href="${investor.link}" class="btn btn-info" role="button" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Link</a>
+      % endif
       <a href="${request.route_url('investor_edit', investor_id=investor.id, slug=investor.slug)}" class="btn btn-warning" role="button"><i class="fa fa-edit" aria-hidden="true"></i> Edytuj</a>
       <a data-toggle="modal" href="#deleteModal" class="btn btn-danger" role="button"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
     </div>
@@ -13,6 +16,17 @@
   <div class="panel-heading"><i class="fa fa-euro" aria-hidden="true"></i> Inwestor</div>
   <div class="panel-body">
     <h1>${investor.name}</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <address>
+          <h3><i class="fa fa-map-marker" aria-hidden="true"></i> Adres</h3>
+          ${investor.city}<br>
+          % if investor.city:
+            <a href="https://maps.google.pl/maps?q=${investor.city}">Pokaż na mapie</a>
+          % endif
+        </address>
+      </div>
+    </div>
   </div>
 </div>
 

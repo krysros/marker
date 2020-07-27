@@ -45,6 +45,13 @@ class InvestorView(object):
                 missing='',
                 validator=colander.Length(max=100),
                 )
+            link = colander.SchemaNode(
+                colander.String(),
+                title='Link',
+                missing='',
+                validaror=colander.All(
+                    colander.url, colander.Length(max=2000)),
+                )
 
         schema = Schema().bind(request=self.request)
         submit_btn = deform.form.Button(name='submit', title='Zapisz')
@@ -101,6 +108,7 @@ class InvestorView(object):
                 investor = Investor(
                     name=appstruct['name'],
                     city=appstruct['city'],
+                    link=appstruct['link'],
                     )
                 investor.added_by = self.request.user
                 self.request.dbsession.add(investor)
@@ -135,13 +143,14 @@ class InvestorView(object):
             else:
                 investor.name = appstruct['name']
                 investor.city = appstruct['city']
+                investor.link = appstruct['link']
                 investor.edited_by = self.request.user
                 self.request.session.flash('success:Zmiany zostały zapisane')
                 log.info(f'Użytkownik {self.request.user.username} zmienił nazwę inwestora {investor.name}')
                 return HTTPFound(location=self.request.route_url('investor_edit',
                                                                  investor_id=investor.id,
                                                                  slug=investor.slug))
-        appstruct = {'name': investor.name, 'city': investor.city}
+        appstruct = {'name': investor.name, 'city': investor.city, 'link': investor.link}
         if rendered_form is None:
             rendered_form = form.render(appstruct=appstruct)
 
