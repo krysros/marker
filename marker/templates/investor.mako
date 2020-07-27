@@ -21,6 +21,7 @@
         <address>
           <h3><i class="fa fa-map-marker" aria-hidden="true"></i> Adres</h3>
           ${investor.city}<br>
+          ${voivodeships.get(investor.voivodeship)}<br>
           % if investor.city:
             <a href="https://maps.google.pl/maps?q=${investor.city}">Pokaż na mapie</a>
           % endif

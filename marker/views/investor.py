@@ -11,6 +11,7 @@ import colander
 from ..models import Investor
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
+from .voivodeships import VOIVODESHIPS
 
 
 log = logging.getLogger(__name__)
@@ -44,6 +45,12 @@ class InvestorView(object):
                 title='Miasto',
                 missing='',
                 validator=colander.Length(max=100),
+                )
+            voivodeship = colander.SchemaNode(
+                colander.String(),
+                title='Województwo',
+                missing='',
+                widget=deform.widget.SelectWidget(values=VOIVODESHIPS),
                 )
             link = colander.SchemaNode(
                 colander.String(),
@@ -87,7 +94,8 @@ class InvestorView(object):
     )
     def view(self):
         investor = self.request.context.investor
-        return {'investor': investor}
+        voivodeships = dict(VOIVODESHIPS)
+        return {'investor': investor, 'voivodeships': voivodeships}
 
     @view_config(
         route_name='investor_add',
@@ -108,6 +116,7 @@ class InvestorView(object):
                 investor = Investor(
                     name=appstruct['name'],
                     city=appstruct['city'],
+                    voivodeship=appstruct['voivodeship'],
                     link=appstruct['link'],
                     )
                 investor.added_by = self.request.user
@@ -143,6 +152,7 @@ class InvestorView(object):
             else:
                 investor.name = appstruct['name']
                 investor.city = appstruct['city']
+                investor.voivodeship = appstruct['voivodeship']
                 investor.link = appstruct['link']
                 investor.edited_by = self.request.user
                 self.request.session.flash('success:Zmiany zostały zapisane')
@@ -150,7 +160,12 @@ class InvestorView(object):
                 return HTTPFound(location=self.request.route_url('investor_edit',
                                                                  investor_id=investor.id,
                                                                  slug=investor.slug))
-        appstruct = {'name': investor.name, 'city': investor.city, 'link': investor.link}
+        appstruct = dict(
+            name=investor.name,
+            city=investor.city,
+            voivodeship=investor.voivodeship,
+            link=investor.link,
+        )
         if rendered_form is None:
             rendered_form = form.render(appstruct=appstruct)
 

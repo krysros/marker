@@ -19,6 +19,7 @@ class Investor(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode(100))
     city = Column(Unicode(100))
+    voivodeship = Column(Unicode(2))
     link = Column(Unicode(2000))
     added = Column(DateTime, default=datetime.datetime.now)
     edited = Column(DateTime, default=datetime.datetime.now,
@@ -28,9 +29,10 @@ class Investor(Base):
     added_by = relationship('User', foreign_keys=[submitter_id])
     edited_by = relationship('User', foreign_keys=[editor_id])
 
-    def __init__(self, name, city, link):
+    def __init__(self, name, city, voivodeship, link):
         self.name = name
         self.city = city
+        self.voivodeship = voivodeship
         self.link = link
 
     @property
