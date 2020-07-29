@@ -47,16 +47,21 @@ def export_companies_to_xlsx(items):
     return response
 
 
-def export_offers_to_xlsx(items):
+def export_offers_to_xlsx(items, query):
     # Create an in-memory output file for the new workbook.
     output = io.BytesIO()
     workbook = xlsxwriter.Workbook(output, {'constant_memory': True, 'default_date_format': 'dd/mm/yyyy'})
     worksheet = workbook.add_worksheet()
     bold = workbook.add_format({'bold': True})
 
+    if query == 'edited':
+        date_header = 'Zmodyfikowano'
+    else:
+        date_header = 'Utworzono'
+
     # Write rows.
     header = ['Firma', 'Przetarg', 'Kategoria', 'Jedn.',
-              'Cena', 'Waluta', 'Utworzono']
+              'Cena', 'Waluta', date_header]
 
     for j, col in enumerate(header):
         worksheet.write(0, j, col, bold)
@@ -67,7 +72,10 @@ def export_offers_to_xlsx(items):
                 offer.unit, offer.cost, offer.currency]
         for j, col in enumerate(cols):
             worksheet.write(i, j, col)
-        worksheet.write_datetime(i, j + 1, offer.added)
+        if query == 'edited':
+            worksheet.write_datetime(i, j + 1, offer.edited)
+        else:
+            worksheet.write_datetime(i, j + 1, offer.added)
         i += 1
 
     # Close the workbook before streaming the data.

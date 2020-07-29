@@ -21,6 +21,7 @@
         <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'cost'})}">wg ceny</a></li>
         <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'currency'})}">wg waluty</a></li>
         <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'added'})}">wg daty dodania</a></li>
+        <li><a href="${request.route_url('branch_offers', branch_id=branch.id, slug=branch.slug, _query={'sort': 'edited'})}">wg daty edycji</a></li>
       </ul>
     </div>
     <div class="btn-group">
@@ -53,7 +54,11 @@
               <th>Jedn.</th>
               <th>Cena</th>
               <th>Waluta</th>
+              % if query == 'edited':
+              <th>Zmodyfikowano</th>
+              % else:
               <th>Utworzono</th>
+              % endif
               <th>Szczegóły</th>
             </tr>
           </thead>
@@ -87,7 +92,11 @@
                 ${offer.currency}
               </td>
               <td>
+              % if query == 'edited':
+                ${offer.edited.strftime('%Y-%m-%d %H:%M:%S')}
+              % else:
                 ${offer.added.strftime('%Y-%m-%d %H:%M:%S')}
+              % endif
               </td>
               <td><a href="${request.route_url('offer_view', offer_id=offer.id)}">Pokaż</a></td>
             </tr>

@@ -137,10 +137,6 @@ class BranchView(object):
         page = self.request.params.get('page', 1)
         query = self.request.params.get('sort', 'added')
 
-        if query not in ['company', 'tender', 'category',
-                         'unit', 'cost', 'currency', 'added']:
-            return HTTPNotFound()
-
         if query == 'company':
             offers = branch.offers.filter(Offer.company).order_by(func.lower(Company.name))
         elif query == 'tender':
@@ -153,8 +149,12 @@ class BranchView(object):
             offers = branch.offers.order_by(Offer.cost)
         elif query == 'currency':
             offers = branch.offers.order_by(Offer.currency)
-        else:
+        elif query == 'added':
             offers = branch.offers.order_by(Offer.id.desc())
+        elif query == 'edited':
+            offers = branch.offers.order_by(Offer.edited.desc(), Offer.id)
+        else:
+            return HTTPNotFound()
 
         paginator = get_paginator(self.request, offers, page=page)
 
@@ -199,10 +199,6 @@ class BranchView(object):
         branch = self.request.context.branch
         query = self.request.params.get('sort', 'added')
 
-        if query not in ['company', 'tender', 'category',
-                         'unit', 'cost', 'currency', 'added']:
-            return HTTPNotFound()
-
         if query == 'company':
             offers = branch.offers.filter(Offer.company).order_by(func.lower(Company.name))
         elif query == 'tender':
@@ -215,10 +211,14 @@ class BranchView(object):
             offers = branch.offers.order_by(Offer.cost)
         elif query == 'currency':
             offers = branch.offers.order_by(Offer.currency)
-        else:
+        elif query == 'added':
             offers = branch.offers.order_by(Offer.id.desc())
+        elif query == 'edited':
+            offers = branch.offers.order_by(Offer.edited.desc(), Offer.id)
+        else:
+            return HTTPNotFound()
 
-        response = export_offers_to_xlsx(offers)
+        response = export_offers_to_xlsx(offers, query)
         log.info(f'Użytkownik {self.request.user.username} eksportował oferty z branży {branch.name}')
         return response
 
