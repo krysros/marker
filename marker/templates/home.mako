@@ -63,13 +63,13 @@
           role="button">Pokaż &raquo;</a></p>
   </div>
   <div class="col-xs-6 col-lg-4">
-    <h2><i class="fa fa-line-chart" aria-hidden="true"></i> Statystyki</h2>
+    <h2><i class="fa fa-line-chart" aria-hidden="true"></i> Raporty</h2>
     <p>
       Wyświetl podsumowanie zawartości bazy danych.
       Analizuj dane o firmach, inwestorach i przetargach.
     </p>
     <p><a class="btn btn-default"
-          href="${request.route_url('stats')}"
+          href="${request.route_url('report')}"
           role="button">Pokaż &raquo;</a></p>
   </div>
   <div class="col-xs-6 col-lg-4">

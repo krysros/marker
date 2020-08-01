@@ -21,11 +21,11 @@ from ..paginator import get_paginator
 
 
 @view_config(
-    route_name='stats',
-    renderer='stats.mako',
+    route_name='report',
+    renderer='report.mako',
     permission='view'
 )
-def stats_view(request):
+def report_view(request):
     rel = request.params.get('rel', 'companies-voivodeships')
     page = request.params.get('page', 1)
     if rel == 'companies-voivodeships':
