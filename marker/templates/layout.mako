@@ -36,8 +36,8 @@
       <script src="${request.static_url(reqt)}" type="text/javascript"></script>
       % endfor
     % endif
-    <script src="${request.static_url('marker:static/js/company_mark.js')}" type="text/javascript"></script>
-    <script src="${request.static_url('marker:static/js/company_upvote.js')}" type="text/javascript"></script>
+    <script src="${request.static_url('marker:static/js/mark_company.js')}" type="text/javascript"></script>
+    <script src="${request.static_url('marker:static/js/upvote_company.js')}" type="text/javascript"></script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
