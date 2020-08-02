@@ -206,7 +206,8 @@ class InvestorView(object):
         permission='view'
     )
     def search(self):
-        return {}
+        voivodeships = dict(VOIVODESHIPS)
+        return {'voivodeships': voivodeships}
 
     @view_config(
         route_name='investor_search_results',
@@ -214,10 +215,18 @@ class InvestorView(object):
         permission='view'
     )
     def search_results(self):
-        name = self.request.params.get('name')
         page = self.request.params.get('page', 1)
+        name = self.request.params.get('name')
+        city = self.request.params.get('city')
+        voivodeship = self.request.params.get('voivodeship')
         results = self.request.dbsession.query(Investor).\
             filter(Investor.name.ilike('%' + name + '%')).\
+            filter(Investor.city.ilike('%' + city + '%')).\
+            filter(Investor.voivodeship.ilike('%' + voivodeship + '%')).\
             order_by(Investor.name)
         paginator = get_paginator(self.request, results, page=page)
-        return {'paginator': paginator}
+        voivodeships = dict(VOIVODESHIPS)
+        return dict(
+            paginator=paginator,
+            voivodeships=voivodeships
+        )
