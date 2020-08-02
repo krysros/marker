@@ -15,6 +15,7 @@ from ..models import (
     )
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
+from .voivodeships import VOIVODESHIPS
 
 
 log = logging.getLogger(__name__)
@@ -60,6 +61,11 @@ class TenderView(object):
                 colander.String(),
                 title='Miasto',
                 validator=colander.Length(min=3, max=100),
+                )
+            voivodeship = colander.SchemaNode(
+                colander.String(),
+                title='Województwo',
+                widget=deform.widget.SelectWidget(values=VOIVODESHIPS),
                 )
             investor = colander.SchemaNode(
                 colander.String(),
@@ -138,6 +144,7 @@ class TenderView(object):
                 tender = Tender(
                     name=appstruct['name'],
                     city=appstruct['city'],
+                    voivodeship=appstruct['voivodeship'],
                     investor=self._get_investor(appstruct['investor']),
                     link=appstruct['link'],
                     deadline=appstruct['deadline'],
@@ -178,6 +185,7 @@ class TenderView(object):
             else:
                 tender.name = appstruct['name']
                 tender.city = appstruct['city']
+                tender.voivodeship = appstruct['voivodeship']
                 tender.investor = self._get_investor(appstruct['investor'])
                 tender.link = appstruct['link']
                 tender.deadline = appstruct['deadline']
@@ -238,7 +246,8 @@ class TenderView(object):
         permission='view'
     )
     def search(self):
-        return {}
+        voivodeships = dict(VOIVODESHIPS)
+        return {'voivodeships': voivodeships}
 
     @view_config(
         route_name='tender_search_results',
@@ -254,4 +263,5 @@ class TenderView(object):
             filter(Tender.city.ilike('%' + city + '%')).\
             order_by(Tender.name)
         paginator = get_paginator(self.request, results, page=page)
-        return {'paginator': paginator}
+        voivodeships = dict(VOIVODESHIPS)
+        return {'paginator': paginator, 'voivodeships': voivodeships}

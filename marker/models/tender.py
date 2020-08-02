@@ -30,6 +30,7 @@ class Tender(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode(100))
     city = Column(Unicode(100))
+    voivodeship = Column(Unicode(2))
     link = Column(Unicode(2000))
     deadline = Column(Date)
     added = Column(DateTime, default=datetime.datetime.now)
@@ -42,9 +43,10 @@ class Tender(Base):
     investor = relationship('Investor', secondary=investors_tenders,
                             backref='tenders', uselist=False)
 
-    def __init__(self, name, city, investor, link, deadline):
+    def __init__(self, name, city, voivodeship, investor, link, deadline):
         self.name = name
         self.city = city
+        self.voivodeship = voivodeship
         self.investor = investor
         self.link = link
         self.deadline = deadline
