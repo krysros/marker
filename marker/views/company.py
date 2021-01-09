@@ -158,6 +158,18 @@ class CompanyView(object):
                 validator=colander.All(
                     colander.Length(min=3, max=100), check_name),
                 )
+            street = colander.SchemaNode(
+                colander.String(),
+                title='Ulica',
+                missing='',
+                validator=colander.Length(max=100),
+                )
+            postcode = colander.SchemaNode(
+                colander.String(),
+                title='Kod pocztowy',
+                missing='',
+                validator=colander.Length(max=10),
+                )
             city = colander.SchemaNode(
                 colander.String(),
                 title='Miasto',
@@ -209,6 +221,12 @@ class CompanyView(object):
                 preparer=[strip_whitespace, remove_multiple_spaces, remove_dashes_and_spaces],
                 validator=validate_krs,
                 )
+            court = colander.SchemaNode(
+                colander.String(),
+                title='Sąd i wydział',
+                missing='',
+                validator=colander.Length(max=100),
+                )
             category = colander.SchemaNode(
                 colander.String(),
                 title='Kategoria',
@@ -221,6 +239,7 @@ class CompanyView(object):
         schema = Schema().bind(request=self.request)
         submit_btn = deform.form.Button(name='submit', title='Zapisz')
         form = deform.Form(schema, buttons=(submit_btn,))
+        form['postcode'].widget = deform.widget.TextInputWidget(mask='99-999', mask_placeholder="_")
         form['branches'].widget = deform.widget.SequenceWidget(min_len=1)
         return form
 
@@ -347,6 +366,8 @@ class CompanyView(object):
             else:
                 company = Company(
                     name=appstruct['name'],
+                    street=appstruct['street'],
+                    postcode=appstruct['postcode'],
                     city=appstruct['city'],
                     voivodeship=appstruct['voivodeship'],
                     phone=appstruct['phone'],
@@ -355,6 +376,7 @@ class CompanyView(object):
                     nip=appstruct['nip'],
                     regon=appstruct['regon'],
                     krs=appstruct['krs'],
+                    court=appstruct['court'],
                     category=appstruct['category'],
                     branches=self._get_branches(appstruct),
                     people=self._get_people(appstruct),
@@ -394,6 +416,8 @@ class CompanyView(object):
                 rendered_form = e.render()
             else:
                 company.name = appstruct['name']
+                company.street = appstruct['street']
+                company.postcode = appstruct['postcode']
                 company.city = appstruct['city']
                 company.voivodeship = appstruct['voivodeship']
                 company.phone = appstruct['phone']
@@ -402,6 +426,7 @@ class CompanyView(object):
                 company.nip = appstruct['nip']
                 company.regon = appstruct['regon']
                 company.krs = appstruct['krs']
+                company.court = appstruct['court']
                 company.category = appstruct['category']
                 company.branches = self._get_branches(appstruct)
                 company.people = self._get_people(appstruct)
@@ -428,6 +453,8 @@ class CompanyView(object):
 
         appstruct = dict(
             name=company.name,
+            street=company.street,
+            postcode=company.postcode,
             city=company.city,
             voivodeship=company.voivodeship,
             phone=company.phone,
@@ -436,6 +463,7 @@ class CompanyView(object):
             nip=company.nip,
             regon=company.regon,
             krs=company.krs,
+            court=company.court,
             category=company.category,
             branches=branches,
             people=people,

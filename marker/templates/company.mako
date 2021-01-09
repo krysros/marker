@@ -34,9 +34,16 @@
       <div class="col-md-4">
         <address>
           <h3><i class="fa fa-map-marker" aria-hidden="true"></i> Adres</h3>
+          ${company.street}<br>
+          % if company.postcode:
+          ${company.postcode} ${company.city}<br>
+          % else:
           ${company.city}<br>
+          % endif
           ${voivodeships.get(company.voivodeship)}<br>
-          % if company.city:
+          % if company.street and company.city:
+            <a href="https://maps.google.pl/maps?q=${company.street}+${company.city}">Pokaż na mapie</a>
+          % elif company.city:
             <a href="https://maps.google.pl/maps?q=${company.city}">Pokaż na mapie</a>
           % endif
         </address>
@@ -270,7 +277,12 @@
 <textarea readonly class="form-control" rows="5" id="plain_text">
 ${company.name}
 % if company.city:
+${company.street}
+% if company.postcode:
+${company.postcode} ${company.city}
+% else:
 ${company.city}
+% endif
 ${voivodeships.get(company.voivodeship)}
 % endif
 
@@ -281,6 +293,9 @@ W: ${company.www}
 NIP: ${company.nip}
 REGON: ${company.regon}
 KRS: ${company.krs}
+% if company.krs:
+${company.court}
+% endif
 
 Branże:
 % for branch in company.branches:

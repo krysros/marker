@@ -52,6 +52,8 @@ class Company(Base):
     __tablename__ = 'companies'
     id = Column(Integer, Sequence('companies_id_seq', 1, 1), primary_key=True)
     name = Column(Unicode(100))
+    street = Column(Unicode(100))
+    postcode = Column(Unicode(10))
     city = Column(Unicode(100))
     voivodeship = Column(Unicode(2))
     phone = Column(Unicode(50))
@@ -60,6 +62,7 @@ class Company(Base):
     nip = Column(Unicode(20))
     regon = Column(Unicode(20))
     krs = Column(Unicode(20))
+    court = Column(Unicode(100))
     category = Column(Unicode(10))
     branches = relationship('Branch', secondary=companies_branches,
                             backref='companies')
@@ -79,10 +82,12 @@ class Company(Base):
     added_by = relationship('User', foreign_keys=[submitter_id])
     edited_by = relationship('User', foreign_keys=[editor_id])
 
-    def __init__(self, name, city, voivodeship,
-                 phone, email, www, nip, regon, krs,
+    def __init__(self, name, street, postcode, city, voivodeship,
+                 phone, email, www, nip, regon, krs, court,
                  category, branches, people):
         self.name = name
+        self.street = street
+        self.postcode = postcode
         self.city = city
         self.voivodeship = voivodeship
         self.phone = phone
@@ -91,6 +96,7 @@ class Company(Base):
         self.nip = nip
         self.regon = regon
         self.krs = krs
+        self.court = court
         self.category = category
         self.branches = branches
         self.people = people
