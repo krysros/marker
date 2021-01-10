@@ -17,9 +17,9 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('companies', sa.Column('street', sa.Unicode(100)))
-    op.add_column('companies', sa.Column('postcode', sa.Unicode(10)))
-    op.add_column('companies', sa.Column('court', sa.Unicode(100)))
+    op.add_column('companies', sa.Column('street', sa.Unicode(100), server_default=''))
+    op.add_column('companies', sa.Column('postcode', sa.Unicode(10), server_default=''))
+    op.add_column('companies', sa.Column('court', sa.Unicode(100), server_default=''))
 
 
 def downgrade():
