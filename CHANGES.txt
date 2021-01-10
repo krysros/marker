@@ -93,3 +93,21 @@
 -----
 
 - Add comments to companies
+
+
+0.9.9 (unreleased)
+------------------
+
+- Add link to tender
+- Add terners-cities to report
+- More about user
+- Search company by comment
+- Show latest comments
+- Sort investors
+- Add price to offer
+- Export offers to xlsx
+- Company info as plain text with copy to clipboard
+- Show offers sorted by modification date
+- Extend search form for Investor
+- Add voivodeship to tender
+- Add street, postcode and court to Company
