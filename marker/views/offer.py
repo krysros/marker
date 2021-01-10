@@ -101,7 +101,7 @@ class OfferView(object):
             currency = colander.SchemaNode(
                 colander.String(),
                 title='Waluta',
-                widget=deform.widget.SelectWidget(values=CURRENCIES), 
+                widget=deform.widget.SelectWidget(values=CURRENCIES),
             )
             description = colander.SchemaNode(
                 colander.String(),

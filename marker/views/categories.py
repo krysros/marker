@@ -45,7 +45,6 @@ UNITS = (
 )
 
 
-
 # https://pl.wikipedia.org/wiki/Krajowy_Rejestr_S%C4%85dowy#Siedziba_i_obszary_w%C5%82a%C5%9Bciwo%C5%9Bci
 COURTS = [
     ('', ''),
