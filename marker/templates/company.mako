@@ -293,9 +293,6 @@ W: ${company.www}
 NIP: ${company.nip}
 REGON: ${company.regon}
 KRS: ${company.krs}
-% if company.krs:
-${company.court}
-% endif
 
 Branże:
 % for branch in company.branches:

@@ -25,6 +25,7 @@ from ..models import (
 from ..paginator import get_paginator
 from .voivodeships import VOIVODESHIPS
 from .categories import CATEGORIES
+from .categories import COURTS
 
 
 log = logging.getLogger(__name__)
@@ -223,9 +224,9 @@ class CompanyView(object):
                 )
             court = colander.SchemaNode(
                 colander.String(),
-                title='Sąd i wydział',
+                title='Sąd',
                 missing='',
-                validator=colander.Length(max=100),
+                widget=deform.widget.SelectWidget(values=COURTS),
                 )
             category = colander.SchemaNode(
                 colander.String(),
