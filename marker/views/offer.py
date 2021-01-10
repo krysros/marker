@@ -17,6 +17,7 @@ from ..paginator import get_paginator
 from .categories import (
     CURRENCIES,
     RMS,
+    UNITS,
 )
 
 log = logging.getLogger(__name__)
@@ -80,25 +81,28 @@ class OfferView(object):
                 validator=check_tender,
                 )
             category = colander.SchemaNode(
-                colander.String(),
+                colander.List(),
                 title='Kategoria',
-                widget=deform.widget.SelectWidget(values=RMS),
-                )
+                widget=deform.widget.CheckboxChoiceWidget(
+                    values=RMS, inline=True
+                ),
+                validator=colander.Length(min=1),
+            )
             unit = colander.SchemaNode(
                 colander.String(),
                 title='Jednostka',
-                validator=colander.Length(max=10),
-                )
+                widget=deform.widget.SelectWidget(values=UNITS),
+            )
             cost = colander.SchemaNode(
                 colander.Decimal(),
                 title='Cena',
-                description='Pamiętaj: kropka, a nie przecinek!',
-                )
+                widget=deform.widget.MoneyInputWidget(options={'allowZero': True}),
+            )
             currency = colander.SchemaNode(
                 colander.String(),
                 title='Waluta',
-                widget=deform.widget.SelectWidget(values=CURRENCIES),
-                )
+                widget=deform.widget.SelectWidget(values=CURRENCIES), 
+            )
             description = colander.SchemaNode(
                 colander.String(),
                 title='Opis',

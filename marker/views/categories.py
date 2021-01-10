@@ -7,13 +7,11 @@ CATEGORIES = (
 )
 
 
-RMS = [
-    ('RMS', 'RMS'),
-    ('Bez materiału', 'Bez materiału'),
-    ('Robocizna', 'Robocizna'),
-    ('Materiał', 'Materiał'),
-    ('Sprzęt', 'Sprzęt'),
-]
+RMS = (
+    ('R', 'Robocizna'),
+    ('M', 'Materiał'),
+    ('S', 'Sprzęt'),
+)
 
 
 CURRENCIES = [
@@ -21,6 +19,31 @@ CURRENCIES = [
     ('EUR', 'EUR'),
     ('USD', 'USD'),
 ]
+
+
+# Lista jednostek z programu RODOS
+UNITS = (
+    ('', ''),
+    ('t', 'tona'),
+    ('szt.', 'sztuka'),
+    ('odc.', 'odcinek'),
+    ('mp', 'metr przestrzenny'),
+    ('m3', 'metr sześcienny'),
+    ('m2', 'metr kwadratowy'),
+    ('m', 'metr'),
+    ('kpl.', 'komplet'),
+    ('km', 'kilometr'),
+    ('kg', 'kilogram'),
+    ('ha', 'hektar'),
+    ('elem.', 'element'),
+    ('dm3', 'decymetr sześcienny'),
+    ('dm2', 'decymetr kwadratowy'),
+    ('dm', 'decymetr'),
+    ('cm2', 'centrymetr kwadratowy'),
+    ('cm', 'centymetr'),
+    ('ar', 'ar')
+)
+
 
 
 # https://pl.wikipedia.org/wiki/Krajowy_Rejestr_S%C4%85dowy#Siedziba_i_obszary_w%C5%82a%C5%9Bciwo%C5%9Bci
