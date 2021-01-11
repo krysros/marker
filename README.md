@@ -7,6 +7,7 @@ Aplikacja dla Generalnych Wykonawców usprawniająca proces ofertowania i analiz
 * Obsługa informacji o firmach, inwestorach, przetargach, ofertach oraz relacjach pomiędzy nimi
 * Zwiększenie wydajności i skuteczności ofertowania
 * Zmniejszenie progu wejścia dla nowych pracowników
+* Automatyzacja procesu generowania wzorów umów na podstawie szablonu
 
 ### Co wyróżnia aplikację?
 
