@@ -1,6 +1,8 @@
 import io
 import xlsxwriter
 from pyramid.response import Response
+from pyramid.path import AssetResolver
+from docxtpl import DocxTemplate
 
 
 def export_companies_to_xlsx(items):
@@ -88,4 +90,21 @@ def export_offers_to_xlsx(items, query):
     response.content_type = 'application/vnd.openxmlformats-' \
                             'officedocument.spreadsheetml.sheet'
     response.content_disposition = 'attachment; filename="oferty.xlsx"'
+    return response
+
+
+def export_contract_to_docx(fields):
+    a = AssetResolver('marker')
+    resolver = a.resolve('templates/draft_contract.docx')
+    template = resolver.abspath()
+    docx = DocxTemplate(template)
+    docx.render(fields)
+    output = io.BytesIO()
+    docx.save(output)
+    output.seek(0)
+    response = Response()
+    response.body_file = output
+    response.content_type = 'application/vnd.openxmlformats-' \
+                            'officedocument.wordprocessingml.document'
+    response.content_disposition = 'attachment; filename="umowa.docx"'
     return response

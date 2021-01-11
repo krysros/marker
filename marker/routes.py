@@ -88,6 +88,9 @@ def includeme(config):
     config.add_route('comment_search_results', '/comment/search/results',
                      factory=default_factory)
 
+    config.add_route('contract', '/company/{company_id:\d+}/{slug}/contract',
+                     factory=company_factory)
+
     config.add_route('person_search', '/person/search',
                      factory=default_factory)
     config.add_route('person_search_results', '/person/search/results',

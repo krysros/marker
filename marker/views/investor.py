@@ -11,7 +11,7 @@ import colander
 from ..models import Investor
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
-from .voivodeships import VOIVODESHIPS
+from .categories import VOIVODESHIPS
 
 
 log = logging.getLogger(__name__)

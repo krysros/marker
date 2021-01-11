@@ -16,8 +16,8 @@ from deform.schema import CSRFSchema
 from ..paginator import get_paginator
 from .categories import (
     CURRENCIES,
-    RMS,
     UNITS,
+    RMS,
 )
 
 log = logging.getLogger(__name__)

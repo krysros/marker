@@ -24,6 +24,7 @@ from ..models import (
 from deform.schema import CSRFSchema
 from ..paginator import get_paginator
 from ..helpers import export_companies_to_xlsx
+from .categories import VOIVODESHIPS
 
 
 log = logging.getLogger(__name__)
@@ -260,7 +261,6 @@ class UserView(object):
         permission='view'
     )
     def marked(self):
-        from .voivodeships import VOIVODESHIPS
         user = self.request.context.user
         page = self.request.params.get('page', 1)
         query = self.request.params.get('sort', 'name')
@@ -345,7 +345,6 @@ class UserView(object):
         permission='view'
     )
     def upvotes(self):
-        from .voivodeships import VOIVODESHIPS
         user = self.request.context.user
         page = self.request.params.get('page', 1)
         query = self.request.params.get('sort', 'name')

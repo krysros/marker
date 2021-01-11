@@ -23,9 +23,11 @@ from ..models import (
     )
 
 from ..paginator import get_paginator
-from .voivodeships import VOIVODESHIPS
-from .categories import CATEGORIES
-from .categories import COURTS
+from .categories import (
+    VOIVODESHIPS,
+    CATEGORIES,
+    COURTS,
+)
 
 
 log = logging.getLogger(__name__)

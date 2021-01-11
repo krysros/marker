@@ -106,3 +106,4 @@ venv.bak/
 # Marker
 marker.sqlite
 marker.ini
+*.docx

@@ -25,6 +25,9 @@ requires = [
     'python-slugify',
     'xlsxwriter',
     'alembic',
+    'babel',
+    'docxtpl',
+    'slownie',
     ]
 
 tests_require = [

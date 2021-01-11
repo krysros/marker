@@ -85,7 +85,7 @@ class BranchView(object):
         permission='view'
     )
     def view_companies(self):
-        from .voivodeships import VOIVODESHIPS
+        from .categories import VOIVODESHIPS
         branch = self.request.context.branch
         page = self.request.params.get('page', 1)
         query = self.request.params.get('sort', 'name')

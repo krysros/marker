@@ -111,3 +111,4 @@
 - Extend search form for Investor
 - Add voivodeship to tender
 - Add street, postcode and court to Company
+- Generate contract for company
