@@ -95,7 +95,7 @@ def export_offers_to_xlsx(items, query):
 
 def export_contract_to_docx(fields):
     a = AssetResolver('marker')
-    resolver = a.resolve('templates/draft_contract.docx')
+    resolver = a.resolve('docx_templates/draft_contract.docx')
     template = resolver.abspath()
     docx = DocxTemplate(template)
     docx.render(fields)

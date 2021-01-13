@@ -90,6 +90,7 @@ class ContractView(object):
             # TODO: Aktualnie to przeliczenie ma sens tylko gdy wszystkie ceny wyrażone są w złotówkach
             appstruct['penalty'] = format_currency(1000.00, 'PLN', locale='pl_PL')
 
+        appstruct['deadlines_labels'] = ['Zakres', 'Od', 'Do', 'Wartość']
         periods_from = []
         periods_to = []
         for deadline in appstruct['deadlines']:
@@ -103,6 +104,11 @@ class ContractView(object):
             deadline['period_to'] = format_datetime(period_to,
                                                     format='dd.MM.YYYY',
                                                     locale='pl_PL')
+            value = deadline['value']
+            currency = deadline['currency']
+            deadline['value'] = format_currency(value, currency, locale='pl_PL')
+            # Remove currency after format value
+            del deadline['currency']
 
         today = datetime.datetime.now()
         appstruct['today'] = format_date(today,
