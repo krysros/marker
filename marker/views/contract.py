@@ -48,6 +48,13 @@ class ContractView(object):
             )
         return result
 
+    def _insert_dots(self, appstruct):
+        DOTS = '..............................'
+        for k, v in appstruct.items():
+            if v == '':
+                appstruct[k] = DOTS
+        return appstruct
+
     def _prepare_template_data(self, company, appstruct):
         voivodeships = dict(VOIVODESHIPS)
         appstruct['name'] = company.name
@@ -64,6 +71,7 @@ class ContractView(object):
         appstruct['court'] = company.court
         appstruct['representation'] = self._get_persons(appstruct['representation'])
         appstruct['contacts'] = self._get_persons(appstruct['contacts'])
+
         penalty = 0
         for price in appstruct['contract_price']:
             price['category'] = ''.join(price['category'])
@@ -110,13 +118,14 @@ class ContractView(object):
         appstruct['final_date'] = format_date(final_date,
                                               format='long',
                                               locale='pl_PL')
+        appstruct = self._insert_dots(appstruct)
         return appstruct
 
     @staticmethod
     def _get_people(company):
         people = []
-        for p in company.people:
-            people.append((p.id, p.fullname))
+        for person in company.people:
+            people.append((person.id, person.fullname))
         return people
 
     @property
@@ -141,6 +150,7 @@ class ContractView(object):
             unit = colander.SchemaNode(
                 colander.String(),
                 title='Jednostka',
+                missing='',
                 widget=deform.widget.SelectWidget(values=UNITS),
             )
             category = colander.SchemaNode(
@@ -206,11 +216,12 @@ class ContractView(object):
                 title='Przedmiot umowy',
                 )
             materials = colander.SchemaNode(
-                colander.String(),
-                title='Materiały dostarczane przez',
-                widget=deform.widget.SelectWidget(values=choices),
+                colander.Boolean(),
+                description='Zaznacz, jeśli materiały dostarcza Podwykonawca',
+                widget=deform.widget.CheckboxWidget(),
+                title='Materiały',
             )
-            manager = colander.SchemaNode(
+            works_manager = colander.SchemaNode(
                 colander.Boolean(),
                 description='Zaznacz, jeśli wymagany jest kierownik robót z uprawnieniami w danej specjalności',
                 widget=deform.widget.CheckboxWidget(),
@@ -260,6 +271,8 @@ class ContractView(object):
         submit_btn = deform.form.Button(name='submit', title='Pobierz')
         form = deform.Form(schema, buttons=(submit_btn,))
         form.set_widgets({'subject': deform.widget.TextAreaWidget()})
+        form.set_widgets({'contract_price': deform.widget.SequenceWidget(min_len=1)})
+        form.set_widgets({'deadlines': deform.widget.SequenceWidget(min_len=1)})
         return form
 
     @view_config(
