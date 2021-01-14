@@ -57,7 +57,6 @@ class ContractView(object):
     def _fmt_currency(self, c):
         return format_currency(c, 'PLN', locale='pl_PL')
 
-
     def _prepare_template_data(self, company, appstruct):
         voivodeships = dict(VOIVODESHIPS)
         voivodeship = voivodeships.get(company.voivodeship)
@@ -262,7 +261,7 @@ class ContractView(object):
         renderer='form.mako',
         permission='view'
     )
-    def prepare(self):
+    def download(self):
         company = self.request.context.company
         self.people = self._get_people(company)
         form = self.contract_form
