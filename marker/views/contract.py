@@ -5,22 +5,15 @@ import colander
 import deform
 from deform.schema import CSRFSchema
 
-from babel.numbers import (
-    format_currency,
-    get_currency_symbol,
-)
+from babel.numbers import format_currency
 from babel.dates import (
     format_date,
     format_datetime,
 )
-from slownie import (
-    slownie,
-    slownie_zl100gr,
-)
+from slownie import slownie_zl100gr
 from ..models import Person
 from .categories import (
     VOIVODESHIPS,
-    CURRENCIES,
     UNITS,
     RMS,
 )
@@ -55,13 +48,27 @@ class ContractView(object):
                 appstruct[k] = DOTS
         return appstruct
 
+    def _fmt_datetime(self, dt):
+        return format_datetime(dt, format='dd.MM.YYYY', locale='pl_PL')
+
+    def _fmt_date(self, d):
+        return format_date(d, format='long', locale='pl_PL')
+
+    def _fmt_currency(self, c):
+        return format_currency(c, 'PLN', locale='pl_PL')
+
+
     def _prepare_template_data(self, company, appstruct):
         voivodeships = dict(VOIVODESHIPS)
+        voivodeship = voivodeships.get(company.voivodeship)
+        representation = self._get_persons(appstruct['representation'])
+        contacts = self._get_persons(appstruct['contacts'])
+
         appstruct['name'] = company.name
         appstruct['street'] = company.street
         appstruct['postcode'] = company.postcode
         appstruct['city'] = company.city
-        appstruct['voivodeship'] = voivodeships.get(company.voivodeship)
+        appstruct['voivodeship'] = voivodeship
         appstruct['phone'] = company.phone
         appstruct['email'] = company.email
         appstruct['www'] = company.www
@@ -69,61 +76,44 @@ class ContractView(object):
         appstruct['regon'] = company.regon
         appstruct['krs'] = company.krs
         appstruct['court'] = company.court
-        appstruct['representation'] = self._get_persons(appstruct['representation'])
-        appstruct['contacts'] = self._get_persons(appstruct['contacts'])
+        appstruct['representation'] = representation
+        appstruct['contacts'] = contacts
 
         penalty = 0
         for price in appstruct['contract_price']:
-            price['category'] = ''.join(price['category'])
             value = price['price']
-            rest = f"{str(value).split('.')[1]}/100"
-            currency = price['currency']
-            currency_symbol = get_currency_symbol(currency, locale='pl_PL')
-            price['price'] = format_currency(value, currency, locale='pl_PL')
-            if currency == 'PLN':
-                price['in_words'] = slownie_zl100gr(value)
-            else:
-                price['in_words'] = f'{slownie(float(value))} {currency_symbol} {rest}'
+            price['category'] = ''.join(price['category'])
+            price['price'] = self._fmt_currency(value)
+            price['in_words'] = slownie_zl100gr(value)
             penalty += 0.005 * float(value)
 
         if penalty < 1000:
-            # TODO: Aktualnie to przeliczenie ma sens tylko gdy wszystkie ceny wyrażone są w złotówkach
-            appstruct['penalty'] = format_currency(1000.00, 'PLN', locale='pl_PL')
+            appstruct['penalty'] = self._fmt_currency(1000.00)
 
-        appstruct['deadlines_labels'] = ['Zakres', 'Od', 'Do', 'Wartość']
+        total = 0
+        appstruct['labels'] = ['Zakres', 'Od', 'Do', 'Wartość']
         periods_from = []
         periods_to = []
         for deadline in appstruct['deadlines']:
+            value = deadline['value']
             period_from = deadline['period_from']
             period_to = deadline['period_to']
             periods_from.append(period_from)
             periods_to.append(period_to)
-            deadline['period_from'] = format_datetime(period_from,
-                                                      format='dd.MM.YYYY',
-                                                      locale='pl_PL')
-            deadline['period_to'] = format_datetime(period_to,
-                                                    format='dd.MM.YYYY',
-                                                    locale='pl_PL')
-            value = deadline['value']
-            currency = deadline['currency']
-            deadline['value'] = format_currency(value, currency, locale='pl_PL')
-            # Remove currency after format value
-            del deadline['currency']
+            deadline['period_from'] = self._fmt_datetime(period_from)
+            deadline['period_to'] = self._fmt_datetime(period_to)
+            deadline['value'] = self._fmt_currency(value)
+            total += value
+        appstruct['total'] = self._fmt_currency(total)
 
         today = datetime.datetime.now()
-        appstruct['today'] = format_date(today,
-                                         format='long',
-                                         locale='pl_PL')
-        appstruct['start_date'] = format_date(min(periods_from),
-                                              format='long',
-                                              locale='pl_PL')
-        appstruct['end_date'] = format_date(max(periods_to),
-                                            format='long',
-                                            locale='pl_PL')
-        final_date = max(periods_to) + datetime.timedelta(30)
-        appstruct['final_date'] = format_date(final_date,
-                                              format='long',
-                                              locale='pl_PL')
+        start_date = min(periods_from)
+        end_date = max(periods_to)
+        final_date = end_date + datetime.timedelta(30)
+        appstruct['today'] = self._fmt_date(today)
+        appstruct['start_date'] = self._fmt_date(start_date)
+        appstruct['end_date'] = self._fmt_date(end_date)
+        appstruct['final_date'] = self._fmt_date(final_date)
         appstruct = self._insert_dots(appstruct)
         return appstruct
 
@@ -137,21 +127,11 @@ class ContractView(object):
     @property
     def contract_form(self):
 
-        choices = (
-            ('SC', 'Podwykonawcę'),
-            ('GC', 'Genralnego Wykonawcę'),
-        )
-
         class Price(colander.Schema):
             price = colander.SchemaNode(
                 colander.Decimal(),
-                title='Cena',
+                title='Cena (PLN)',
                 widget=deform.widget.MoneyInputWidget(options={'allowZero': True}),
-            )
-            currency = colander.SchemaNode(
-                colander.String(),
-                title='Waluta',
-                widget=deform.widget.SelectWidget(values=CURRENCIES), 
             )
             unit = colander.SchemaNode(
                 colander.String(),
@@ -187,13 +167,8 @@ class ContractView(object):
             )
             value = colander.SchemaNode(
                 colander.Decimal(),
-                title='Wartość',
+                title='Wartość (PLN)',
                 widget=deform.widget.MoneyInputWidget(options={'allowZero': True}),
-            )
-            currency = colander.SchemaNode(
-                colander.String(),
-                title='Waluta',
-                widget=deform.widget.SelectWidget(values=CURRENCIES), 
             )
 
         class ContractPrice(colander.SequenceSchema):
@@ -254,9 +229,10 @@ class ContractView(object):
             refund = colander.SchemaNode(
                 colander.Integer(),
                 default=40,
+                missing=0,
                 title='Zwrot kaucji (%)',
                 validator=colander.Range(min=0, max=100),
-                description='Jeżeli zero, to może zostać w całości lub w części zmieniona na gwarancję ubezpieczeniową lub bankową',
+                description='Domyślnie w całości lub w części zmieniona na gwarancję ubezpieczeniową lub bankową',
             )
             guarantee = colander.SchemaNode(
                 colander.Integer(),
