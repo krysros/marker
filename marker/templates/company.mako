@@ -18,8 +18,8 @@
     </button>
     <a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}" class="btn btn-default" role="button">Kto poleca?</a>
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#plainModal">Zwykły tekst</button>
-    <a href="${request.route_url('contract', company_id=company.id, slug=company.slug)}" class="btn btn-default" role="button"><i class="fa fa-file-word-o" aria-hidden="true"></i></a>
     <div class="pull-right">
+      <a href="${request.route_url('contract', company_id=company.id, slug=company.slug)}" class="btn btn-primary" role="button"><i class="fa fa-file-word-o" aria-hidden="true"></i> Wzór umowy</a>
       <a href="${request.route_url('comment_add', company_id=company.id)}" class="btn btn-info" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Komentarz</a>
       <a href="${request.route_url('company_edit', company_id=company.id, slug=company.slug)}" class="btn btn-warning" role="button"><i class="fa fa-edit" aria-hidden="true"></i> Edytuj</a>
       <a data-toggle="modal" href="#deleteModal" class="btn btn-danger" role="button"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</a>
