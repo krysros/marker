@@ -1,5 +1,9 @@
 <%inherit file="layout.mako"/>
 
+<div class="page-header">
+  <h4>Komentarze</h4>
+</div>
+
 % for comment in paginator.items:
 <div class="panel panel-default">
   <div class="panel-heading">

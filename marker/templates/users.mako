@@ -1,5 +1,9 @@
 <%inherit file="layout.mako"/>
 
+<div class="page-header">
+  <h4>Użytkownicy</h4>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">

@@ -15,6 +15,18 @@
   </div>
 </div>
 
+<div class="page-header">
+  <h4>
+  % if query == 'inprogress':
+  Przetargi w trakcie
+  % elif query == 'completed':
+  Przetargi zakończone
+  % else:
+  Wszystkie przetargi
+  % endif
+  </h4>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">

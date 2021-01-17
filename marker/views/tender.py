@@ -113,7 +113,7 @@ class TenderView(object):
         else:
             return HTTPNotFound()
         paginator = get_paginator(self.request, tenders, page=page)
-        return {'paginator': paginator}
+        return {'query': query, 'paginator': paginator}
 
     @view_config(
         route_name='tender_view',

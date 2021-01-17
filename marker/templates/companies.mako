@@ -15,6 +15,18 @@
   </div>
 </div>
 
+<div class="page-header">
+  <h4>Firmy posortowe
+  % if query == 'alpha':
+  alfabetycznie
+  % elif query == 'edited':
+  wg daty edycji
+  % else:
+  wg daty dodania
+  % endif
+  </h4>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">

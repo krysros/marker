@@ -40,71 +40,88 @@
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading"><i class="fa fa-cube" aria-hidden="true"></i> Oferty branży ${branch.name}</div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-md-12">
-        <table id="offers" class="table table-striped">
-          <thead>
-            <tr>
-              <th>Firma</th>
-              <th>Przetarg</th>
-              <th>Kategoria</th>
-              <th>Jedn.</th>
-              <th>Cena</th>
-              <th>Waluta</th>
-              % if query == 'edited':
-              <th>Zmodyfikowano</th>
-              % else:
-              <th>Utworzono</th>
-              % endif
-              <th>Szczegóły</th>
-            </tr>
-          </thead>
-          <tbody>
-          % for offer in paginator.items:
-            <tr>
-              <td>
-                % if offer.company:
-                <a href="${request.route_url('company_view', company_id=offer.company.id, slug=offer.company.slug)}">${offer.company.name}</a>
-                % else:
-                ---
-                % endif
-              </td>
-              <td>
-                % if offer.tender:
-                <a href="${request.route_url('tender_view', tender_id=offer.tender.id, slug=offer.tender.slug)}">${offer.tender.name}</a>
-                % else:
-                ---
-                % endif
-              </td>
-              <td>
-                ${offer.category}
-              </td>
-              <td>
-                ${offer.unit}
-              </td>
-              <td>
-                ${offer.cost}
-              </td>
-              <td>
-                ${offer.currency}
-              </td>
-              <td>
-              % if query == 'edited':
-                ${offer.edited.strftime('%Y-%m-%d %H:%M:%S')}
-              % else:
-                ${offer.added.strftime('%Y-%m-%d %H:%M:%S')}
-              % endif
-              </td>
-              <td><a href="${request.route_url('offer_view', offer_id=offer.id)}">Pokaż</a></td>
-            </tr>
-          % endfor
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="page-header">
+  <h4>Oferty branży <strong>${branch.name}</strong> posortowane
+  % if query == 'company':
+  alfabetycznie wg nazwy firmy
+  % elif query == 'tender':
+  alfabetycznie wg nazwy przetargu
+  % elif query == 'category':
+  wg kategorii
+  % elif query == 'unit':
+  wg jednostki
+  % elif query == 'cost':
+  wg ceny
+  % elif query == 'currency':
+  wg waluty
+  % elif query == 'edited':
+  wg daty edycji
+  % else:
+  wg daty dodania
+  % endif
+  </h4>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table id="offers" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Firma</th>
+          <th>Przetarg</th>
+          <th>Kategoria</th>
+          <th>Jedn.</th>
+          <th>Cena</th>
+          <th>Waluta</th>
+          % if query == 'edited':
+          <th>Zmodyfikowano</th>
+          % else:
+          <th>Utworzono</th>
+          % endif
+          <th>Szczegóły</th>
+        </tr>
+      </thead>
+      <tbody>
+      % for offer in paginator.items:
+        <tr>
+          <td>
+            % if offer.company:
+            <a href="${request.route_url('company_view', company_id=offer.company.id, slug=offer.company.slug)}">${offer.company.name}</a>
+            % else:
+            ---
+            % endif
+          </td>
+          <td>
+            % if offer.tender:
+            <a href="${request.route_url('tender_view', tender_id=offer.tender.id, slug=offer.tender.slug)}">${offer.tender.name}</a>
+            % else:
+            ---
+            % endif
+          </td>
+          <td>
+            ${offer.category}
+          </td>
+          <td>
+            ${offer.unit}
+          </td>
+          <td>
+            ${offer.cost}
+          </td>
+          <td>
+            ${offer.currency}
+          </td>
+          <td>
+          % if query == 'edited':
+            ${offer.edited.strftime('%Y-%m-%d %H:%M:%S')}
+          % else:
+            ${offer.added.strftime('%Y-%m-%d %H:%M:%S')}
+          % endif
+          </td>
+          <td><a href="${request.route_url('offer_view', offer_id=offer.id)}">Pokaż</a></td>
+        </tr>
+      % endfor
+      </tbody>
+    </table>
   </div>
 </div>
 

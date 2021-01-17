@@ -26,48 +26,55 @@
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <i class="fa fa-thumbs-up" aria-hidden="true"></i> Rekomendowane firmy
-  </div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-md-12">
-        <table id="companies" class="table table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Firma</th>
-              <th>Miasto</th>
-              <th>Województwo</th>
-              <th>Rekomendacje</th>
-            </tr>
-          </thead>
-          <tbody>
-          % for company in paginator.items:
-            <tr class="${company.category}">
-              <td>
-              % if company in user_marker:
-                <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off" checked>
-              % else:
-                <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off">
-              % endif
-              </td>
-              <td>
-              % if company in user_upvotes:
-                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-              % endif
-                <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>
-              </td>
-              <td>${company.city}</td>
-              <td>${voivodeships.get(company.voivodeship)}</td>
-              <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
-            </tr>
-          % endfor
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="page-header">
+  <h4>Firmy rekomendowane przez Ciebie posortowe
+  % if query == 'city':
+  alfabetycznie wg miasta
+  % elif query == 'voivodeship':
+  alfabetycznie wg województwa
+  % elif query == 'upvotes':
+  wg liczby rekomendacji
+  % else:
+  alfabetycznie wg nazwy
+  % endif
+  </h4>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table id="companies" class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Firma</th>
+          <th>Miasto</th>
+          <th>Województwo</th>
+          <th>Rekomendacje</th>
+        </tr>
+      </thead>
+      <tbody>
+      % for company in paginator.items:
+        <tr class="${company.category}">
+          <td>
+          % if company in user_marker:
+            <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off" checked>
+          % else:
+            <input class="js-mark" type="checkbox" value="${company.id}" autocomplete="off">
+          % endif
+          </td>
+          <td>
+          % if company in user_upvotes:
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+          % endif
+            <a href="${request.route_url('company_view', company_id=company.id, slug=company.slug)}">${company.name}</a>
+          </td>
+          <td>${company.city}</td>
+          <td>${voivodeships.get(company.voivodeship)}</td>
+          <td><a href="${request.route_url('company_upvotes', company_id=company.id, slug=company.slug)}">Pokaż</a> (${company.upvote_count})</td>
+        </tr>
+      % endfor
+      </tbody>
+    </table>
   </div>
 </div>
 
