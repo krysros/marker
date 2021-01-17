@@ -27,7 +27,7 @@
 </div>
 
 <div class="page-header">
-  <h4>Zaznaczone firmy posortowe
+  <h4>Firmy zaznaczone przez Ciebie posortowe
   % if query == 'city':
   alfabetycznie wg miasta
   % elif query == 'voivodeship':
