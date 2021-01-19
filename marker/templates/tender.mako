@@ -41,6 +41,7 @@
           <tr>
             <th>Firma</th>
             <th>Branża</th>
+            <th>Opis</th>
             <th>Utworzono</th>
             <th>Szczegóły</th>
           </tr>
@@ -61,6 +62,9 @@
               % else:
                 ---
               % endif
+            </td>
+            <td>
+              ${offer.description[:50]}...
             </td>
             <td>${offer.added.strftime('%Y-%m-%d %H:%M:%S')}</td>
             <td><a href="${request.route_url('offer_view', offer_id=offer.id)}">Pokaż</a></td>

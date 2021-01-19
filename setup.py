@@ -17,6 +17,7 @@ requires = [
     'SQLAlchemy',
     'transaction',
     'zope.sqlalchemy',
+    'psycopg2',
     'waitress',
     'passlib',
     'bcrypt',

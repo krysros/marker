@@ -69,6 +69,7 @@
         <tr>
           <th>Firma</th>
           <th>Przetarg</th>
+          <th>Opis</th>
           <th>Kategoria</th>
           <th>Jedn.</th>
           <th>Cena</th>
@@ -97,6 +98,9 @@
             % else:
             ---
             % endif
+          </td>
+          <td>
+            ${offer.description[:50]}...
           </td>
           <td>
             ${offer.category}

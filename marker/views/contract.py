@@ -41,13 +41,6 @@ class ContractView(object):
             )
         return result
 
-    def _insert_dots(self, appstruct):
-        DOTS = '..............................'
-        for k, v in appstruct.items():
-            if v == '':
-                appstruct[k] = DOTS
-        return appstruct
-
     def _fmt_datetime(self, dt):
         return format_datetime(dt, format='dd.MM.YYYY', locale='pl_PL')
 
@@ -113,7 +106,6 @@ class ContractView(object):
         appstruct['start_date'] = self._fmt_date(start_date)
         appstruct['end_date'] = self._fmt_date(end_date)
         appstruct['final_date'] = self._fmt_date(final_date)
-        appstruct = self._insert_dots(appstruct)
         return appstruct
 
     @staticmethod

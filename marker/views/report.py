@@ -18,6 +18,7 @@ from ..models.tender import investors_tenders
 from ..models.user import upvotes
 
 from ..paginator import get_paginator
+from .categories import VOIVODESHIPS
 
 
 @view_config(
@@ -28,6 +29,7 @@ from ..paginator import get_paginator
 def report_view(request):
     rel = request.params.get('rel', 'companies-voivodeships')
     page = request.params.get('page', 1)
+    voivodeships = dict(VOIVODESHIPS)
     if rel == 'companies-voivodeships':
         data = request.dbsession.query(Company.voivodeship,
                                        func.count(Company.voivodeship).label('cv')).\
@@ -83,4 +85,5 @@ def report_view(request):
     return dict(
         rel=rel,
         paginator=paginator,
+        voivodeships=voivodeships,
         )

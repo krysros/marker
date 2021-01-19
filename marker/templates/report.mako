@@ -1,10 +1,5 @@
 <%inherit file="layout.mako"/>
 
-<%!
-  from marker.views.voivodeships import VOIVODESHIPS
-  voivodeships = dict(VOIVODESHIPS)
-%>
-
 <%
   tab_bar = [('companies-voivodeships', 'Województwa'),
              ('companies-cities', 'Miasta'),
